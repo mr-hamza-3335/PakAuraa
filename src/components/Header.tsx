@@ -55,6 +55,7 @@ export default function Header() {
   const t = useTranslate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -472,6 +473,50 @@ export default function Header() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-8">
+              {/* Account / Wishlist / Cart */}
+              <div className="flex items-center justify-center gap-12 mb-8 pb-6 border-b border-gold/[0.08]">
+                <a
+                  href="/account"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                >
+                  <User size={20} strokeWidth={1.5} />
+                  <span className="text-[9px] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                    {t("account")}
+                  </span>
+                </a>
+                <a
+                  href="/wishlist"
+                  onClick={() => setMobileOpen(false)}
+                  className="relative flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                >
+                  <Heart size={20} strokeWidth={1.5} />
+                  {wishCount > 0 && (
+                    <span className="absolute -top-1 right-1 w-4 h-4 bg-wine text-cream text-[8px] rounded-full flex items-center justify-center">
+                      {wishCount}
+                    </span>
+                  )}
+                  <span className="text-[9px] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                    {t("wishlist")}
+                  </span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => { setMobileOpen(false); setCartOpen(true); }}
+                  className="relative flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                >
+                  <ShoppingBag size={20} strokeWidth={1.5} />
+                  {count > 0 && (
+                    <span className="absolute -top-1 right-1 w-4 h-4 bg-gold text-obsidian text-[8px] font-medium rounded-full flex items-center justify-center">
+                      {count}
+                    </span>
+                  )}
+                  <span className="text-[9px] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                    {t("cart")}
+                  </span>
+                </button>
+              </div>
+
               {/* Search */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 border-b border-gold/20 pb-5">
@@ -523,27 +568,81 @@ export default function Header() {
 
               {/* Links */}
               <nav className="space-y-1">
-                {navLinks.map((link, i) => (
-                  <motion.a
-                    key={link.label}
-                    href={link.href ?? "#"}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex items-center justify-between py-5 border-b border-gold/[0.08] group"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <span
-                      className="text-[28px] font-display text-cream/80 group-hover:text-cream transition-colors duration-300 leading-none"
-                      style={{ fontFamily: "var(--font-display-family)" }}
+                {navLinks.map((link, i) => {
+                  const isExpanded = mobileExpanded === link.label;
+                  return (
+                    <motion.div
+                      key={link.label}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="border-b border-gold/[0.08]"
                     >
-                      {link.label}
-                    </span>
-                    {link.items && (
-                      <ChevronDown size={16} className="text-gold/40 group-hover:text-gold transition-colors" />
-                    )}
-                  </motion.a>
-                ))}
+                      {link.items ? (
+                        <button
+                          type="button"
+                          onClick={() => setMobileExpanded(isExpanded ? null : link.label)}
+                          className="w-full flex items-center justify-between py-5 group"
+                        >
+                          <span
+                            className="text-[28px] font-display text-cream/80 group-hover:text-cream transition-colors duration-300 leading-none"
+                            style={{ fontFamily: "var(--font-display-family)" }}
+                          >
+                            {link.label}
+                          </span>
+                          <ChevronDown
+                            size={16}
+                            className={`text-gold/40 group-hover:text-gold transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+                          />
+                        </button>
+                      ) : (
+                        <a
+                          href={link.href ?? "#"}
+                          className="flex items-center justify-between py-5 group"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          <span
+                            className="text-[28px] font-display text-cream/80 group-hover:text-cream transition-colors duration-300 leading-none"
+                            style={{ fontFamily: "var(--font-display-family)" }}
+                          >
+                            {link.label}
+                          </span>
+                        </a>
+                      )}
+
+                      <AnimatePresence>
+                        {link.items && isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pb-5 pl-1 space-y-4">
+                              {link.items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  onClick={() => { setMobileOpen(false); setMobileExpanded(null); }}
+                                  className="flex items-center gap-3"
+                                >
+                                  <span className="w-3 h-px bg-gold/50 flex-shrink-0" />
+                                  <span
+                                    className="text-[13px] text-warm-gray tracking-[0.08em] uppercase"
+                                    style={{ fontFamily: "var(--font-body-family)" }}
+                                  >
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
               </nav>
 
               {/* Featured product */}
@@ -565,29 +664,6 @@ export default function Header() {
                   Sultan-e-Zafroon →
                 </Link>
               </motion.div>
-            </div>
-
-            {/* Bottom icons */}
-            <div className="px-6 py-6 border-t border-gold/[0.08] flex items-center gap-8">
-              {[
-                { Icon: Heart, href: "/wishlist", label: "Wishlist" },
-                { Icon: User, href: "/account", label: "Account" },
-              ].map(({ Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="text-warm-gray/70 hover:text-gold transition-colors"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <Icon size={18} strokeWidth={1.5} />
-                </a>
-              ))}
-              <button
-                className="text-warm-gray/70 hover:text-gold transition-colors"
-                onClick={() => { setMobileOpen(false); setCartOpen(true); }}
-              >
-                <ShoppingBag size={18} strokeWidth={1.5} />
-              </button>
             </div>
           </motion.div>
         )}

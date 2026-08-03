@@ -165,7 +165,7 @@ export default function HeroSection() {
             {/* Main headline */}
             {ready && (
               <h1
-                className="leading-[0.85] tracking-[-0.02em] overflow-hidden whitespace-nowrap"
+                className="leading-[0.85] tracking-[-0.02em] overflow-hidden"
                 style={{ fontFamily: "var(--font-display-family)" }}
               >
                 <span className="block overflow-hidden">
@@ -184,7 +184,7 @@ export default function HeroSection() {
                         ease: [0.16, 1, 0.3, 1],
                       }}
                       style={{
-                        fontSize: "clamp(38px, 4.4vw, 92px)",
+                        fontSize: "clamp(30px, 8vw, 92px)",
                         lineHeight: 0.9,
                       }}
                     >
