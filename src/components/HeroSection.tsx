@@ -68,7 +68,7 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[720px] overflow-hidden"
+      className="relative min-h-[100svh] lg:h-screen lg:min-h-[720px] overflow-hidden"
       style={{ background: "#080808" }}
     >
       {/* ── Background ── */}
@@ -121,7 +121,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Main Layout ── */}
-      <div className="relative z-10 h-full max-w-[1560px] mx-auto px-6 lg:px-20 flex items-center">
+      <div className="relative z-10 min-h-[100svh] lg:h-full max-w-[1560px] mx-auto px-6 lg:px-20 pt-28 pb-16 lg:pt-24 lg:pb-0 flex items-center">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
 
           {/* LEFT: Editorial text */}
@@ -385,7 +385,7 @@ export default function HeroSection() {
 
       {/* ── Scroll indicator ── */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden lg:flex flex-col items-center gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 1 }}
