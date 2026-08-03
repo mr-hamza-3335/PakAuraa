@@ -36,6 +36,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# design-review scratch artifacts (not app assets)
+/final-*.png
+/sc-*.png
+/v3-*.png
+/screenshots/
+/screenshot.mjs
+/docs/
+*.tmp.*
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
