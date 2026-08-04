@@ -58,7 +58,7 @@ export default function LoadingScreen() {
             animate={{ opacity: 0.5, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
             className="text-gold text-xl mb-10"
-            style={{ fontFamily: "Scheherazade New, serif" }}
+            style={{ fontFamily: "var(--font-scheherazade), serif" }}
           >
             عطور فاخرة
           </motion.p>

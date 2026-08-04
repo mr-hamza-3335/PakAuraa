@@ -26,6 +26,7 @@ export default function AffiliatePage() {
   useEffect(() => {
     const supabase = createClient();
     if (!supabase) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time auth check on mount, no Supabase configured
       setChecked(true);
       return;
     }

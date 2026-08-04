@@ -69,7 +69,14 @@ export default function Header() {
   const { currency, language, setCurrency, setLanguage } = useSettings();
   const products = useCatalog();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // Hydration guard: cart/wishlist counts read localStorage-persisted
+    // Zustand state, which must render as 0 on the server and first client
+    // paint before the real count appears — otherwise React throws a
+    // hydration mismatch for any returning visitor with items already saved.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
   const count = mounted ? cartCount() : 0;
   const wishCount = mounted ? wishlist.length : 0;
 

@@ -83,7 +83,7 @@ export default function CheckGiftCardPage() {
               />
             </div>
             <div>
-              <label className="block text-[9px] text-warm-gray tracking-[0.15em] uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Name on the Card (recipient — or sender's name if none was set)</label>
+              <label className="block text-[9px] text-warm-gray tracking-[0.15em] uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Name on the Card (recipient — or sender&rsquo;s name if none was set)</label>
               <input
                 required
                 value={name}

@@ -31,7 +31,7 @@ export default function BrandStory() {
               <div className="absolute inset-0 flex items-center justify-center opacity-10">
                 <div
                   className="text-[180px] text-gold leading-none select-none"
-                  style={{ fontFamily: "Scheherazade New, serif" }}
+                  style={{ fontFamily: "var(--font-scheherazade), serif" }}
                 >
                   ◈
                 </div>

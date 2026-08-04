@@ -12,12 +12,12 @@ const IgIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 const posts = [
-  { src: "/sultan-e-zafroon.jpeg", caption: "The Flagship. Sultan-e-Zafroon.", tag: "#SultanEZafroon" },
+  { src: "/sultan-e-zafroon-v2.jpeg", caption: "The Flagship. Sultan-e-Zafroon.", tag: "#SultanEZafroon" },
   { src: "/packaging-lifestyle.jpeg", caption: "Luxury begins before the first spray.", tag: "#PakAuraaPackaging" },
   { src: "/naazif.jpeg", caption: "Pure. Clean. Naazif.", tag: "#Naazif" },
-  { src: "/zurtaan.jpeg", caption: "Strength. Power. Zurtaan.", tag: "#Zurtaan" },
-  { src: "/zarfah.jpeg", caption: "For the graceful one. Zarfah.", tag: "#Zarfah" },
-  { src: "/nuxtar.jpeg", caption: "Own the night. Nuxtar.", tag: "#Nuxtar" },
+  { src: "/zurtaan-v2.jpeg", caption: "Strength. Power. Zurtaan.", tag: "#Zurtaan" },
+  { src: "/zarfah-v2.jpeg", caption: "For the graceful one. Zarfah.", tag: "#Zarfah" },
+  { src: "/nuxtar-v2.jpeg", caption: "Own the night. Nuxtar.", tag: "#Nuxtar" },
 ];
 
 export default function InstagramGallery() {

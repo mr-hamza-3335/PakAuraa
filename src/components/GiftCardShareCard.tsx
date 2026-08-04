@@ -206,6 +206,8 @@ export default function GiftCardShareCard({ card, onClose }: GiftCardShareCardPr
   }, [card]);
 
   useEffect(() => {
+    // Browser capability check — navigator.canShare only exists client-side.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCanShareFiles(typeof navigator !== "undefined" && !!navigator.canShare && navigator.canShare({ files: [new File([], "test.png", { type: "image/png" })] }));
   }, []);
 

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
-import { Playfair_Display, Cormorant_Garamond, Inter } from "next/font/google";
+import { Playfair_Display, Cormorant_Garamond, Inter, Scheherazade_New } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
 import CartDrawer from "@/components/CartDrawer";
@@ -35,6 +35,13 @@ const inter = Inter({
   display: "swap",
 });
 
+const scheherazade = Scheherazade_New({
+  variable: "--font-scheherazade",
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://pakauraa.com"),
   title: {
@@ -59,13 +66,13 @@ export const metadata: Metadata = {
     title: "PakAuraa — Luxury Perfumes | Born in Pakistan",
     description:
       "World-class luxury fragrances, crafted in Pakistan for the global connoisseur.",
-    images: [{ url: "/sultan-e-zafroon.jpeg", width: 1200, height: 630, alt: "PakAuraa Luxury Perfumes" }],
+    images: [{ url: "/sultan-e-zafroon-v2.jpeg", width: 1200, height: 630, alt: "PakAuraa Luxury Perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PakAuraa — Luxury Perfumes",
     description: "Born in Pakistan. Worn by royalty.",
-    images: ["/sultan-e-zafroon.jpeg"],
+    images: ["/sultan-e-zafroon-v2.jpeg"],
   },
   robots: {
     index: true,
@@ -86,16 +93,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${cormorant.variable} ${inter.variable}`}
+      className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${scheherazade.variable}`}
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="min-h-screen bg-obsidian antialiased">
         <script
           type="application/ld+json"

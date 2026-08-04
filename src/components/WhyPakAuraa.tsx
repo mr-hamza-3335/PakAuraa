@@ -86,7 +86,7 @@ export default function WhyPakAuraa() {
 
               <p
                 className="text-xl text-gold/28 mb-4 transition-colors duration-400 group-hover:text-gold/45"
-                style={{ fontFamily: "Scheherazade New, serif" }}
+                style={{ fontFamily: "var(--font-scheherazade), serif" }}
               >
                 {p.arabic}
               </p>

@@ -162,6 +162,8 @@ export default function CouponShareCard({ coupon, onClose }: CouponShareCardProp
   }, [coupon]);
 
   useEffect(() => {
+    // Browser capability check — navigator.canShare only exists client-side.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCanShareFiles(typeof navigator !== "undefined" && !!navigator.canShare && navigator.canShare({ files: [new File([], "test.png", { type: "image/png" })] }));
   }, []);
 

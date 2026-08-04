@@ -189,7 +189,7 @@ export default function Footer() {
 
           <p
             className="text-xl text-gold/28 mb-7"
-            style={{ fontFamily: "Scheherazade New, serif" }}
+            style={{ fontFamily: "var(--font-scheherazade), serif" }}
           >
             عطور فاخرة من باكستان
           </p>

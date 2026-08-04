@@ -50,7 +50,7 @@ export default function Newsletter() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-gold text-xl mb-2"
-          style={{ fontFamily: "Scheherazade New, serif" }}
+          style={{ fontFamily: "var(--font-scheherazade), serif" }}
         >
           انضم إلينا
         </motion.p>

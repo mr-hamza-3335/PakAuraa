@@ -164,7 +164,7 @@ export default function Ingredients() {
               {/* Arabic name */}
               <p
                 className="text-[28px] text-gold/30 mb-3"
-                style={{ fontFamily: "Scheherazade New, serif" }}
+                style={{ fontFamily: "var(--font-scheherazade), serif" }}
               >
                 {current.arabicName}
               </p>

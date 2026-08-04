@@ -127,7 +127,7 @@ export default function ScentFinder() {
                     {"arabic" in opt && (
                       <span
                         className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-gold opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-                        style={{ fontFamily: "Scheherazade New, serif" }}
+                        style={{ fontFamily: "var(--font-scheherazade), serif" }}
                       >
                         {opt.arabic}
                       </span>

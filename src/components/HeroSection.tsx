@@ -159,7 +159,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[22px] lg:text-[26px] text-gold/55 leading-none"
-                style={{ fontFamily: "Scheherazade New, serif" }}
+                style={{ fontFamily: "var(--font-scheherazade), serif" }}
               >
                 سلطان الزعفران
               </motion.p>
@@ -293,11 +293,12 @@ export default function HeroSection() {
                 <div className="absolute inset-[-40px] bg-[radial-gradient(ellipse_at_center,_rgba(61,8,32,0.7)_0%,_transparent_65%)] pointer-events-none" />
                 <div className="relative w-full h-full overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.9)]">
                   <Image
-                    src="/sultan-e-zafroon.jpeg"
+                    src="/sultan-e-zafroon-v2.jpeg"
                     alt="Sultan-e-Zafroon — PakAuraa Flagship Perfume"
                     fill
                     className="object-cover object-center"
                     sizes="220px"
+                    priority
                   />
                 </div>
               </motion.div>
@@ -331,7 +332,7 @@ export default function HeroSection() {
                   {/* Product image */}
                   <div className="relative w-[380px] lg:w-[440px] xl:w-[500px] 2xl:w-[560px] aspect-[4/5] overflow-hidden shadow-[0_56px_140px_rgba(0,0,0,0.95),0_0_100px_rgba(61,8,32,0.55)]">
                     <Image
-                      src="/sultan-e-zafroon.jpeg"
+                      src="/sultan-e-zafroon-v2.jpeg"
                       alt="Sultan-e-Zafroon — PakAuraa Flagship Perfume"
                       fill
                       className="object-cover object-center"

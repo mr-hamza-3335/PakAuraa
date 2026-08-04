@@ -107,7 +107,7 @@ export default function QuickView() {
                 <h2 className="font-display text-2xl text-cream leading-tight mb-1" style={{ fontFamily: "var(--font-display-family)" }}>
                   {product.name}
                 </h2>
-                <p className="text-lg text-gold/50 mb-3" style={{ fontFamily: "Scheherazade New, serif" }}>
+                <p className="text-lg text-gold/50 mb-3" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
                   {product.arabicName}
                 </p>
 

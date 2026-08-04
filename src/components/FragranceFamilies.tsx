@@ -152,7 +152,7 @@ export default function FragranceFamilies() {
                 {/* Arabic name */}
                 <p
                   className="text-sm text-gold/40 mb-2 transition-colors duration-500 group-hover:text-gold/65"
-                  style={{ fontFamily: "Scheherazade New, serif" }}
+                  style={{ fontFamily: "var(--font-scheherazade), serif" }}
                 >
                   {family.arabicName}
                 </p>

@@ -48,7 +48,7 @@ export default function AboutPage() {
               Our Heritage
             </motion.p>
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="text-3xl text-gold/30 mb-4" style={{ fontFamily: "Scheherazade New, serif" }}>
+              className="text-3xl text-gold/30 mb-4" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
               قصتنا
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.9 }}
@@ -119,9 +119,9 @@ export default function AboutPage() {
         {/* ── DUA / PRAYER REQUEST ── */}
         <section className="py-20 px-6 bg-obsidian text-center border-t border-gold/8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="max-w-[700px] mx-auto">
-            <p className="text-2xl text-gold/30 mb-4" style={{ fontFamily: "Scheherazade New, serif" }}>دعا</p>
+            <p className="text-2xl text-gold/30 mb-4" style={{ fontFamily: "var(--font-scheherazade), serif" }}>دعا</p>
             <p className="text-[15px] text-warm-gray leading-[1.9]" style={{ fontFamily: "var(--font-body-family)" }}>
-              PakAuraa has been a dream since 2024 — and in 2026, we're finally opening our doors. We ask you to keep us in your prayers, that Allah grants this business success.
+              PakAuraa has been a dream since 2024 — and in 2026, we&rsquo;re finally opening our doors. We ask you to keep us in your prayers, that Allah grants this business success.
             </p>
             <p className="text-[16px] text-cream leading-[1.9] mt-5" dir="rtl" style={{ fontFamily: "var(--font-body-family)" }}>
               براہ کرم ہمیں اپنی دعاؤں میں یاد رکھیں — اللہ تعالیٰ ہمیں اس بزنس میں کامیابی عطا فرمائے۔ آمین۔
@@ -178,7 +178,7 @@ export default function AboutPage() {
                   style={{ background: "rgba(17,17,17,0.7)" }}
                   whileHover={{ y: -4 }}
                 >
-                  <p className="text-2xl text-gold/40 mb-3 group-hover:text-gold/70 transition-colors" style={{ fontFamily: "Scheherazade New, serif" }}>
+                  <p className="text-2xl text-gold/40 mb-3 group-hover:text-gold/70 transition-colors" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
                     {v.arabic}
                   </p>
                   <h3 className="font-display text-lg text-cream mb-3" style={{ fontFamily: "var(--font-display-family)" }}>{v.title}</h3>
@@ -192,7 +192,7 @@ export default function AboutPage() {
         {/* ── CTA ── */}
         <section className="py-24 px-6 bg-burgundy text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <p className="text-xl text-gold/30 mb-3" style={{ fontFamily: "Scheherazade New, serif" }}>اكتشف عطرك</p>
+            <p className="text-xl text-gold/30 mb-3" style={{ fontFamily: "var(--font-scheherazade), serif" }}>اكتشف عطرك</p>
             <h2 className="font-display text-[clamp(32px,5vw,56px)] text-cream mb-6" style={{ fontFamily: "var(--font-display-family)" }}>
               Find Your Signature
             </h2>

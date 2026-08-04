@@ -45,18 +45,11 @@ export default function CheckoutClient() {
     { id: "jazzcash", label: "JazzCash", description: "Scan the QR code or send to our Till ID", Icon: Wallet },
   ];
   const paymentOptions = allPaymentOptions.filter((opt) => opt.id !== "cod" || !giftCardOnlyCart);
-  const [method, setMethod] = useState<PaymentMethod>("cod");
+  const [rawMethod, setMethod] = useState<PaymentMethod>("cod");
   const [showJazzCashModal, setShowJazzCashModal] = useState(false);
   const [showCodModal, setShowCodModal] = useState(false);
   const [codSameAddress, setCodSameAddress] = useState<boolean | null>(null);
   const [codAltAddress, setCodAltAddress] = useState("");
-
-  useEffect(() => {
-    // Gift-card-only carts are delivered by email, not in person — Cash on
-    // Delivery doesn't apply, so bump off it the moment the cart becomes
-    // gift-cards-only. A mixed cart (gift card + a real product) keeps COD.
-    if (giftCardOnlyCart && method === "cod") setMethod("jazzcash");
-  }, [giftCardOnlyCart, method]);
   const [form, setForm] = useState<OrderCustomer>({ name: "", email: "", phone: "", address: "", city: "", landmark: "" });
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -119,16 +112,17 @@ export default function CheckoutClient() {
 
   const formValid = form.name && form.email && form.phone && form.address && form.city;
 
-  useEffect(() => {
-    // Fully covered by gift card — force the payment method to reflect
-    // that (no COD/JazzCash step), and drop back out the moment it stops
-    // being fully covered (coupon removed, more items added, etc).
-    if (giftCardCoversAll) {
-      if (method !== "giftcard") setMethod("giftcard");
-    } else if (method === "giftcard") {
-      setMethod("cod");
-    }
-  }, [giftCardCoversAll, method]);
+  // `method` is derived from the raw selection rather than stored directly so
+  // constraint-driven overrides (gift card covers the order; cart is
+  // gift-cards-only) apply instantly during render instead of flashing the
+  // stale selection for a frame before an effect corrects it.
+  const method: PaymentMethod = giftCardCoversAll
+    ? "giftcard"
+    : giftCardOnlyCart && rawMethod === "cod"
+      ? "jazzcash"
+      : rawMethod === "giftcard"
+        ? "cod"
+        : rawMethod;
 
   useEffect(() => {
     // Debounced abandoned-cart snapshot — only once there's a plausible
@@ -197,6 +191,7 @@ export default function CheckoutClient() {
     const pending = typeof window !== "undefined" ? localStorage.getItem(PENDING_GIFT_CARD_KEY) : null;
     if (!pending) return;
     localStorage.removeItem(PENDING_GIFT_CARD_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from localStorage on mount, not derived render state
     setGiftCardCodeInput(pending);
     handleApplyGiftCard(pending);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -385,7 +385,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             <h1 className="font-display text-[clamp(32px,4vw,48px)] text-cream leading-tight mb-1" style={{ fontFamily: "var(--font-display-family)" }}>
               {product.name}
             </h1>
-            <p className="text-xl text-gold/40 mb-2" style={{ fontFamily: "Scheherazade New, serif" }}>
+            <p className="text-xl text-gold/40 mb-2" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
               {product.arabicName}
             </p>
             <p className="text-[12px] text-gold/70 tracking-wider italic mb-5" style={{ fontFamily: "var(--font-body-family)" }}>

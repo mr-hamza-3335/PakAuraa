@@ -15,7 +15,6 @@ export default function AdminSubscribersPage() {
 
   useEffect(() => {
     // Initial fetch from Supabase on mount.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     (async () => {
       const supabase = createClient();
       if (!supabase) return;

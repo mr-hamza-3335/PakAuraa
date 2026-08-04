@@ -62,7 +62,7 @@ export default function CollectionsGrid() {
                 <div className="absolute inset-0 flex items-center justify-center opacity-5 select-none pointer-events-none">
                   <div
                     className="text-[120px] text-gold leading-none"
-                    style={{ fontFamily: "Scheherazade New, serif" }}
+                    style={{ fontFamily: "var(--font-scheherazade), serif" }}
                   >
                     ◈
                   </div>
