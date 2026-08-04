@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart, ShoppingBag, Star, Share2, ChevronDown, Minus, Plus,
-  Sun, Moon, Package, Gift, Pen, Truck, RotateCcw, ArrowRight, Zap
+  Sun, Moon, Package, Gift, Pen, Truck, RotateCcw, ArrowRight, Zap, ZoomIn, X
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -259,10 +259,24 @@ export default function ProductPageClient({ product, related, reviews }: { produ
   const [giftWrap, setGiftWrap] = useState(false);
   const [engrave, setEngrave] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "reviews" | "details">("overview");
   const { addToCart, toggleWishlist, isWishlisted, setCartOpen, addRecentlyViewed } = useStore();
   const { currency } = useSettings();
   const t = useTranslate();
+  const primaryCtaRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    // Mobile sticky Add to Cart bar appears once the main CTA scrolls out of
+    // view — long luxury PDPs (notes, meters, FAQ) otherwise bury the buy
+    // action far below the fold.
+    const el = primaryCtaRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setShowStickyBar(!entry.isIntersecting), { threshold: 0 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Deferred a tick so this always runs after StoreHydration's persist.rehydrate()
@@ -319,17 +333,21 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="relative aspect-[4/5] rounded-xl overflow-hidden border border-gold/15 shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+              onClick={() => setLightboxOpen(true)}
+              className="relative aspect-[4/5] rounded-xl overflow-hidden border border-gold/15 shadow-[0_24px_80px_rgba(0,0,0,0.7)] cursor-zoom-in group"
             >
               <div className={`absolute inset-0 ${product.gradient}`} />
               <Image
                 src={product.gallery[activeImage] ?? product.image}
                 alt={`${product.name} — ${product.tagline} | Luxury Arabic Perfume by PakAuraa`}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                 sizes="(max-width: 1024px) 100vw, 55vw"
                 priority
               />
+              <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full glass-dark border border-gold/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <ZoomIn size={15} strokeWidth={1.5} className="text-gold" />
+              </div>
               {/* Corner ornaments */}
               {["top-5 left-5", "top-5 right-5 rotate-90", "bottom-5 left-5 -rotate-90", "bottom-5 right-5 rotate-180"].map((pos, i) => (
                 <div key={i} className={`absolute ${pos} w-8 h-8 opacity-30`}>
@@ -489,7 +507,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             </div>
 
             {/* Add to cart / Buy now / Notify Me */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-3">
+            <div ref={primaryCtaRef} className="flex flex-col sm:flex-row gap-3 mb-3">
               {product.stock !== undefined && product.stock <= 0 ? (
                 <NotifyBackInStock productId={product.id} />
               ) : (
@@ -648,6 +666,14 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                     </div>
                   </div>
                   <div>
+                    <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-2.5" style={{ fontFamily: "var(--font-body-family)" }}>For</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] text-cream border border-gold/20 px-3 py-1.5 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
+                        {product.gender === "men" ? "Men" : product.gender === "women" ? "Women" : "Unisex"}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
                     <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-2.5" style={{ fontFamily: "var(--font-body-family)" }}>Occasions</p>
                     <div className="flex flex-wrap gap-2">
                       {product.occasions.map((o) => (
@@ -687,6 +713,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                 <div className="space-y-6">
                   <Meter label="Longevity" value={product.longevity} icon={<span className="text-[12px]">◷</span>} />
                   <Meter label="Projection" value={product.projection} icon={<span className="text-[12px]">◎</span>} />
+                  <Meter label="Sillage" value={product.sillage} icon={<span className="text-[12px]">≈</span>} />
                 </div>
 
                 {/* Details */}
@@ -834,6 +861,80 @@ export default function ProductPageClient({ product, related, reviews }: { produ
       </section>
 
       <RecentlyViewed currentProductId={product.id} />
+
+      {/* ── Gallery lightbox ── */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/92 p-4 md:p-12"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(false)}
+              aria-label="Close"
+              className="absolute top-5 right-5 md:top-8 md:right-8 w-10 h-10 flex items-center justify-center text-cream hover:text-gold transition-colors"
+            >
+              <X size={22} strokeWidth={1.5} />
+            </button>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl aspect-[4/5]"
+            >
+              <Image
+                src={product.gallery[activeImage] ?? product.image}
+                alt={`${product.name} — ${product.tagline} | Luxury Arabic Perfume by PakAuraa`}
+                fill
+                className="object-contain"
+                sizes="90vw"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Sticky mobile Add to Cart bar ── */}
+      <AnimatePresence>
+        {showStickyBar && (product.stock === undefined || product.stock > 0) && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass-dark border-t border-gold/15 px-4 py-3 flex items-center gap-3"
+            style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+          >
+            <div className="flex-shrink-0 min-w-0">
+              <p className="text-[10px] text-cream truncate" style={{ fontFamily: "var(--font-body-family)" }}>{product.name}</p>
+              <p className="text-[11px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice((size.price + unitAddon) * qty, currency)}</p>
+            </div>
+            <button
+              onClick={handleAddToCart}
+              className={`flex-1 py-3 text-[10px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 font-medium transition-all duration-300 ${
+                added ? "bg-[#1a3a1a] border border-green-600/40 text-green-400" : "border border-gold/40 text-gold"
+              }`}
+              style={{ fontFamily: "var(--font-body-family)" }}
+            >
+              <ShoppingBag size={13} strokeWidth={2} />
+              {added ? t("addedToCart") : t("addToCart")}
+            </button>
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 py-3 text-[10px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 font-medium bg-gradient-to-r from-gold-deep to-gold text-obsidian"
+              style={{ fontFamily: "var(--font-body-family)" }}
+            >
+              <Zap size={13} strokeWidth={2} />
+              {t("buyNow")}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

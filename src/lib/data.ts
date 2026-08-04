@@ -46,6 +46,8 @@ export interface Product {
   notes: { top: string[]; heart: string[]; base: string[] };
   longevity: number;
   projection: number;
+  /** How far the scent trail carries as the wearer moves through a room — distinct from projection (how far it reads from the skin). 1–10. */
+  sillage: number;
   concentration: string;
   occasions: string[];
   seasons: string[];
@@ -101,6 +103,7 @@ export const products: Product[] = [
     },
     longevity: 10,
     projection: 9,
+    sillage: 9,
     concentration: "Extrait de Parfum",
     occasions: ["Evening", "Wedding", "Royal Events", "Special Occasion"],
     seasons: ["Autumn", "Winter"],
@@ -144,6 +147,7 @@ export const products: Product[] = [
     },
     longevity: 7,
     projection: 6,
+    sillage: 5,
     concentration: "Eau de Parfum",
     occasions: ["Daily", "Office", "Morning", "Gifting"],
     seasons: ["Spring", "Summer"],
@@ -186,6 +190,7 @@ export const products: Product[] = [
     },
     longevity: 9,
     projection: 8,
+    sillage: 8,
     concentration: "Eau de Parfum",
     occasions: ["Evening", "Business", "Formal", "Date Night"],
     seasons: ["Autumn", "Winter", "Spring"],
@@ -226,6 +231,7 @@ export const products: Product[] = [
       heart: ["Rose Absolute", "Jasmine Sambac"],
       base: ["Vanilla", "White Musk"],
     },
+    sillage: 6,
     longevity: 7,
     projection: 6,
     concentration: "Eau de Parfum",
@@ -272,6 +278,7 @@ export const products: Product[] = [
     },
     longevity: 9,
     projection: 8,
+    sillage: 8,
     concentration: "Eau de Parfum",
     occasions: ["Evening", "Party", "Date Night", "Winter Formal"],
     seasons: ["Autumn", "Winter"],

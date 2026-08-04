@@ -37,6 +37,7 @@ interface FormState {
   notesBase: string;
   longevity: number;
   projection: number;
+  sillage: number;
   concentration: string;
   occasions: string;
   seasons: string;
@@ -73,6 +74,7 @@ const blankForm: FormState = {
   notesBase: "",
   longevity: 7,
   projection: 6,
+  sillage: 6,
   concentration: "Eau de Parfum",
   occasions: "",
   seasons: "",
@@ -122,6 +124,7 @@ function productToForm(p: Product): FormState {
     notesBase: p.notes.base.join(", "),
     longevity: p.longevity,
     projection: p.projection,
+    sillage: p.sillage,
     concentration: p.concentration,
     occasions: p.occasions.join(", "),
     seasons: p.seasons.join(", "),
@@ -164,6 +167,7 @@ function formToProduct(f: FormState): Product {
     notes: { top: csv(f.notesTop), heart: csv(f.notesHeart), base: csv(f.notesBase) },
     longevity: f.longevity,
     projection: f.projection,
+    sillage: f.sillage,
     concentration: f.concentration,
     occasions: csv(f.occasions),
     seasons: csv(f.seasons),
@@ -430,6 +434,7 @@ export default function AdminProductsPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <Field label="Longevity (1–10)"><input type="number" min={1} max={10} className={inputClass} value={form.longevity} onChange={(e) => setForm({ ...form, longevity: Number(e.target.value) })} /></Field>
               <Field label="Projection (1–10)"><input type="number" min={1} max={10} className={inputClass} value={form.projection} onChange={(e) => setForm({ ...form, projection: Number(e.target.value) })} /></Field>
+              <Field label="Sillage (1–10)"><input type="number" min={1} max={10} className={inputClass} value={form.sillage} onChange={(e) => setForm({ ...form, sillage: Number(e.target.value) })} /></Field>
               <Field label="Day / Night">
                 <select className={inputClass} value={form.dayNight} onChange={(e) => setForm({ ...form, dayNight: e.target.value as FormState["dayNight"] })}>
                   <option value="day">Day</option>

@@ -35,6 +35,7 @@ export function createGiftCardProduct(amount: number): Product {
     notes: { top: [], heart: [], base: [] },
     longevity: 0,
     projection: 0,
+    sillage: 0,
     concentration: "Gift Card",
     occasions: ["Gifting"],
     seasons: [],
