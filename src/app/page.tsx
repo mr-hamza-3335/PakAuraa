@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -6,6 +7,14 @@ import BestSellers from "@/components/BestSellers";
 import PressStrip from "@/components/PressStrip";
 import JournalPreview from "@/components/JournalPreview";
 import Footer from "@/components/Footer";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "PakAuraa — Luxury Arabic Perfumes in Pakistan | Sultan-e-Zafroon",
+  description:
+    "Shop luxury Pakistani perfumes crafted with rare oud, saffron and Bulgarian rose. Long-lasting Arabic perfumes and extrait de parfum — including our flagship Sultan-e-Zafroon — with free Pakistan-wide delivery.",
+  path: "/",
+});
 
 // Below-fold sections are code-split into separate chunks — still
 // server-rendered for SEO/crawlability, but deferred out of the initial

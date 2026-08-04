@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className={`aspect-square relative ${product.gradient} overflow-hidden`}>
           <Image
             src={product.image}
-            alt={product.name}
+            alt={`${product.name} — ${product.collection} luxury perfume | PakAuraa`}
             fill
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 50vw, 25vw"

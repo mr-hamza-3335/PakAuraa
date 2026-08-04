@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { Playfair_Display, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
@@ -11,6 +11,7 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import CompareBar from "@/components/CompareBar";
 import ReferralTracker from "@/components/ReferralTracker";
 import LocaleEffect from "@/components/LocaleEffect";
+import { organizationJsonLd, localBusinessJsonLd, websiteJsonLd, BRAND_KEYWORDS } from "@/lib/seo";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -43,16 +44,13 @@ export const metadata: Metadata = {
   description:
     "Discover world-class luxury perfumes by PakAuraa. Authentic Arabic-inspired fragrances crafted for royalty in Lahore, Pakistan. Sultan-e-Zafroon, Naazif, Zurtaan, Zarfah, Nuxtar.",
   keywords: [
-    "luxury perfume Pakistan",
+    ...BRAND_KEYWORDS,
     "Arabic fragrance",
-    "oud perfume",
     "premium perfume",
-    "Sultan-e-Zafroon",
-    "PakAuraa",
     "Lahore perfume",
     "Pakistani luxury brand",
-    "extrait de parfum",
   ],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -61,7 +59,7 @@ export const metadata: Metadata = {
     title: "PakAuraa — Luxury Perfumes | Born in Pakistan",
     description:
       "World-class luxury fragrances, crafted in Pakistan for the global connoisseur.",
-    images: [{ url: "/sultan-e-zafroon.jpeg", width: 1200, height: 630 }],
+    images: [{ url: "/sultan-e-zafroon.jpeg", width: 1200, height: 630, alt: "PakAuraa Luxury Perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -74,6 +72,12 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#080808",
 };
 
 export default function RootLayout({
@@ -93,6 +97,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-obsidian antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([organizationJsonLd(), localBusinessJsonLd(), websiteJsonLd()]),
+          }}
+        />
         <StoreHydration />
         <LocaleEffect />
         <Suspense fallback={null}>

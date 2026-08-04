@@ -14,6 +14,7 @@ import { useStore, GIFT_WRAP_PRICE, ENGRAVE_PRICE } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { productFaqItems } from "@/lib/seo";
 import ProductCard from "@/components/ProductCard";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import NotifyBackInStock from "@/components/NotifyBackInStock";
@@ -323,7 +324,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               <div className={`absolute inset-0 ${product.gradient}`} />
               <Image
                 src={product.gallery[activeImage] ?? product.image}
-                alt={product.name}
+                alt={`${product.name} — ${product.tagline} | Luxury Arabic Perfume by PakAuraa`}
                 fill
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 55vw"
@@ -359,7 +360,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                     <div className={`absolute inset-0 ${product.gradient}`} />
                     <Image
                       src={src}
-                      alt={`${product.name} view ${i + 1}`}
+                      alt={`${product.name} luxury perfume bottle — photo ${i + 1}`}
                       fill
                       className="object-cover object-center"
                       sizes="25vw"
@@ -635,7 +636,14 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                     <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-2.5" style={{ fontFamily: "var(--font-body-family)" }}>Fragrance Family</p>
                     <div className="flex flex-wrap gap-2">
                       {product.fragranceFamily.map((f) => (
-                        <span key={f} className="text-[10px] text-cream border border-gold/20 px-3 py-1.5 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>{f}</span>
+                        <Link
+                          key={f}
+                          href={`/collections?family=${encodeURIComponent(f.toLowerCase())}`}
+                          className="text-[10px] text-cream border border-gold/20 px-3 py-1.5 tracking-wider hover:border-gold/45 hover:text-gold transition-colors"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          {f}
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -794,6 +802,16 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               <Accordion title="Authenticity Guarantee">
                 <p>Every PakAuraa fragrance is sourced, blended and quality-checked in-house. We guarantee 100% authentic fragrances or your money back.</p>
               </Accordion>
+              <div className="mt-8 pt-8 border-t border-gold/10">
+                <p className="text-[9px] text-gold tracking-[0.3em] uppercase mb-4" style={{ fontFamily: "var(--font-body-family)" }}>
+                  Frequently Asked Questions
+                </p>
+                {productFaqItems(product).map((f) => (
+                  <Accordion key={f.q} title={f.q}>
+                    <p>{f.a}</p>
+                  </Accordion>
+                ))}
+              </div>
             </motion.div>
           )}
         </>

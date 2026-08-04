@@ -148,7 +148,6 @@ export default function Header() {
               width={294}
               height={209}
               className="object-contain w-[68px] lg:w-[80px] h-auto"
-              priority
               placeholder="empty"
               style={{ filter: "drop-shadow(0 2px 12px rgba(201,168,76,0.20))" }}
             />

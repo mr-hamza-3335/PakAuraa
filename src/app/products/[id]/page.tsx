@@ -4,6 +4,7 @@ import { products as staticProducts, getReviewsFor, type Review } from "@/lib/da
 import { getAllProducts, getProductById } from "@/lib/catalog.server";
 import { getRelatedProducts } from "@/lib/recommend";
 import { createClient } from "@/lib/supabase/server";
+import { productMetadata, productJsonLd, breadcrumbJsonLd, faqJsonLd, productFaqItems } from "@/lib/seo";
 import ProductPageClient from "./ProductPageClient";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -20,10 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = await getProductById(id);
   if (!product) return {};
-  return {
-    title: product.name,
-    description: product.description,
-  };
+  return productMetadata(product);
 }
 
 async function getApprovedReviews(productId: string): Promise<Review[]> {
@@ -60,27 +58,26 @@ export default async function ProductPage({ params }: Props) {
 
   const related = getRelatedProducts(allProducts, id, 3);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.description,
-    image: `https://pakauraa.com${product.image}`,
-    brand: { "@type": "Brand", name: "PakAuraa" },
-    offers: product.sizes.map((s) => ({
-      "@type": "Offer",
-      price: s.price,
-      priceCurrency: "PKR",
-      availability: "https://schema.org/InStock",
-      url: `https://pakauraa.com/products/${product.id}`,
-    })),
-  };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Collections", path: "/collections" },
+    { name: product.name, path: `/products/${product.id}` },
+  ]);
+  const faq = faqJsonLd(productFaqItems(product));
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product, reviews)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }}
       />
       <Header />
       <ProductPageClient product={product} related={related} reviews={reviews} />
