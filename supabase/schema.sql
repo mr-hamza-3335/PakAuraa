@@ -358,3 +358,21 @@ create index if not exists abandoned_carts_email_idx on abandoned_carts (email);
 create index if not exists abandoned_carts_reminder_idx on abandoned_carts (reminder_sent, recovered, last_seen_at);
 
 alter table abandoned_carts enable row level security;
+
+-- ── Announcement bar (site-wide promo strip above the header) ───────
+create table if not exists announcements (
+  id uuid primary key default gen_random_uuid(),
+  message text not null,
+  link text,
+  active boolean not null default false,
+  sort_order integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists announcements_active_order_idx on announcements (active, sort_order);
+
+alter table announcements enable row level security;
+create policy "Active announcements are publicly readable"
+  on announcements for select using (active = true);
+create policy "Admins manage announcements" on announcements for all
+  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));

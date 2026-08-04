@@ -27,6 +27,7 @@
 }
 
 :root {
+  --site-header-height: 80px;
   --font-display-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
   --font-heading-family: var(--font-playfair, 'Playfair Display'), serif;
   --font-elegant-family: var(--font-cormorant, 'Cormorant Garamond'), serif;

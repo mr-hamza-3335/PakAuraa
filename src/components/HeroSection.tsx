@@ -121,7 +121,10 @@ export default function HeroSection() {
       </div>
 
       {/* ── Main Layout ── */}
-      <div className="relative z-10 min-h-[100svh] lg:h-full max-w-[1560px] mx-auto px-6 lg:px-20 pt-28 pb-16 lg:pt-24 lg:pb-0 flex items-center">
+      <div
+        className="relative z-10 min-h-[100svh] lg:h-full max-w-[1560px] mx-auto px-6 lg:px-20 pb-16 lg:pb-0 flex items-center"
+        style={{ paddingTop: "calc(var(--site-header-height) + 24px)" }}
+      >
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
 
           {/* LEFT: Editorial text */}

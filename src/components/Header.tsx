@@ -9,6 +9,7 @@ import { useStore } from "@/lib/store";
 import { useSettings, type Currency, type Language } from "@/lib/settings";
 import { useTranslate } from "@/lib/i18n";
 import { useCatalog } from "@/lib/catalog.client";
+import AnnouncementBar from "@/components/AnnouncementBar";
 
 const currencies: Currency[] = ["PKR", "USD", "AED", "GBP"];
 const languages: { id: Language; label: string }[] = [
@@ -62,6 +63,7 @@ export default function Header() {
   const [prefsOpen, setPrefsOpen] = useState<"currency" | "language" | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerWrapRef = useRef<HTMLDivElement>(null);
 
   const { setCartOpen, cartCount, wishlist } = useStore();
   const { currency, language, setCurrency, setLanguage } = useSettings();
@@ -90,6 +92,21 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Keeps a CSS var in sync with the fixed header's real rendered height
+  // (nav row + optional announcement bar), so any page can offset content
+  // below it without hard-coding a height that drifts when the bar toggles.
+  useEffect(() => {
+    const el = headerWrapRef.current;
+    if (!el) return;
+    const setVar = () => {
+      document.documentElement.style.setProperty("--site-header-height", `${el.offsetHeight}px`);
+    };
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   useEffect(() => {
     if (searchOpen) searchRef.current?.focus();
   }, [searchOpen]);
@@ -105,8 +122,9 @@ export default function Header() {
 
   return (
     <>
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-[100]"
+      <div ref={headerWrapRef} className="fixed top-0 left-0 right-0 z-[100]">
+        <AnnouncementBar />
+        <motion.header
         animate={{
           backgroundColor: scrolled ? "rgba(8,8,8,0.92)" : "rgba(8,8,8,0.0)",
           borderBottomColor: scrolled ? "rgba(201,168,76,0.10)" : "rgba(201,168,76,0)",
@@ -444,7 +462,8 @@ export default function Header() {
             </motion.button>
           </div>
         </div>
-      </motion.header>
+        </motion.header>
+      </div>
 
       {/* ── Mobile Menu ── */}
       <AnimatePresence>
