@@ -139,10 +139,22 @@ function CollectionsPageInner() {
   const [sort, setSort] = useState(searchParams.get("sort") === "new" ? "Newest" : "Featured");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  const families = useMemo(
+    () => Array.from(new Set(products.flatMap((p) => p.fragranceFamily))).sort(),
+    [products]
+  );
+
   const setCategory = (cat: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (cat === "all") params.delete("cat");
     else params.set("cat", cat);
+    router.push(params.toString() ? `/collections?${params.toString()}` : "/collections", { scroll: false });
+  };
+
+  const setFamily = (family: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (!family) params.delete("family");
+    else params.set("family", family.toLowerCase());
     router.push(params.toString() ? `/collections?${params.toString()}` : "/collections", { scroll: false });
   };
 
@@ -270,6 +282,31 @@ function CollectionsPageInner() {
                   </button>
                 ))}
               </div>
+              <div className="w-px h-5 bg-gold/20" />
+              {/* Fragrance Family */}
+              <div className="flex items-center gap-1 flex-wrap">
+                <button
+                  onClick={() => setFamily(null)}
+                  className={`text-[9px] tracking-[0.1em] uppercase px-3 py-2 border transition-all duration-300 ${
+                    !activeFamily ? "border-gold/60 text-gold bg-gold/8" : "border-gold/14 text-warm-gray hover:border-gold/30"
+                  }`}
+                  style={{ fontFamily: "var(--font-body-family)" }}
+                >
+                  All Families
+                </button>
+                {families.map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFamily(f)}
+                    className={`text-[9px] tracking-[0.1em] uppercase px-3 py-2 border transition-all duration-300 ${
+                      activeFamily === f.toLowerCase() ? "border-gold/60 text-gold bg-gold/8" : "border-gold/14 text-warm-gray hover:border-gold/30"
+                    }`}
+                    style={{ fontFamily: "var(--font-body-family)" }}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Sort + count */}
@@ -326,6 +363,23 @@ function CollectionsPageInner() {
                       ))}
                     </div>
                   </div>
+                  <div>
+                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Fragrance Family</p>
+                    <div className="flex flex-wrap gap-2">
+                      <button onClick={() => setFamily(null)}
+                        className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border transition-all ${!activeFamily ? "border-gold/60 text-gold" : "border-gold/14 text-warm-gray"}`}
+                        style={{ fontFamily: "var(--font-body-family)" }}>
+                        All
+                      </button>
+                      {families.map((f) => (
+                        <button key={f} onClick={() => setFamily(f)}
+                          className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border transition-all ${activeFamily === f.toLowerCase() ? "border-gold/60 text-gold" : "border-gold/14 text-warm-gray"}`}
+                          style={{ fontFamily: "var(--font-body-family)" }}>
+                          {f}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -352,8 +406,16 @@ function CollectionsPageInner() {
               animate={{ opacity: 1 }}
               className="text-center py-24"
             >
-              <p className="text-[14px] text-warm-gray mb-4" style={{ fontFamily: "var(--font-body-family)" }}>No fragrances match your filters.</p>
-              <button onClick={() => { setConcentration("All"); setPriceIdx(0); setCategory("all"); }} className="text-[11px] text-gold tracking-[0.2em] uppercase border-b border-gold/30 pb-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
+              <div className="w-14 h-14 mx-auto mb-6 rounded-full border border-gold/20 flex items-center justify-center">
+                <SlidersHorizontal size={18} strokeWidth={1.2} className="text-gold/50" />
+              </div>
+              <p className="text-[15px] text-cream mb-2" style={{ fontFamily: "var(--font-elegant-family)" }}>No fragrances match your filters</p>
+              <p className="text-[12px] text-warm-gray mb-6" style={{ fontFamily: "var(--font-body-family)" }}>Try widening your price range or clearing a filter.</p>
+              <button
+                onClick={() => { setConcentration("All"); setPriceIdx(0); setCategory("all"); setFamily(null); }}
+                className="text-[11px] text-gold tracking-[0.2em] uppercase border-b border-gold/30 pb-0.5 hover:border-gold transition-colors"
+                style={{ fontFamily: "var(--font-body-family)" }}
+              >
                 Clear Filters
               </button>
             </motion.div>
