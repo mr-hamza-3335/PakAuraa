@@ -163,7 +163,7 @@ export default function AdminDashboard() {
           <div key={label} className="border border-gold/12 bg-charcoal/30 p-6">
             <Icon size={18} className="text-gold mb-4" strokeWidth={1.5} />
             <p className="text-[24px] text-cream mb-1" style={{ fontFamily: "var(--font-display-family)" }}>{value}</p>
-            <p className="text-[10px] text-muted tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
+            <p className="text-[10px] text-warm-gray/85 tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
           </div>
         ))}
       </div>
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
           <div key={label} className="border border-gold/12 bg-charcoal/30 p-6">
             <Icon size={18} className="text-gold mb-4" strokeWidth={1.5} />
             <p className="text-[24px] text-cream mb-1" style={{ fontFamily: "var(--font-display-family)" }}>{value}</p>
-            <p className="text-[10px] text-muted tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
+            <p className="text-[10px] text-warm-gray/85 tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
           </div>
         ))}
       </div>
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
           {traffic ? (
             <TrendChart data={traffic.trend} emptyLabel="No visits recorded yet." formatValue={(v) => `${v} visits`} />
           ) : (
-            <p className="text-[11px] text-muted">Loading…</p>
+            <p className="text-[11px] text-warm-gray/85">Loading…</p>
           )}
         </div>
 
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
               ))}
             </ul>
           ) : (
-            <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No visits recorded yet.</p>
+            <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No visits recorded yet.</p>
           )}
         </div>
       </div>
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
           {sales ? (
             <TrendChart data={sales.trend} emptyLabel="No sales recorded yet." formatValue={(v) => `PKR ${v.toLocaleString()}`} />
           ) : (
-            <p className="text-[11px] text-muted">Loading…</p>
+            <p className="text-[11px] text-warm-gray/85">Loading…</p>
           )}
         </div>
 
@@ -225,13 +225,13 @@ export default function AdminDashboard() {
             <ul className="space-y-3">
               {sales.topProducts.map((p) => (
                 <li key={p.name} className="flex items-center justify-between gap-3 text-[11px]" style={{ fontFamily: "var(--font-body-family)" }}>
-                  <span className="text-warm-gray truncate">{p.name} <span className="text-muted">×{p.qty}</span></span>
+                  <span className="text-warm-gray truncate">{p.name} <span className="text-warm-gray/85">×{p.qty}</span></span>
                   <span className="text-gold flex-shrink-0">PKR {p.revenue.toLocaleString()}</span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No sales recorded yet.</p>
+            <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No sales recorded yet.</p>
           )}
         </div>
       </div>
@@ -267,7 +267,7 @@ function TrendChart({ data, emptyLabel, formatValue }: { data: TrendPoint[]; emp
   const yTicks = [0, 0.5, 1].map((f) => axisMax * f);
 
   if (data.every((d) => d.value === 0)) {
-    return <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{emptyLabel}</p>;
+    return <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{emptyLabel}</p>;
   }
 
   return (

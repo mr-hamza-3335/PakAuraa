@@ -112,7 +112,7 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
         </div>
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-gold/10">
           <span className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice(size.price, currency)}</span>
-          <span className="text-[9px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
+          <span className="text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
         </div>
       </div>
     </motion.div>
@@ -311,7 +311,7 @@ function CollectionsPageInner() {
 
             {/* Sort + count */}
             <div className="flex items-center gap-4 ml-auto">
-              <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 {filtered.length} result{filtered.length !== 1 ? "s" : ""}
               </span>
               <select
@@ -340,7 +340,7 @@ function CollectionsPageInner() {
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Concentration</p>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Concentration</p>
                     <div className="flex flex-wrap gap-2">
                       {concentrations.map((c) => (
                         <button key={c} onClick={() => setConcentration(c)}
@@ -352,7 +352,7 @@ function CollectionsPageInner() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Price</p>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Price</p>
                     <div className="flex flex-wrap gap-2">
                       {priceRanges.map((r, i) => (
                         <button key={r.label} onClick={() => setPriceIdx(i)}
@@ -364,7 +364,7 @@ function CollectionsPageInner() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Fragrance Family</p>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Fragrance Family</p>
                     <div className="flex flex-wrap gap-2">
                       <button onClick={() => setFamily(null)}
                         className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border transition-all ${!activeFamily ? "border-gold/60 text-gold" : "border-gold/14 text-warm-gray"}`}

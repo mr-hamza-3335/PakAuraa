@@ -48,21 +48,21 @@ export default function AdminAffiliatesPage() {
       </p>
 
       {!affiliates ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
       ) : affiliates.length === 0 ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No affiliates yet.</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No affiliates yet.</p>
       ) : (
         <div className="border border-gold/12 divide-y divide-gold/10">
           {affiliates.map((a) => (
             <div key={a.userId} className="flex items-center gap-4 p-4 flex-wrap">
               <div className="flex-1 min-w-[160px]">
                 <p className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{a.email ?? a.userId}</p>
-                <p className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   Code {a.code} · {Math.round(a.commissionRate * 100)}% commission · {a.referrals} referred orders
                 </p>
               </div>
               <span className="text-[12px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>PKR {a.pending.toLocaleString()} pending</span>
-              <span className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>PKR {a.paid.toLocaleString()} paid</span>
+              <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>PKR {a.paid.toLocaleString()} paid</span>
               <button
                 onClick={() => markPaid(a.userId)}
                 disabled={a.pending === 0 || payingOut === a.userId}

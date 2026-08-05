@@ -366,7 +366,7 @@ export default function CheckoutClient() {
                           <Icon size={16} strokeWidth={1.5} className={disabled ? "text-warm-gray/85" : method === id ? "text-gold" : "text-warm-gray"} />
                           <div>
                             <p className="text-[12px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
-                            <p className="text-[10px] text-muted mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>{description}</p>
+                            <p className="text-[10px] text-warm-gray/85 mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>{description}</p>
                           </div>
                         </button>
                       ))}
@@ -389,8 +389,8 @@ export default function CheckoutClient() {
                       />
                       <div style={{ fontFamily: "var(--font-body-family)" }}>
                         <p className="text-[12px] text-cream">Scan the QR code with JazzCash to pay</p>
-                        <p className="text-[11px] text-muted mt-1">Or send to Till ID: <span className="text-gold">984002990</span></p>
-                        <p className="text-[10px] text-muted mt-2">
+                        <p className="text-[11px] text-warm-gray/85 mt-1">Or send to Till ID: <span className="text-gold">984002990</span></p>
+                        <p className="text-[10px] text-warm-gray/85 mt-2">
                           After paying, WhatsApp your payment screenshot to{" "}
                           <a href="https://wa.me/923252106239" target="_blank" rel="noopener noreferrer" className="text-gold underline">0325-2106239</a>. Order ships only after we verify it.
                         </p>
@@ -426,7 +426,7 @@ export default function CheckoutClient() {
                           type="button"
                           onClick={() => setShowJazzCashModal(false)}
                           aria-label="Close"
-                          className="absolute top-4 right-4 text-muted hover:text-cream text-2xl leading-none"
+                          className="absolute top-4 right-4 text-warm-gray/85 hover:text-cream text-2xl leading-none"
                         >
                           ✕
                         </button>
@@ -443,13 +443,13 @@ export default function CheckoutClient() {
                           <p className="text-[16px] text-cream mt-4" style={{ fontFamily: "var(--font-body-family)" }}>
                             Scan with the JazzCash app to pay
                           </p>
-                          <p className="text-[15px] text-muted mt-1" style={{ fontFamily: "var(--font-body-family)" }}>
+                          <p className="text-[15px] text-warm-gray/85 mt-1" style={{ fontFamily: "var(--font-body-family)" }}>
                             Or send to Till ID: <span className="text-gold font-semibold">984002990</span>
                           </p>
                         </div>
 
                         <div className="flex-1 flex flex-col justify-center text-left border-t sm:border-t-0 sm:border-l border-gold/15 pt-6 sm:pt-0 sm:pl-8">
-                          <p className="text-[13px] text-muted tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                          <p className="text-[13px] text-warm-gray/85 tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
                             Send payment screenshot on WhatsApp
                           </p>
                           <a
@@ -504,7 +504,7 @@ export default function CheckoutClient() {
                           type="button"
                           onClick={() => setShowCodModal(false)}
                           aria-label="Close"
-                          className="absolute top-4 right-4 text-muted hover:text-cream text-2xl leading-none"
+                          className="absolute top-4 right-4 text-warm-gray/85 hover:text-cream text-2xl leading-none"
                         >
                           ✕
                         </button>
@@ -621,7 +621,7 @@ export default function CheckoutClient() {
                         </>
                       ) : (
                         <>
-                          {item.product.name} × {item.quantity} <span className="text-muted">({item.size}ml)</span>
+                          {item.product.name} × {item.quantity} <span className="text-warm-gray/85">({item.size}ml)</span>
                           {(item.giftWrap || item.engrave) && (
                             <span className="block text-[9px] text-gold/70 mt-0.5">
                               {[item.giftWrap && t("giftWrapped"), item.engrave && t("engraved")].filter(Boolean).join(" · ")}
@@ -639,7 +639,7 @@ export default function CheckoutClient() {
                 {appliedCoupon ? (
                   <div className="flex items-center justify-between text-[11px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
                     <span className="flex items-center gap-1.5"><Check size={12} strokeWidth={2} /> {appliedCoupon.code} applied — {appliedCoupon.percentOff}% off</span>
-                    <button type="button" onClick={() => { setAppliedCoupon(null); setCouponCode(""); }} className="text-muted hover:text-warm-gray underline">{t("remove")}</button>
+                    <button type="button" onClick={() => { setAppliedCoupon(null); setCouponCode(""); }} className="text-warm-gray/85 hover:text-warm-gray underline">{t("remove")}</button>
                   </div>
                 ) : (
                   <div className="flex gap-2">
@@ -681,7 +681,7 @@ export default function CheckoutClient() {
                     <span className="flex items-center gap-1.5">
                       <Check size={12} strokeWidth={2} /> {appliedGiftCard.code} applied — PKR {appliedGiftCard.balance.toLocaleString()} balance
                     </span>
-                    <button type="button" onClick={() => { setAppliedGiftCard(null); setGiftCardCodeInput(""); }} className="text-muted hover:text-warm-gray underline">{t("remove")}</button>
+                    <button type="button" onClick={() => { setAppliedGiftCard(null); setGiftCardCodeInput(""); }} className="text-warm-gray/85 hover:text-warm-gray underline">{t("remove")}</button>
                   </div>
                 ) : (
                   <div className="flex gap-2">
@@ -719,7 +719,7 @@ export default function CheckoutClient() {
                       {t("loyaltyPointsAvailable").replace("{n}", String(loyaltyBalance))}
                     </span>
                     {pointsToRedeem > 0 && (
-                      <button type="button" onClick={() => setPointsToRedeem(0)} className="text-[10px] text-muted hover:text-warm-gray underline" style={{ fontFamily: "var(--font-body-family)" }}>
+                      <button type="button" onClick={() => setPointsToRedeem(0)} className="text-[10px] text-warm-gray/85 hover:text-warm-gray underline" style={{ fontFamily: "var(--font-body-family)" }}>
                         {t("remove")}
                       </button>
                     )}
@@ -739,7 +739,7 @@ export default function CheckoutClient() {
                       {t("usePointsOff").replace(/\{n\}/g, String(maxRedeemable))}
                     </button>
                   ) : (
-                    <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{t("orderFullyDiscounted")}</p>
+                    <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{t("orderFullyDiscounted")}</p>
                   )}
                 </div>
               )}
@@ -776,7 +776,7 @@ export default function CheckoutClient() {
                   <span>PKR {grandTotal.toLocaleString()}</span>
                 </div>
                 {currency !== "PKR" && (
-                  <p className="text-[10px] text-muted pt-1" style={{ fontFamily: "var(--font-body-family)" }}>
+                  <p className="text-[10px] text-warm-gray/85 pt-1" style={{ fontFamily: "var(--font-body-family)" }}>
                     Charged as PKR {grandTotal.toLocaleString()} (~{formatPrice(grandTotal, currency)}). Card payments are billed in PKR regardless of display currency.
                   </p>
                 )}
@@ -797,7 +797,7 @@ export default function CheckoutClient() {
               >
                 {processing ? t("processing") : giftCardCoversAll ? t("placeOrder") : `${t("placeOrder")} — PKR ${grandTotal.toLocaleString()}`}
               </motion.button>
-              <p className="text-[10px] text-muted text-center mt-3" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[10px] text-warm-gray/85 text-center mt-3" style={{ fontFamily: "var(--font-body-family)" }}>
                 Every order arrives in signature PakAuraa luxury packaging.
               </p>
             </div>

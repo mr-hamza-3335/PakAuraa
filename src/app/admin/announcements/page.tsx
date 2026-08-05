@@ -153,12 +153,12 @@ export default function AdminAnnouncementsPage() {
 
       <div className="border border-gold/12 divide-y divide-gold/10">
         {loaded && items.length === 0 && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
             No announcements yet.
           </p>
         )}
         {!loaded && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
             Loading…
           </p>
         )}
@@ -172,23 +172,23 @@ export default function AdminAnnouncementsPage() {
               {item.message}
             </span>
             {item.link && (
-              <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 {item.link}
               </span>
             )}
-            <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+            <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
               Order {item.sort_order}
             </span>
             <button
               onClick={() => toggleActive(item)}
               className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border ${
-                item.active ? "border-gold/40 text-gold" : "border-warm-gray/20 text-muted"
+                item.active ? "border-gold/40 text-gold" : "border-warm-gray/20 text-warm-gray/85"
               }`}
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {item.active ? "Active" : "Inactive"}
             </button>
-            <button onClick={() => remove(item.id)} className="text-muted hover:text-red-400 transition-colors">
+            <button onClick={() => remove(item.id)} className="text-warm-gray/85 hover:text-red-400 transition-colors">
               <Trash2 size={14} strokeWidth={1.5} />
             </button>
           </div>

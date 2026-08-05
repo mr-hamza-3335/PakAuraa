@@ -32,7 +32,7 @@ export default function SizeGuidePage() {
                     <p className="text-[14px] text-gold mb-1" style={{ fontFamily: "var(--font-body-family)" }}>{s.ml}</p>
                     <p className="text-[13px] text-warm-gray leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>{s.desc}</p>
                   </div>
-                  <span className="text-[11px] text-muted whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{s.sprays}</span>
+                  <span className="text-[11px] text-warm-gray/85 whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{s.sprays}</span>
                 </div>
               ))}
             </div>
@@ -48,7 +48,7 @@ export default function SizeGuidePage() {
                 </div>
               ))}
             </div>
-            <p className="text-[12px] text-muted mt-6 leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>
+            <p className="text-[12px] text-warm-gray/85 mt-6 leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>
               Every product page shows both meters, plus a full top/heart/base note breakdown — check the &quot;Notes&quot;
               and &quot;Overview&quot; tabs on any fragrance.
             </p>

@@ -117,7 +117,7 @@ export default function CheckGiftCardPage() {
                 </p>
                 <span
                   className={`flex items-center gap-1.5 text-[9px] tracking-wider uppercase px-2.5 py-1 border ${
-                    card.active && card.balance > 0 ? "border-gold/40 text-gold" : "border-warm-gray/20 text-muted"
+                    card.active && card.balance > 0 ? "border-gold/40 text-gold" : "border-warm-gray/20 text-warm-gray/85"
                   }`}
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
@@ -179,7 +179,7 @@ export default function CheckGiftCardPage() {
             </div>
           )}
 
-          <p className="text-[11px] text-muted text-center" style={{ fontFamily: "var(--font-body-family)" }}>
+          <p className="text-[11px] text-warm-gray/85 text-center" style={{ fontFamily: "var(--font-body-family)" }}>
             Don&apos;t have a gift card yet?{" "}
             <Link href="/gift-cards" className="text-gold hover:text-gold-light underline">
               Buy one here

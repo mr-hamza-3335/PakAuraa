@@ -118,7 +118,7 @@ export default function OrderConfirmationClient({
                 <div key={gc.code} className="flex items-center justify-between gap-3 border border-gold/10 px-3 py-2.5">
                   <div>
                     <span className="text-[12px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{gc.code}</span>
-                    <span className="text-[11px] text-muted ml-2" style={{ fontFamily: "var(--font-body-family)" }}>PKR {gc.initialAmount.toLocaleString()}</span>
+                    <span className="text-[11px] text-warm-gray/85 ml-2" style={{ fontFamily: "var(--font-body-family)" }}>PKR {gc.initialAmount.toLocaleString()}</span>
                   </div>
                   <button
                     onClick={() =>

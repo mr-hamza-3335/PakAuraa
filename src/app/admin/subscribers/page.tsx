@@ -56,12 +56,12 @@ export default function AdminSubscribersPage() {
 
       <div className="border border-gold/12 divide-y divide-gold/10">
         {!loading && subscribers.length === 0 && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No subscribers yet.</p>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No subscribers yet.</p>
         )}
         {subscribers.map((s) => (
           <div key={s.email} className="p-4 flex items-center justify-between">
             <span className="text-[12px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{s.email}</span>
-            <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+            <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
               {new Date(s.subscribed_at).toLocaleString()}
             </span>
           </div>

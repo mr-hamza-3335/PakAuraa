@@ -277,7 +277,7 @@ export default function Header() {
                     />
                     <button
                       onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
-                      className="text-muted hover:text-gold transition-colors ml-2 flex-shrink-0"
+                      className="text-warm-gray/85 hover:text-gold transition-colors ml-2 flex-shrink-0"
                     >
                       <X size={13} strokeWidth={1.5} />
                     </button>

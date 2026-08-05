@@ -42,18 +42,44 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="pt-32 pb-24 bg-obsidian min-h-screen">
-        <div className="max-w-[1100px] mx-auto px-6 lg:px-12">
-          <p className="text-[9px] text-gold tracking-[0.35em] uppercase mb-3 text-center" style={{ fontFamily: "var(--font-body-family)" }}>Get in Touch</p>
-          <h1 className="font-display text-[clamp(32px,5vw,52px)] text-cream text-center mb-16" style={{ fontFamily: "var(--font-display-family)" }}>
-            Contact Us
-          </h1>
+      <main className="bg-obsidian min-h-screen">
+        {/* Header band */}
+        <section className="relative pt-40 pb-20 px-6 overflow-hidden border-b border-gold/8">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a0f] to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,_rgba(201,168,76,0.07)_0%,_transparent_60%)]" />
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative z-10"
+          >
+            <p className="text-[9px] text-gold tracking-[0.35em] uppercase mb-3 text-center" style={{ fontFamily: "var(--font-body-family)" }}>Get in Touch</p>
+            <h1 className="font-display text-[clamp(32px,5vw,52px)] text-cream text-center" style={{ fontFamily: "var(--font-display-family)" }}>
+              Contact Us
+            </h1>
+            <div className="divider-gold mt-6" />
+          </motion.div>
+        </section>
 
+        <div className="max-w-[1100px] mx-auto px-6 lg:px-12 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16">
             {/* Details */}
-            <div className="space-y-6">
-              {details.map(({ Icon, label, value, href }) => (
-                <div key={label} className="flex items-start gap-4 border border-gold/12 bg-charcoal/30 p-5">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7 }}
+              className="space-y-6"
+            >
+              {details.map(({ Icon, label, value, href }, i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="flex items-start gap-4 border border-gold/12 bg-charcoal/30 p-5 hover:border-gold/25 transition-colors duration-300"
+                >
                   <Icon size={16} className="text-gold flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <div>
                     <p className="text-[9px] text-warm-gray tracking-[0.2em] uppercase mb-1" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
@@ -63,15 +89,20 @@ export default function ContactPage() {
                       <p className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{value}</p>
                     )}
                   </div>
-                </div>
+                </motion.div>
               ))}
-              <p className="text-[12px] text-muted leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[12px] text-warm-gray/85 leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>
                 We typically respond within 24–48 hours. For order questions, include your order ID.
               </p>
-            </div>
+            </motion.div>
 
             {/* Form */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
               {sent ? (
                 <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-gold/20 bg-gold/5 p-8 text-center">
                   <CheckCircle2 size={30} className="text-gold mx-auto mb-4" strokeWidth={1.2} />
@@ -123,7 +154,7 @@ export default function ContactPage() {
                   </button>
                 </form>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       </main>

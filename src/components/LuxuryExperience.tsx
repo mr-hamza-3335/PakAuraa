@@ -96,7 +96,7 @@ export default function LuxuryExperience() {
                 {f.subtitle}
               </p>
               <p
-                className="text-[13px] text-muted leading-relaxed"
+                className="text-[13px] text-warm-gray/85 leading-relaxed"
                 style={{ fontFamily: "var(--font-body-family)" }}
               >
                 {f.desc}

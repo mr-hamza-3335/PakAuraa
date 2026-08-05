@@ -172,7 +172,7 @@ export default function CartDrawer() {
                             </span>
                             <button
                               onClick={() => removeFromCart(item.product.id, item.size)}
-                              className="text-muted hover:text-red-400 transition-colors"
+                              className="text-warm-gray/85 hover:text-red-400 transition-colors"
                             >
                               <Trash2 size={13} strokeWidth={1.5} />
                             </button>
@@ -207,7 +207,7 @@ export default function CartDrawer() {
                     </span>
                   </div>
                 )}
-                <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   {t("shippingTaxesAtCheckout")}
                 </p>
 

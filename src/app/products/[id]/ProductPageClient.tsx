@@ -79,7 +79,7 @@ function ScentPyramid({ notes }: { notes: Product["notes"] }) {
               )}
               <p className="text-gold text-sm mb-0.5 relative z-10">{tier.emoji}</p>
               <p className="text-[10px] text-cream tracking-[0.18em] uppercase relative z-10" style={{ fontFamily: "var(--font-body-family)" }}>{tier.label}</p>
-              <p className="text-[9px] text-muted tracking-wider mt-0.5 relative z-10" style={{ fontFamily: "var(--font-body-family)" }}>{tier.sublabel}</p>
+              <p className="text-[9px] text-warm-gray/85 tracking-wider mt-0.5 relative z-10" style={{ fontFamily: "var(--font-body-family)" }}>{tier.sublabel}</p>
             </motion.div>
             <AnimatePresence>
               {isActive && (
@@ -102,7 +102,7 @@ function ScentPyramid({ notes }: { notes: Product["notes"] }) {
           </div>
         );
       })}
-      <p className="text-center text-[9px] text-muted mt-1" style={{ fontFamily: "var(--font-body-family)" }}>
+      <p className="text-center text-[9px] text-warm-gray/85 mt-1" style={{ fontFamily: "var(--font-body-family)" }}>
         Tap each tier to reveal the notes
       </p>
     </div>
@@ -312,7 +312,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
     <main className="pt-20 bg-obsidian min-h-screen">
       {/* ── BREADCRUMB ── */}
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-6 border-b border-gold/8">
-        <div className="flex items-center gap-2 text-[10px] text-muted tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
+        <div className="flex items-center gap-2 text-[10px] text-warm-gray/85 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
           <Link href="/" className="hover:text-gold transition-colors">Home</Link>
           <span>/</span>
           <Link href="/collections" className="hover:text-gold transition-colors">Collections</Link>
@@ -482,7 +482,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                     whileTap={{ scale: 0.97 }}
                   >
                     <p className="text-[13px]" style={{ fontFamily: "var(--font-body-family)" }}>{s.ml}ml</p>
-                    <p className="text-[10px] text-muted mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
+                    <p className="text-[10px] text-warm-gray/85 mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
                       {formatPrice(s.price, currency)}
                     </p>
                   </motion.button>
@@ -600,7 +600,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               ].map(({ Icon, text }) => (
                 <div key={text} className="flex items-center gap-3">
                   <Icon size={13} strokeWidth={1.5} className="text-gold/60 flex-shrink-0" />
-                  <span className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{text}</span>
+                  <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{text}</span>
                 </div>
               ))}
             </div>
@@ -725,7 +725,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                     { label: "Bottle Size", value: `${size.ml}ml` },
                   ].map(({ label, value }) => (
                     <div key={label} className="flex justify-between">
-                      <span className="text-[11px] text-muted tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>{label}</span>
+                      <span className="text-[11px] text-warm-gray/85 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>{label}</span>
                       <span className="text-[11px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{value}</span>
                     </div>
                   ))}
@@ -779,7 +779,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <p className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{r.author}</p>
-                          <p className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{r.location}</p>
+                          <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{r.location}</p>
                         </div>
                         <div className="flex gap-0.5">
                           {Array.from({ length: 5 }).map((_, i) => (

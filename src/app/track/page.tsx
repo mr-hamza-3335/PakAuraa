@@ -146,7 +146,7 @@ function TrackForm() {
               {statusExplanations[order.status]}
             </p>
             {(order.status === "pending" || order.status === "paid" || order.status === "cod" || order.status === "shipped") && (
-              <p className="text-[11px] text-muted mb-4" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[11px] text-warm-gray/85 mb-4" style={{ fontFamily: "var(--font-body-family)" }}>
                 Expected delivery: <span className="text-warm-gray">{estimatedDelivery(order.createdAt)}</span>
               </p>
             )}
@@ -181,7 +181,7 @@ function TrackForm() {
                   <p className="text-[12px] text-warm-gray" style={{ fontFamily: "var(--font-body-family)" }}>{order.cancelNote}</p>
                 )}
                 <div className="pt-2 mt-2 border-t border-[#B95C5C]/15">
-                  <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                  <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                     Questions about this? Contact us —{" "}
                     <a href={whatsAppLink(`Hi PakAuraa, my order ${order.id} was cancelled — I'd like to know more.`)} target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light inline-flex items-center gap-1">
                       <MessageCircle size={11} strokeWidth={1.5} /> WhatsApp us
@@ -219,7 +219,7 @@ function TrackForm() {
                   </p>
                 )}
                 <div className="pt-2 mt-2 border-t border-gold/10">
-                  <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                  <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                     Any issue with your delivery? Contact us directly —{" "}
                     <a href={whatsAppLink(`Hi PakAuraa, I need help with my order ${order.id}.`)} target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light inline-flex items-center gap-1">
                       <MessageCircle size={11} strokeWidth={1.5} /> WhatsApp us
@@ -237,7 +237,7 @@ function TrackForm() {
               ))}
             </div>
             <div className="flex items-center justify-between pt-3 border-t border-gold/10">
-              <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 Placed {new Date(order.createdAt).toLocaleDateString()}
               </span>
               <span className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>PKR {order.total.toLocaleString()}</span>

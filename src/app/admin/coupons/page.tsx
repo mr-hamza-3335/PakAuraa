@@ -106,26 +106,26 @@ export default function AdminCouponsPage() {
 
       <div className="border border-gold/12 divide-y divide-gold/10">
         {coupons.length === 0 && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No coupons yet.</p>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No coupons yet.</p>
         )}
         {coupons.map((c) => (
           <div key={c.code} className="flex items-center gap-4 p-4 flex-wrap">
             <span className="text-[13px] text-gold flex-1 min-w-[100px]" style={{ fontFamily: "var(--font-body-family)" }}>{c.code}</span>
             <span className="text-[12px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{c.percent_off}% off</span>
             {c.min_order_value > 0 && (
-              <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Min PKR {c.min_order_value.toLocaleString()}</span>
+              <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Min PKR {c.min_order_value.toLocaleString()}</span>
             )}
-            <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+            <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
               {c.max_uses ? `${c.used_count} / ${c.max_uses} used` : `${c.used_count} used`}
             </span>
             {c.expires_at && (
-              <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 Expires {new Date(c.expires_at).toLocaleDateString()}
               </span>
             )}
             <button
               onClick={() => toggleActive(c)}
-              className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border ${c.active ? "border-gold/40 text-gold" : "border-warm-gray/20 text-muted"}`}
+              className={`text-[9px] tracking-wider uppercase px-3 py-1.5 border ${c.active ? "border-gold/40 text-gold" : "border-warm-gray/20 text-warm-gray/85"}`}
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {c.active ? "Active" : "Inactive"}
@@ -137,7 +137,7 @@ export default function AdminCouponsPage() {
             >
               <Share2 size={12} strokeWidth={1.5} /> Share
             </button>
-            <button onClick={() => remove(c.code)} className="text-muted hover:text-red-400 transition-colors">
+            <button onClick={() => remove(c.code)} className="text-warm-gray/85 hover:text-red-400 transition-colors">
               <Trash2 size={14} strokeWidth={1.5} />
             </button>
           </div>

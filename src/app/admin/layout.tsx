@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             );
           })}
         </nav>
-        <Link href="/" className="mt-auto px-6 pt-8 text-[10px] text-muted hover:text-gold transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>
+        <Link href="/" className="mt-auto px-6 pt-8 text-[10px] text-warm-gray/85 hover:text-gold transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>
           ← Back to Storefront
         </Link>
       </aside>

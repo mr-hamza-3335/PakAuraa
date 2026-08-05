@@ -96,7 +96,7 @@ export default function Newsletter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address..."
                 required
-                className="flex-1 bg-obsidian/60 border border-gold/20 text-cream text-[14px] px-5 py-4 placeholder:text-muted focus:outline-none focus:border-gold/60 transition-colors duration-300"
+                className="flex-1 bg-obsidian/60 border border-gold/20 text-cream text-[14px] px-5 py-4 placeholder:text-warm-gray/85 focus:outline-none focus:border-gold/60 transition-colors duration-300"
                 style={{ fontFamily: "var(--font-body-family)" }}
               />
               <motion.button
@@ -152,7 +152,7 @@ export default function Newsletter() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-[11px] text-muted mt-5"
+          className="text-[11px] text-warm-gray/85 mt-5"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           No spam. Unsubscribe at any time. We respect your privacy.

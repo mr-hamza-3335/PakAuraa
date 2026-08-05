@@ -42,16 +42,16 @@ export default function AdminGiftCardsPage() {
       </p>
 
       {!cards ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
       ) : cards.length === 0 ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No gift cards issued yet.</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No gift cards issued yet.</p>
       ) : (
         <div className="border border-gold/12 overflow-x-auto">
           <table className="w-full min-w-[720px] border-collapse">
             <thead>
               <tr className="border-b border-gold/12">
                 {["Code", "Recipient", "From", "Balance", "Initial", "Issued", ""].map((h) => (
-                  <th key={h} className="text-left px-4 py-3 text-[10px] text-muted tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{h}</th>
+                  <th key={h} className="text-left px-4 py-3 text-[10px] text-warm-gray/85 tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -61,14 +61,14 @@ export default function AdminGiftCardsPage() {
                   <td className="px-4 py-3 text-[12px] text-gold whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{c.code}</td>
                   <td className="px-4 py-3 text-[12px] text-cream whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>
                     {c.recipient_name ?? c.recipient_email}
-                    <span className="block text-[10px] text-muted">{c.recipient_email}</span>
+                    <span className="block text-[10px] text-warm-gray/85">{c.recipient_email}</span>
                   </td>
                   <td className="px-4 py-3 text-[12px] text-warm-gray whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{c.sender_name ?? "—"}</td>
                   <td className="px-4 py-3 text-[12px] whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>
-                    <span className={c.balance > 0 ? "text-gold" : "text-muted"}>PKR {c.balance.toLocaleString()}</span>
+                    <span className={c.balance > 0 ? "text-gold" : "text-warm-gray/85"}>PKR {c.balance.toLocaleString()}</span>
                   </td>
-                  <td className="px-4 py-3 text-[12px] text-muted whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>PKR {c.initial_amount.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-[11px] text-muted whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{new Date(c.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-[12px] text-warm-gray/85 whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>PKR {c.initial_amount.toLocaleString()}</td>
+                  <td className="px-4 py-3 text-[11px] text-warm-gray/85 whitespace-nowrap" style={{ fontFamily: "var(--font-body-family)" }}>{new Date(c.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     <button
                       onClick={() =>

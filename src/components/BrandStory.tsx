@@ -164,7 +164,7 @@ export default function BrandStory() {
                       {v.label}
                     </p>
                     <p
-                      className="text-[13px] text-muted"
+                      className="text-[13px] text-warm-gray/85"
                       style={{ fontFamily: "var(--font-body-family)" }}
                     >
                       {v.desc}

@@ -503,7 +503,7 @@ export default function AdminProductsPage() {
             </div>
             <div className="flex-1 min-w-[160px]">
               <p className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</p>
-              <p className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 {p.collection} · PKR {p.price.toLocaleString()} · Stock: {p.stock ?? "∞"}
                 {p.stock !== undefined && p.stock > 0 && p.stock <= LOW_STOCK_THRESHOLD && (
                   <span className="ml-2 text-[9px] text-red-300 tracking-wider uppercase">Low Stock</span>

@@ -11,7 +11,7 @@ export default function TermsPage() {
           <h1 className="font-display text-[clamp(28px,4vw,44px)] text-cream mb-4" style={{ fontFamily: "var(--font-display-family)" }}>
             Terms &amp; Conditions
           </h1>
-          <p className="text-[12px] text-muted mb-12" style={{ fontFamily: "var(--font-body-family)" }}>Last updated: 2026</p>
+          <p className="text-[12px] text-warm-gray/85 mb-12" style={{ fontFamily: "var(--font-body-family)" }}>Last updated: 2026</p>
 
           <div className="space-y-10 text-[14px] text-warm-gray leading-[1.9]" style={{ fontFamily: "var(--font-body-family)" }}>
             <section>

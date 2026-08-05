@@ -83,25 +83,25 @@ export default function AffiliatePage() {
           <div className="border border-gold/12 bg-charcoal/20 p-6 text-center">
             <Percent size={20} className="text-gold mx-auto mb-3" strokeWidth={1.5} />
             <p className="text-[13px] text-cream mb-1" style={{ fontFamily: "var(--font-body-family)" }}>10% Commission</p>
-            <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>On every order your link brings in</p>
+            <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>On every order your link brings in</p>
           </div>
           <div className="border border-gold/12 bg-charcoal/20 p-6 text-center">
             <Share2 size={20} className="text-gold mx-auto mb-3" strokeWidth={1.5} />
             <p className="text-[13px] text-cream mb-1" style={{ fontFamily: "var(--font-body-family)" }}>Your Own Link</p>
-            <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Share anywhere — social, WhatsApp, blog</p>
+            <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Share anywhere — social, WhatsApp, blog</p>
           </div>
           <div className="border border-gold/12 bg-charcoal/20 p-6 text-center">
             <Wallet size={20} className="text-gold mx-auto mb-3" strokeWidth={1.5} />
             <p className="text-[13px] text-cream mb-1" style={{ fontFamily: "var(--font-body-family)" }}>Real Payouts</p>
-            <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Tracked transparently in your account</p>
+            <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Tracked transparently in your account</p>
           </div>
         </div>
 
         <div className="max-w-[560px] mx-auto border border-gold/12 bg-charcoal/20 p-8">
           {!checked ? (
-            <p className="text-[12px] text-muted text-center" style={{ fontFamily: "var(--font-body-family)" }}>Checking your account…</p>
+            <p className="text-[12px] text-warm-gray/85 text-center" style={{ fontFamily: "var(--font-body-family)" }}>Checking your account…</p>
           ) : !isSupabaseConfigured ? (
-            <p className="text-[12px] text-muted text-center" style={{ fontFamily: "var(--font-body-family)" }}>
+            <p className="text-[12px] text-warm-gray/85 text-center" style={{ fontFamily: "var(--font-body-family)" }}>
               Accounts aren&apos;t connected yet — the affiliate program needs Supabase configured.
             </p>
           ) : !signedIn ? (
@@ -138,15 +138,15 @@ export default function AffiliatePage() {
                 <div className="text-center">
                   <Users size={14} className="text-gold/60 mx-auto mb-1.5" strokeWidth={1.5} />
                   <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>{affiliate.referrals}</p>
-                  <p className="text-[9px] text-muted tracking-wider uppercase">Referred Orders</p>
+                  <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Referred Orders</p>
                 </div>
                 <div className="text-center">
                   <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.pending.toLocaleString()}</p>
-                  <p className="text-[9px] text-muted tracking-wider uppercase">Pending Payout</p>
+                  <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Pending Payout</p>
                 </div>
                 <div className="text-center">
                   <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.paid.toLocaleString()}</p>
-                  <p className="text-[9px] text-muted tracking-wider uppercase">Paid Out</p>
+                  <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Paid Out</p>
                 </div>
               </div>
             </>

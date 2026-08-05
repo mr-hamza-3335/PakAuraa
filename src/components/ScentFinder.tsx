@@ -140,7 +140,7 @@ export default function ScentFinder() {
             {stepIndex > 0 && (
               <button
                 onClick={handleBack}
-                className="inline-flex items-center gap-1.5 text-[10px] text-muted hover:text-warm-gray tracking-[0.15em] uppercase transition-colors"
+                className="inline-flex items-center gap-1.5 text-[10px] text-warm-gray/85 hover:text-warm-gray tracking-[0.15em] uppercase transition-colors"
                 style={{ fontFamily: "var(--font-body-family)" }}
               >
                 <ArrowLeft size={11} /> Back

@@ -227,9 +227,9 @@ export default function AdminOrdersPage() {
       </div>
 
       {loading ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Loading…</p>
       ) : visibleOrders.length === 0 ? (
-        <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No orders in this view.</p>
+        <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No orders in this view.</p>
       ) : (
         <div className="space-y-4">
           {visibleOrders.map((order) => {
@@ -245,7 +245,7 @@ export default function AdminOrdersPage() {
                     >
                       <meta.Icon size={11} strokeWidth={1.5} /> {meta.label}
                     </span>
-                    <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                    <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                       {new Date(order.createdAt).toLocaleString()}
                     </span>
                   </div>
@@ -309,7 +309,7 @@ export default function AdminOrdersPage() {
                         />
                       </div>
                     </div>
-                    <p className="text-[10px] text-muted mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Date, day and time are recorded automatically.</p>
+                    <p className="text-[10px] text-warm-gray/85 mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Date, day and time are recorded automatically.</p>
                     <div className="flex gap-2">
                       <button onClick={() => confirmDelivered(order)} className="text-[10px] text-obsidian bg-[#7FA888] px-4 py-2 tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
                         Confirm Delivered
@@ -359,7 +359,7 @@ export default function AdminOrdersPage() {
                         style={{ fontFamily: "var(--font-body-family)" }}
                       />
                     </div>
-                    <p className="text-[10px] text-muted mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Date, day and time are recorded automatically.</p>
+                    <p className="text-[10px] text-warm-gray/85 mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Date, day and time are recorded automatically.</p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => confirmCancelled(order)}
@@ -426,7 +426,7 @@ export default function AdminOrdersPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Ship To</p>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Ship To</p>
                     <p className="text-[13px] text-cream mb-1" style={{ fontFamily: "var(--font-body-family)" }}>{order.customer?.name}</p>
                     <p className="text-[12px] text-warm-gray flex items-start gap-1.5 mb-1" style={{ fontFamily: "var(--font-body-family)" }}>
                       <MapPin size={13} strokeWidth={1.5} className="mt-0.5 flex-shrink-0 text-gold/70" />
@@ -443,7 +443,7 @@ export default function AdminOrdersPage() {
                   </div>
 
                   <div>
-                    <p className="text-[9px] text-muted tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Items — {order.paymentMethod.toUpperCase()}</p>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Items — {order.paymentMethod.toUpperCase()}</p>
                     <div className="space-y-1">
                       {order.items?.map((item) => (
                         <p key={`${item.product.id}-${item.size}-${item.giftWrap}-${item.engrave}`} className="text-[12px] text-warm-gray" style={{ fontFamily: "var(--font-body-family)" }}>
@@ -461,7 +461,7 @@ export default function AdminOrdersPage() {
 
                 <div className="mt-5 pt-5 border-t border-gold/10">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[9px] text-muted tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                    <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
                       Tracking Info — shown to the customer on /track
                     </p>
                     {trackingSavedId === order.id && (

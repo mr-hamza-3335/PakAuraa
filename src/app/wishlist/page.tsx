@@ -31,7 +31,7 @@ export default function WishlistPage() {
             <div className="py-20 text-center border border-gold/10 bg-charcoal/20">
               <Heart size={26} className="text-warm-gray/40 mx-auto mb-5" strokeWidth={1} />
               <p className="text-[14px] text-warm-gray mb-2" style={{ fontFamily: "var(--font-body-family)" }}>Nothing saved yet</p>
-              <p className="text-[12px] text-muted mb-6" style={{ fontFamily: "var(--font-body-family)" }}>Tap the heart on any fragrance to save it here.</p>
+              <p className="text-[12px] text-warm-gray/85 mb-6" style={{ fontFamily: "var(--font-body-family)" }}>Tap the heart on any fragrance to save it here.</p>
               <Link href="/collections" className="text-[11px] text-gold tracking-[0.2em] uppercase border-b border-gold/30 pb-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
                 Browse Fragrances
               </Link>
@@ -92,7 +92,7 @@ export default function WishlistPage() {
                       </Link>
                       <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-gold/10">
                         <span className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice(size.price, currency)}</span>
-                        <span className="text-[9px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
+                        <span className="text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
                       </div>
                     </div>
                   </motion.div>

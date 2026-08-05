@@ -162,17 +162,17 @@ export default function AccountPage() {
                 {isSupabaseConfigured && user ? (
                   <>
                     <p className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{user.user_metadata?.full_name ?? "Welcome back"}</p>
-                    <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{user.email}</p>
+                    <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{user.email}</p>
                   </>
                 ) : isSupabaseConfigured && checked ? (
                   <>
                     <p className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>You&apos;re not signed in</p>
-                    <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Sign in to sync your orders across devices.</p>
+                    <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Sign in to sync your orders across devices.</p>
                   </>
                 ) : (
                   <>
                     <p className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>Guest</p>
-                    <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Accounts aren&apos;t connected yet — orders below are saved on this device.</p>
+                    <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Accounts aren&apos;t connected yet — orders below are saved on this device.</p>
                   </>
                 )}
               </div>
@@ -217,7 +217,7 @@ export default function AccountPage() {
               </div>
               <div>
                 <p className="text-[16px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>{loyaltyBalance} Points</p>
-                <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   Worth PKR {loyaltyBalance.toLocaleString()} — redeemable at checkout. Earn 1 point per PKR 100 spent.
                 </p>
               </div>
@@ -250,15 +250,15 @@ export default function AccountPage() {
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>{affiliate.referrals}</p>
-                      <p className="text-[9px] text-muted tracking-wider uppercase">Referred Orders</p>
+                      <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Referred Orders</p>
                     </div>
                     <div>
                       <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.pending.toLocaleString()}</p>
-                      <p className="text-[9px] text-muted tracking-wider uppercase">Pending Payout</p>
+                      <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Pending Payout</p>
                     </div>
                     <div>
                       <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.paid.toLocaleString()}</p>
-                      <p className="text-[9px] text-muted tracking-wider uppercase">Paid Out</p>
+                      <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Paid Out</p>
                     </div>
                   </div>
                 </>
@@ -328,7 +328,7 @@ export default function AccountPage() {
               >
                 <Save size={13} strokeWidth={2} /> {profileSaving ? t("saving") : profileSaved ? t("saved") : t("saveChanges")}
               </button>
-              <p className="text-[11px] text-muted mt-3" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[11px] text-warm-gray/85 mt-3" style={{ fontFamily: "var(--font-body-family)" }}>
                 This address auto-fills at checkout so you don&apos;t have to retype it every time.
               </p>
             </div>
@@ -347,7 +347,7 @@ export default function AccountPage() {
               )}
             </div>
             {wishlistItems.length === 0 ? (
-              <p className="text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+              <p className="text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                 Nothing saved yet — tap the heart on any fragrance to save it here.
               </p>
             ) : (
@@ -398,7 +398,7 @@ export default function AccountPage() {
                       ))}
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t border-gold/10">
-                      <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                      <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                         {new Date(order.createdAt).toLocaleDateString()}
                       </span>
                       <div className="flex items-center gap-4">

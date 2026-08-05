@@ -46,7 +46,7 @@ export default function AdminMessagesPage() {
 
       <div className="border border-gold/12 divide-y divide-gold/10">
         {!loading && messages.length === 0 && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No messages yet.</p>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No messages yet.</p>
         )}
         {messages.map((m) => (
           <div key={m.id} className="p-4">
@@ -56,13 +56,13 @@ export default function AdminMessagesPage() {
                 <p className="text-[11px] text-warm-gray" style={{ fontFamily: "var(--font-body-family)" }}>{m.email}</p>
               </div>
               <div className="flex items-center gap-3 flex-shrink-0">
-                <span className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>
+                <span className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   {new Date(m.created_at).toLocaleString()}
                 </span>
                 <a href={`mailto:${m.email}`} className="text-gold hover:text-gold/70" aria-label="Reply by email">
                   <Mail size={15} strokeWidth={1.5} />
                 </a>
-                <button onClick={() => remove(m.id)} className="text-muted hover:text-red-400 transition-colors" aria-label="Delete message">
+                <button onClick={() => remove(m.id)} className="text-warm-gray/85 hover:text-red-400 transition-colors" aria-label="Delete message">
                   <Trash2 size={15} strokeWidth={1.5} />
                 </button>
               </div>

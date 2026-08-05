@@ -58,7 +58,7 @@ export default function AdminReviewsPage() {
         Pending ({pending.length})
       </p>
       <div className="border border-gold/12 divide-y divide-gold/10 mb-10">
-        {pending.length === 0 && <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>Nothing pending.</p>}
+        {pending.length === 0 && <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Nothing pending.</p>}
         {pending.map((r) => (
           <div key={r.id} className="p-4">
             <div className="flex items-center justify-between mb-2">
@@ -77,7 +77,7 @@ export default function AdminReviewsPage() {
         Live on site ({approved.length})
       </p>
       <div className="border border-gold/12 divide-y divide-gold/10">
-        {approved.length === 0 && <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>None approved yet.</p>}
+        {approved.length === 0 && <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>None approved yet.</p>}
         {approved.map((r) => (
           <div key={r.id} className="p-4 flex items-center justify-between">
             <div>
@@ -86,7 +86,7 @@ export default function AdminReviewsPage() {
                 {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={10} className={i < r.rating ? "fill-gold text-gold" : "text-gold/20"} />)}
               </div>
             </div>
-            <button onClick={() => remove(r.id)} className="text-muted hover:text-red-400 transition-colors text-[10px] uppercase tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
+            <button onClick={() => remove(r.id)} className="text-warm-gray/85 hover:text-red-400 transition-colors text-[10px] uppercase tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
               Remove
             </button>
           </div>

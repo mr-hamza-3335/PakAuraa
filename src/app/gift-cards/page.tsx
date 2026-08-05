@@ -98,7 +98,7 @@ export default function GiftCardsPage() {
                   onFocus={() => setUseCustom(true)}
                   onChange={(e) => { setCustomAmount(e.target.value); setUseCustom(true); }}
                   placeholder={`PKR ${MIN_CUSTOM.toLocaleString()} – ${MAX_CUSTOM.toLocaleString()}`}
-                  className="flex-1 bg-transparent text-cream text-[13px] outline-none placeholder:text-muted"
+                  className="flex-1 bg-transparent text-cream text-[13px] outline-none placeholder:text-warm-gray/85"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 />
               </button>
@@ -171,7 +171,7 @@ export default function GiftCardsPage() {
             )}
           </div>
 
-          <p className="text-[11px] text-muted text-center mt-8" style={{ fontFamily: "var(--font-body-family)" }}>
+          <p className="text-[11px] text-warm-gray/85 text-center mt-8" style={{ fontFamily: "var(--font-body-family)" }}>
             Already have a gift card?{" "}
             <Link href="/gift-cards/check" className="text-gold hover:text-gold-light underline">
               Check its balance &amp; details

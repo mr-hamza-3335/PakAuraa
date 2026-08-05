@@ -9,7 +9,7 @@ import { useStore } from "@/lib/store";
 import { useCatalog } from "@/lib/catalog.client";
 import { useSettings, formatPrice } from "@/lib/settings";
 
-const rowLabel = "text-[10px] text-muted tracking-[0.15em] uppercase whitespace-nowrap";
+const rowLabel = "text-[10px] text-warm-gray/85 tracking-[0.15em] uppercase whitespace-nowrap";
 const cellText = "text-[12px] text-warm-gray leading-relaxed";
 
 export default function ComparePage() {

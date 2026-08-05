@@ -225,15 +225,15 @@ export default function AdminPressPage() {
 
       <div className="border border-gold/12 divide-y divide-gold/10">
         {mentions.length === 0 && loaded && (
-          <p className="p-4 text-[12px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>No press mentions yet.</p>
+          <p className="p-4 text-[12px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>No press mentions yet.</p>
         )}
         {mentions.map((m) => (
           <div key={m.id} className="flex items-center gap-4 p-4 flex-wrap">
             <div className="flex-1 min-w-[160px]">
               <p className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{m.title}</p>
-              <p className="text-[10px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{m.outlet}</p>
+              <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{m.outlet}</p>
             </div>
-            <span className={`text-[9px] tracking-wider uppercase px-2.5 py-1 border ${m.published ? "border-gold/40 text-gold" : "border-warm-gray/20 text-muted"}`} style={{ fontFamily: "var(--font-body-family)" }}>
+            <span className={`text-[9px] tracking-wider uppercase px-2.5 py-1 border ${m.published ? "border-gold/40 text-gold" : "border-warm-gray/20 text-warm-gray/85"}`} style={{ fontFamily: "var(--font-body-family)" }}>
               {m.published ? "Published" : "Draft"}
             </span>
             <button onClick={() => startEdit(m)} className="flex items-center gap-1.5 text-[10px] text-warm-gray border border-gold/20 px-3 py-2 hover:border-gold/40 hover:text-cream transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>

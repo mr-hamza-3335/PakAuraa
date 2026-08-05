@@ -224,7 +224,7 @@ export default function CouponShareCard({ coupon, onClose }: CouponShareCardProp
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-[440px] border border-gold/25 bg-charcoal p-6 max-h-[90vh] overflow-y-auto"
       >
-        <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 text-muted hover:text-cream transition-colors">
+        <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 text-warm-gray/85 hover:text-cream transition-colors">
           <X size={18} strokeWidth={1.5} />
         </button>
 

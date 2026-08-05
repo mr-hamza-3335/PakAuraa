@@ -49,7 +49,7 @@ export default function NotifyBackInStock({ productId }: { productId: string }) 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Your email"
-          className="w-full bg-transparent text-cream text-[12px] py-2.5 outline-none placeholder:text-muted"
+          className="w-full bg-transparent text-cream text-[12px] py-2.5 outline-none placeholder:text-warm-gray/85"
           style={{ fontFamily: "var(--font-body-family)" }}
         />
       </div>
