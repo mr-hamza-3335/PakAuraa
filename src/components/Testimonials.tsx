@@ -109,7 +109,7 @@ export default function Testimonials() {
             {review.author}
           </p>
           <p
-            className="text-[10px] text-muted/70 tracking-[0.2em] uppercase"
+            className="text-[10px] text-warm-gray/85 tracking-[0.2em] uppercase"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             {review.location}{review.productName ? ` · ${review.productName}` : ""}
@@ -120,7 +120,8 @@ export default function Testimonials() {
         <div className="flex items-center justify-center gap-6">
           <motion.button
             onClick={prev}
-            className="w-10 h-10 border border-gold/18 text-warm-gray/50 hover:text-gold hover:border-gold/40 flex items-center justify-center transition-all duration-300"
+            aria-label="Previous testimonial"
+            className="w-10 h-10 border border-gold/18 text-warm-gray/85 hover:text-gold hover:border-gold/40 flex items-center justify-center transition-all duration-300"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.93 }}
           >
@@ -128,21 +129,26 @@ export default function Testimonials() {
           </motion.button>
 
           {/* Dots */}
-          <div className="flex gap-2.5">
+          <div className="flex items-center gap-1">
             {reviews.map((_, i) => (
               <button
                 key={i}
                 onClick={() => { setDir(i > active ? 1 : -1); setActive(i); }}
-                className={`transition-all duration-400 ${
+                aria-label={`Go to testimonial ${i + 1}`}
+                aria-current={i === active}
+                className="w-6 h-6 flex items-center justify-center"
+              >
+                <span className={`block transition-all duration-400 ${
                   i === active ? "w-6 h-1 bg-gold" : "w-2 h-1 bg-gold/20 hover:bg-gold/40"
-                }`}
-              />
+                }`} />
+              </button>
             ))}
           </div>
 
           <motion.button
             onClick={next}
-            className="w-10 h-10 border border-gold/18 text-warm-gray/50 hover:text-gold hover:border-gold/40 flex items-center justify-center transition-all duration-300"
+            aria-label="Next testimonial"
+            className="w-10 h-10 border border-gold/18 text-warm-gray/85 hover:text-gold hover:border-gold/40 flex items-center justify-center transition-all duration-300"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.93 }}
           >

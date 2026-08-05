@@ -57,7 +57,7 @@ export default function Craftsmanship() {
           </h2>
           <div className="divider-gold" />
           <p
-            className="mt-8 text-warm-gray/50 max-w-[400px] mx-auto leading-[1.85] text-[13px]"
+            className="mt-8 text-warm-gray/85 max-w-[400px] mx-auto leading-[1.85] text-[13px]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             From raw ingredient to finished bottle — a journey measured in months, not minutes.
@@ -98,7 +98,7 @@ export default function Craftsmanship() {
 
                 {/* Text */}
                 <p
-                  className="text-[8px] text-gold/55 tracking-[0.3em] uppercase mb-3"
+                  className="text-[8px] text-gold/78 tracking-[0.3em] uppercase mb-3"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   {step.subtitle}
@@ -112,7 +112,7 @@ export default function Craftsmanship() {
                 </h3>
 
                 <p
-                  className="text-warm-gray/50 leading-[1.85] mb-5 text-[13px] max-w-[260px] mx-auto lg:mx-0 group-hover:text-warm-gray/68 transition-colors duration-400"
+                  className="text-warm-gray/85 leading-[1.85] mb-5 text-[13px] max-w-[260px] mx-auto lg:mx-0 group-hover:text-warm-gray/68 transition-colors duration-400"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   {step.body}

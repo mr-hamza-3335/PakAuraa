@@ -52,7 +52,7 @@ export default function WhyPakAuraa() {
           </h2>
           <div className="divider-gold" />
           <p
-            className="mt-8 text-warm-gray/50 max-w-[360px] mx-auto leading-[1.85] text-[13px]"
+            className="mt-8 text-warm-gray/85 max-w-[360px] mx-auto leading-[1.85] text-[13px]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             Four principles that separate the extraordinary from the ordinary.

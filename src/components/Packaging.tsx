@@ -128,7 +128,7 @@ export default function Packaging() {
                   </span>
                   <span
                     className={`text-[10px] tracking-[0.16em] uppercase whitespace-nowrap transition-colors duration-300 ${
-                      active === f.id ? "text-cream" : "text-warm-gray/45 group-hover:text-warm-gray/70"
+                      active === f.id ? "text-cream" : "text-warm-gray/45 group-hover:text-warm-gray/85"
                     }`}
                     style={{ fontFamily: "var(--font-body-family)" }}
                   >
@@ -171,7 +171,7 @@ export default function Packaging() {
               </h3>
 
               <p
-                className="text-warm-gray/60 leading-[1.95] mb-10 max-w-[520px]"
+                className="text-warm-gray/85 leading-[1.95] mb-10 max-w-[520px]"
                 style={{
                   fontFamily: "var(--font-body-family)",
                   fontSize: "clamp(14px, 1.3vw, 16px)",
@@ -183,7 +183,7 @@ export default function Packaging() {
               <div className="flex items-center gap-4">
                 <div className="h-px w-8 bg-gold/25" />
                 <span
-                  className="text-[8px] text-gold/55 tracking-[0.28em] uppercase"
+                  className="text-[8px] text-gold/78 tracking-[0.28em] uppercase"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   {current.spec}

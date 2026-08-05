@@ -271,7 +271,7 @@ export default function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder={t("searchPlaceholder")}
-                      className="bg-transparent text-[12px] text-cream placeholder:text-muted/60 outline-none w-full py-1"
+                      className="bg-transparent text-[12px] text-cream placeholder:text-warm-gray/85 outline-none w-full py-1"
                       style={{ fontFamily: "var(--font-body-family)" }}
                       onKeyDown={(e) => e.key === "Escape" && (setSearchOpen(false), setSearchQuery(""))}
                     />
@@ -314,7 +314,7 @@ export default function Header() {
                 <motion.button
                   key="btn"
                   aria-label="Search"
-                  className="hidden sm:flex text-warm-gray/70 hover:text-gold transition-colors duration-300"
+                  className="hidden sm:flex text-warm-gray/85 hover:text-gold transition-colors duration-300"
                   onClick={() => setSearchOpen(true)}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.92 }}
@@ -333,7 +333,7 @@ export default function Header() {
               >
                 <button
                   aria-label={t("currency")}
-                  className="flex items-center gap-1 text-warm-gray/70 hover:text-gold transition-colors text-[10px] tracking-wider"
+                  className="flex items-center gap-1 text-warm-gray/85 hover:text-gold transition-colors text-[10px] tracking-wider"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   <Coins size={13} strokeWidth={1.5} /> {currency}
@@ -368,7 +368,7 @@ export default function Header() {
               >
                 <button
                   aria-label={t("language")}
-                  className="flex items-center gap-1 text-warm-gray/70 hover:text-gold transition-colors text-[10px] tracking-wider"
+                  className="flex items-center gap-1 text-warm-gray/85 hover:text-gold transition-colors text-[10px] tracking-wider"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   <Globe size={13} strokeWidth={1.5} /> {language.toUpperCase()}
@@ -401,7 +401,7 @@ export default function Header() {
             <motion.a
               href="/wishlist"
               aria-label="Wishlist"
-              className="hidden sm:flex relative text-warm-gray/70 hover:text-gold transition-colors duration-300"
+              className="hidden sm:flex relative text-warm-gray/85 hover:text-gold transition-colors duration-300"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
             >
@@ -424,7 +424,7 @@ export default function Header() {
             <motion.a
               href="/account"
               aria-label="Account"
-              className="hidden sm:flex text-warm-gray/70 hover:text-gold transition-colors duration-300"
+              className="hidden sm:flex text-warm-gray/85 hover:text-gold transition-colors duration-300"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
             >
@@ -435,7 +435,7 @@ export default function Header() {
             <motion.button
               aria-label="Cart"
               onClick={() => setCartOpen(true)}
-              className="relative flex text-warm-gray/70 hover:text-gold transition-colors duration-300"
+              className="relative flex text-warm-gray/85 hover:text-gold transition-colors duration-300"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
             >
@@ -457,7 +457,7 @@ export default function Header() {
             {/* Mobile hamburger */}
             <motion.button
               aria-label="Menu"
-              className="lg:hidden text-warm-gray/70 hover:text-gold transition-colors"
+              className="lg:hidden text-warm-gray/85 hover:text-gold transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               whileTap={{ scale: 0.9 }}
             >
@@ -508,7 +508,7 @@ export default function Header() {
                 <a
                   href="/account"
                   onClick={() => setMobileOpen(false)}
-                  className="flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                  className="flex flex-col items-center gap-2 text-warm-gray/85 hover:text-gold transition-colors"
                 >
                   <User size={20} strokeWidth={1.5} />
                   <span className="text-[9px] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
@@ -518,7 +518,7 @@ export default function Header() {
                 <a
                   href="/wishlist"
                   onClick={() => setMobileOpen(false)}
-                  className="relative flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                  className="relative flex flex-col items-center gap-2 text-warm-gray/85 hover:text-gold transition-colors"
                 >
                   <Heart size={20} strokeWidth={1.5} />
                   {wishCount > 0 && (
@@ -533,7 +533,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => { setMobileOpen(false); setCartOpen(true); }}
-                  className="relative flex flex-col items-center gap-2 text-warm-gray/70 hover:text-gold transition-colors"
+                  className="relative flex flex-col items-center gap-2 text-warm-gray/85 hover:text-gold transition-colors"
                 >
                   <ShoppingBag size={20} strokeWidth={1.5} />
                   {count > 0 && (
@@ -555,7 +555,7 @@ export default function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={t("searchPlaceholder")}
-                    className="bg-transparent text-[14px] text-cream placeholder:text-muted/60 outline-none flex-1"
+                    className="bg-transparent text-[14px] text-cream placeholder:text-warm-gray/85 outline-none flex-1"
                     style={{ fontFamily: "var(--font-body-family)" }}
                   />
                 </div>

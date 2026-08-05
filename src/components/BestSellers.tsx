@@ -39,7 +39,7 @@ export default function BestSellers() {
           </div>
           <a
             href="/collections"
-            className="text-[9px] text-gold/55 hover:text-gold tracking-[0.25em] uppercase transition-colors duration-300 border-b border-gold/20 hover:border-gold/50 pb-0.5 self-end sm:self-auto"
+            className="text-[9px] text-gold/78 hover:text-gold tracking-[0.25em] uppercase transition-colors duration-300 border-b border-gold/20 hover:border-gold/50 pb-0.5 self-end sm:self-auto"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             View All →
@@ -75,7 +75,7 @@ export default function BestSellers() {
                 <button
                   aria-label="Wishlist"
                   onClick={() => toggleWishlist(product.id)}
-                  className="absolute top-3 right-3 z-10 w-7 h-7 flex items-center justify-center bg-obsidian/70 border border-gold/10 rounded-full text-warm-gray/60 hover:text-gold hover:border-gold/30 transition-all duration-300"
+                  className="absolute top-3 right-3 z-10 w-7 h-7 flex items-center justify-center bg-obsidian/70 border border-gold/10 rounded-full text-warm-gray/85 hover:text-gold hover:border-gold/30 transition-all duration-300"
                 >
                   <Heart
                     size={11}

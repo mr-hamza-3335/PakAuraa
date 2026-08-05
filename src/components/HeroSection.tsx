@@ -158,7 +158,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[22px] lg:text-[26px] text-gold/55 leading-none"
+                className="text-[22px] lg:text-[26px] text-gold/78 leading-none"
                 style={{ fontFamily: "var(--font-scheherazade), serif" }}
               >
                 سلطان الزعفران
@@ -211,7 +211,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[15px] lg:text-[17px] text-warm-gray/70 leading-[1.9] max-w-[420px] lg:max-w-[480px] font-light"
+                className="text-[15px] lg:text-[17px] text-warm-gray/85 leading-[1.9] max-w-[420px] lg:max-w-[480px] font-light"
                 style={{ fontFamily: "var(--font-body-family)" }}
               >
                 The reigning sovereign of rare Kashmir saffron and aged Assam oud.
@@ -241,7 +241,7 @@ export default function HeroSection() {
 
                 <motion.a
                   href="/collections"
-                  className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/70 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
+                  className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/85 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
                   style={{ fontFamily: "var(--font-body-family)" }}
                   whileHover={{ backgroundColor: "rgba(201,168,76,0.04)" }}
                   whileTap={{ scale: 0.97 }}
@@ -395,7 +395,7 @@ export default function HeroSection() {
         transition={{ delay: 2.2, duration: 1 }}
       >
         <span
-          className="text-[7px] text-muted/60 tracking-[0.5em] uppercase"
+          className="text-[7px] text-warm-gray/85 tracking-[0.5em] uppercase"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           Scroll

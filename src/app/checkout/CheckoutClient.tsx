@@ -363,7 +363,7 @@ export default function CheckoutClient() {
                               : "border-gold/15 hover:border-gold/30"
                           }`}
                         >
-                          <Icon size={16} strokeWidth={1.5} className={disabled ? "text-warm-gray/50" : method === id ? "text-gold" : "text-warm-gray"} />
+                          <Icon size={16} strokeWidth={1.5} className={disabled ? "text-warm-gray/85" : method === id ? "text-gold" : "text-warm-gray"} />
                           <div>
                             <p className="text-[12px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{label}</p>
                             <p className="text-[10px] text-muted mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>{description}</p>

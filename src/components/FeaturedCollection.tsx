@@ -155,7 +155,7 @@ function ProductCard({
         </p>
 
         <p
-          className="text-[12px] text-warm-gray/60 leading-[1.85] mb-5 flex-1 line-clamp-3"
+          className="text-[12px] text-warm-gray/85 leading-[1.85] mb-5 flex-1 line-clamp-3"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           {product.description}
@@ -166,7 +166,7 @@ function ProductCard({
           {product.notes.top.slice(0, 3).map((n) => (
             <span
               key={n}
-              className="text-[7px] text-muted/70 border border-gold/[0.10] px-2.5 py-1 tracking-[0.12em] uppercase"
+              className="text-[7px] text-warm-gray/85 border border-gold/[0.10] px-2.5 py-1 tracking-[0.12em] uppercase"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {n}
@@ -183,7 +183,7 @@ function ProductCard({
               {formatPrice(defaultSize.price, currency)}
             </span>
             <span
-              className="text-[9px] text-muted/60 ml-1.5"
+              className="text-[9px] text-warm-gray/85 ml-1.5"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               /{defaultSize.ml}ml
@@ -232,7 +232,7 @@ export default function FeaturedCollection() {
           <div className="divider-gold" />
 
           <p
-            className="text-[14px] text-warm-gray/50 mt-8 max-w-[420px] mx-auto leading-[1.85]"
+            className="text-[14px] text-warm-gray/85 mt-8 max-w-[420px] mx-auto leading-[1.85]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             Five extraordinary fragrances. Each a world unto itself.
@@ -256,7 +256,7 @@ export default function FeaturedCollection() {
         >
           <motion.a
             href="/collections"
-            className="group inline-flex items-center gap-3 border border-gold/20 text-warm-gray/60 text-[9px] tracking-[0.3em] uppercase px-10 py-4 hover:border-gold/40 hover:text-cream transition-all duration-500"
+            className="group inline-flex items-center gap-3 border border-gold/20 text-warm-gray/85 text-[9px] tracking-[0.3em] uppercase px-10 py-4 hover:border-gold/40 hover:text-cream transition-all duration-500"
             style={{ fontFamily: "var(--font-body-family)" }}
             whileHover={{ scale: 1.02, backgroundColor: "rgba(201,168,76,0.03)" }}
             whileTap={{ scale: 0.98 }}

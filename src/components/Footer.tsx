@@ -112,7 +112,7 @@ export default function Footer() {
       <div className="bg-[#0A0A0A] border-b border-gold/[0.06] py-12 px-6 lg:px-16">
         <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
-            <p className="eyebrow mb-3 opacity-65">Join the Inner Circle</p>
+            <p className="eyebrow mb-3 opacity-80">Join the Inner Circle</p>
             <p
               className="text-cream"
               style={{ fontFamily: "var(--font-display-family)", fontSize: "clamp(18px,2vw,24px)" }}
@@ -181,7 +181,7 @@ export default function Footer() {
           </div>
 
           <p
-            className="text-[13px] text-muted/70 leading-relaxed mb-5 max-w-[260px]"
+            className="text-[13px] text-warm-gray/85 leading-relaxed mb-5 max-w-[260px]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             World-class luxury fragrances, crafted in Pakistan for the global connoisseur.
@@ -202,7 +202,7 @@ export default function Footer() {
             ].map(({ Icon, text }) => (
               <div key={text} className="flex items-center gap-3">
                 <Icon size={11} strokeWidth={1.5} className="text-gold/40 flex-shrink-0" />
-                <span className="text-[11px] text-muted/60" style={{ fontFamily: "var(--font-body-family)" }}>
+                <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   {text}
                 </span>
               </div>
@@ -217,7 +217,7 @@ export default function Footer() {
                 aria-label={label}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 border border-gold/14 flex items-center justify-center text-muted/60 hover:text-gold hover:border-gold/38 transition-all duration-300"
+                className="w-9 h-9 border border-gold/14 flex items-center justify-center text-warm-gray/85 hover:text-gold hover:border-gold/38 transition-all duration-300"
                 whileHover={{ scale: 1.08, y: -1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -231,7 +231,7 @@ export default function Footer() {
         {Object.entries(footerLinks).map(([section, items]) => (
           <div key={section}>
             <h3
-              className="text-[8px] text-gold/55 tracking-[0.3em] uppercase mb-6"
+              className="text-[8px] text-gold/78 tracking-[0.3em] uppercase mb-6"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {section === "Shop" ? t("shop") : section === "Information" ? t("information") : section === "Help" ? t("help") : section}
@@ -241,7 +241,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <motion.a
                     href={item.href}
-                    className="group text-[11px] text-muted/55 hover:text-warm-gray/80 transition-colors duration-250 flex items-center gap-0 hover:gap-1.5"
+                    className="group text-[11px] text-warm-gray/85 hover:text-warm-gray/80 transition-colors duration-250 flex items-center gap-0 hover:gap-1.5"
                     style={{ fontFamily: "var(--font-body-family)" }}
                   >
                     <span className="w-0 h-px bg-gold/45 transition-all duration-300 group-hover:w-2.5 flex-shrink-0" />
@@ -261,7 +261,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="max-w-[1400px] mx-auto px-6 lg:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="text-[10px] text-muted/45" style={{ fontFamily: "var(--font-body-family)" }}>
+        <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
           © {year} PakAuraa Luxury Perfumes. All rights reserved.
         </p>
         <div className="flex gap-5">
@@ -273,7 +273,7 @@ export default function Footer() {
             <a
               key={item.label}
               href={item.href}
-              className="text-[10px] text-muted/40 hover:text-warm-gray/60 transition-colors duration-250"
+              className="text-[10px] text-warm-gray/85 hover:text-warm-gray/85 transition-colors duration-250"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {item.label}

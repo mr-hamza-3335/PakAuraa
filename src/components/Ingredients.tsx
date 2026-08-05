@@ -99,7 +99,7 @@ export default function Ingredients() {
           </h2>
           <div className="divider-gold" />
           <p
-            className="mt-8 text-warm-gray/50 max-w-[380px] mx-auto leading-[1.85] text-[13px]"
+            className="mt-8 text-warm-gray/85 max-w-[380px] mx-auto leading-[1.85] text-[13px]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             Six extraordinary materials. Sourced with obsessive care. Combined by a master.
@@ -133,7 +133,7 @@ export default function Ingredients() {
                     {ing.name}
                   </p>
                   <p
-                    className="text-[9px] text-muted/60"
+                    className="text-[9px] text-warm-gray/85"
                     style={{ fontFamily: "var(--font-body-family)" }}
                   >
                     {ing.origin}
@@ -177,7 +177,7 @@ export default function Ingredients() {
               </h3>
 
               <p
-                className="text-[9px] text-gold/55 tracking-[0.25em] uppercase mb-8"
+                className="text-[9px] text-gold/78 tracking-[0.25em] uppercase mb-8"
                 style={{ fontFamily: "var(--font-body-family)" }}
               >
                 {current.origin} · {current.rarity}
@@ -207,7 +207,7 @@ export default function Ingredients() {
               {/* Used in */}
               <div>
                 <p
-                  className="text-[8px] text-muted/60 tracking-[0.28em] uppercase mb-3"
+                  className="text-[8px] text-warm-gray/85 tracking-[0.28em] uppercase mb-3"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
                   Found In
