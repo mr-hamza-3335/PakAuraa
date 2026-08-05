@@ -295,10 +295,15 @@ export default function Header() {
                             key={p.id}
                             href={`/products/${p.id}`}
                             onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
-                            className="flex items-center justify-between px-4 py-2.5 hover:bg-gold/[0.05] transition-colors"
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-gold/[0.05] transition-colors"
                           >
-                            <span className="text-[11px] text-cream tracking-wide" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</span>
-                            <span className="text-[9px] text-gold/60 uppercase tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>{p.collection}</span>
+                            <div className={`relative w-9 h-9 flex-shrink-0 overflow-hidden rounded-sm ${p.gradient}`}>
+                              <Image src={p.image} alt="" fill className="object-cover object-center" sizes="36px" />
+                            </div>
+                            <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
+                              <span className="text-[11px] text-cream tracking-wide truncate" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</span>
+                              <span className="text-[9px] text-gold/60 uppercase tracking-wider flex-shrink-0" style={{ fontFamily: "var(--font-body-family)" }}>{p.collection}</span>
+                            </div>
                           </Link>
                         ))}
                       </motion.div>
@@ -561,10 +566,15 @@ export default function Header() {
                         key={p.id}
                         href={`/products/${p.id}`}
                         onClick={() => { setMobileOpen(false); setSearchQuery(""); }}
-                        className="flex items-center justify-between py-3 border-b border-gold/[0.06]"
+                        className="flex items-center gap-3 py-3 border-b border-gold/[0.06]"
                       >
-                        <span className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</span>
-                        <span className="text-[9px] text-gold/60 uppercase tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>{p.collection}</span>
+                        <div className={`relative w-10 h-10 flex-shrink-0 overflow-hidden rounded-sm ${p.gradient}`}>
+                          <Image src={p.image} alt="" fill className="object-cover object-center" sizes="40px" />
+                        </div>
+                        <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
+                          <span className="text-[13px] text-cream truncate" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</span>
+                          <span className="text-[9px] text-gold/60 uppercase tracking-wider flex-shrink-0" style={{ fontFamily: "var(--font-body-family)" }}>{p.collection}</span>
+                        </div>
                       </Link>
                     ))}
                   </div>

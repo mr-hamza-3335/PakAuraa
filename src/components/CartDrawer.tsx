@@ -2,21 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2, PackagePlus } from "lucide-react";
+import Image from "next/image";
 import { useStore, BUNDLE_MIN_ITEMS } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
 import { useTranslate } from "@/lib/i18n";
-
-function BottleArt({ gradient }: { gradient: string }) {
-  return (
-    <div className={`w-full h-full flex items-center justify-center ${gradient}`}>
-      <div className="relative">
-        <div className="w-[24px] h-[50px] rounded-[8px_8px_4px_4px] bg-gradient-to-b from-[#c9a84c22] to-[#c9a84c08] border border-gold/20" />
-        <div className="absolute bottom-[50px] left-1/2 -translate-x-1/2 w-[7px] h-[14px] bg-gradient-to-b from-[#c9a84c15] to-transparent border-x border-gold/10" />
-        <div className="absolute bottom-[62px] left-1/2 -translate-x-1/2 w-[13px] h-[8px] rounded-sm bg-gradient-to-b from-gold to-gold-deep" />
-      </div>
-    </div>
-  );
-}
 
 export default function CartDrawer() {
   const { cart, cartOpen, setCartOpen, removeFromCart, updateQuantity, cartTotal, distinctProductCount, bundleDiscount } =
@@ -128,8 +117,8 @@ export default function CartDrawer() {
                       className="flex gap-4 p-6"
                     >
                       {/* Product image */}
-                      <div className="w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border border-gold/15">
-                        <BottleArt gradient={item.product.gradient} />
+                      <div className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border border-gold/15 ${item.product.gradient}`}>
+                        <Image src={item.product.image} alt="" fill className="object-cover object-center" sizes="80px" />
                       </div>
 
                       {/* Info */}
