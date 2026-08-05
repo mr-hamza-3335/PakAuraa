@@ -251,14 +251,20 @@ function TrendChart({ data, emptyLabel, formatValue }: { data: TrendPoint[]; emp
   const width = 560;
   const height = 160;
   const padding = 24;
+  const leftGutter = 44;
   const max = Math.max(1, ...data.map((d) => d.value));
-  const stepX = data.length > 1 ? (width - padding * 2) / (data.length - 1) : 0;
+  const stepX = data.length > 1 ? (width - leftGutter - padding) / (data.length - 1) : 0;
   const points = data.map((d, i) => ({
-    x: padding + i * stepX,
+    x: leftGutter + i * stepX,
     y: height - padding - (d.value / max) * (height - padding * 2),
     ...d,
   }));
   const path = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+  const areaPath = `${path} L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z`;
+  // Round the axis ceiling up to a clean-looking number (nearest 10/100/1000 depending on magnitude).
+  const magnitude = 10 ** Math.max(0, Math.floor(Math.log10(max)) - 1);
+  const axisMax = Math.ceil(max / magnitude) * magnitude;
+  const yTicks = [0, 0.5, 1].map((f) => axisMax * f);
 
   if (data.every((d) => d.value === 0)) {
     return <p className="text-[11px] text-muted" style={{ fontFamily: "var(--font-body-family)" }}>{emptyLabel}</p>;
@@ -267,8 +273,32 @@ function TrendChart({ data, emptyLabel, formatValue }: { data: TrendPoint[]; emp
   return (
     <div className="relative">
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-[160px]" onMouseLeave={() => setHover(null)}>
-        <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#3A3636" strokeWidth={1} />
+        <defs>
+          <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#C9A84C" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {/* Horizontal gridlines + Y-axis labels */}
+        {yTicks.map((v) => {
+          const y = height - padding - (v / axisMax) * (height - padding * 2);
+          return (
+            <g key={v}>
+              <line x1={leftGutter} y1={y} x2={width - padding} y2={y} stroke="#221f1f" strokeWidth={1} />
+              <text x={leftGutter - 8} y={y} textAnchor="end" dominantBaseline="middle" fill="#6B6460" fontSize="9">
+                {v >= 1000 ? `${Math.round(v / 1000)}k` : Math.round(v)}
+              </text>
+            </g>
+          );
+        })}
+        <path d={areaPath} fill="url(#trendFill)" />
         <path d={path} fill="none" stroke="#C9A84C" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+        {/* First/mid/last date labels along the X-axis */}
+        {[0, Math.floor((points.length - 1) / 2), points.length - 1].map((i) => (
+          <text key={i} x={points[i].x} y={height - 6} textAnchor="middle" fill="#6B6460" fontSize="9">
+            {new Date(points[i].date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+          </text>
+        ))}
         {points.map((p, i) => (
           <rect key={p.date} x={p.x - stepX / 2} y={0} width={stepX || width} height={height} fill="transparent" onMouseEnter={() => setHover(i)} />
         ))}
