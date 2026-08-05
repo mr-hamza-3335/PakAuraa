@@ -1,8 +1,11 @@
+import { randomBytes } from "crypto";
 import { createAdminClient } from "./supabase/server";
 import { sendGiftCardEmail } from "./email";
 
+/** Gift card codes are redeemable for real balance, so they're generated with a
+ * CSPRNG rather than Math.random() (predictable, not safe for anything with monetary value). */
 function generateGiftCardCode(): string {
-  return `GC-${Math.random().toString(36).slice(2, 10).toUpperCase()}`;
+  return `GC-${randomBytes(6).toString("hex").toUpperCase()}`;
 }
 
 interface GiftCardLineItem {
