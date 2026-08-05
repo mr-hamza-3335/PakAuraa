@@ -9,7 +9,8 @@ const sizes = [
 
 const meters = [
   { label: "Longevity", desc: "How many hours the fragrance lasts on skin, rated 1 (very light) to 10 (beast mode)." },
-  { label: "Projection", desc: "How far the scent trail carries around you, rated 1 (intimate/skin-close) to 10 (fills a room)." },
+  { label: "Projection", desc: "How far the fragrance reads from your skin at close range, rated 1 (intimate/skin-close) to 10 (an arm's length away)." },
+  { label: "Sillage", desc: "How much of a scent trail lingers in a room as you move through it, rated 1 (barely noticeable) to 10 (fills the space long after you've left)." },
 ];
 
 export default function SizeGuidePage() {
@@ -49,7 +50,7 @@ export default function SizeGuidePage() {
               ))}
             </div>
             <p className="text-[12px] text-warm-gray/85 mt-6 leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>
-              Every product page shows both meters, plus a full top/heart/base note breakdown — check the &quot;Notes&quot;
+              Every product page shows all three meters, plus a full top/heart/base note breakdown — check the &quot;Notes&quot;
               and &quot;Overview&quot; tabs on any fragrance.
             </p>
           </section>
