@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, CheckCircle2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { trackContactFormSubmit } from "@/lib/analytics";
 
 const details = [
   { Icon: Mail, label: "Email", value: "ameerhamza94572@gmail.com", href: "mailto:ameerhamza94572@gmail.com" },
@@ -33,6 +34,7 @@ export default function ContactPage() {
         setError(data.error ?? "Couldn't send your message. Please try again.");
         return;
       }
+      trackContactFormSubmit();
       setSent(true);
     } finally {
       setSending(false);

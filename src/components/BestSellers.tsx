@@ -74,7 +74,7 @@ export default function BestSellers() {
                 {/* Wishlist */}
                 <button
                   aria-label="Wishlist"
-                  onClick={() => toggleWishlist(product.id)}
+                  onClick={() => toggleWishlist(product)}
                   className="absolute top-3 right-3 z-10 w-7 h-7 flex items-center justify-center bg-obsidian/70 border border-gold/10 rounded-full text-warm-gray/85 hover:text-gold hover:border-gold/30 transition-all duration-300"
                 >
                   <Heart

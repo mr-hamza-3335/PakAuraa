@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
+import { trackNewsletterSubscribe } from "@/lib/analytics";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function Newsletter() {
         setError(data.error ?? "Something went wrong. Please try again.");
         return;
       }
+      trackNewsletterSubscribe();
       setSubmitted(true);
     } finally {
       setLoading(false);

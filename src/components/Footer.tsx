@@ -6,6 +6,7 @@ import { ArrowRight, Check, MapPin, Phone, Mail } from "lucide-react";
 import Image from "next/image";
 import { whatsAppLink } from "@/components/WhatsAppWidget";
 import { useTranslate } from "@/lib/i18n";
+import { trackNewsletterSubscribe } from "@/lib/analytics";
 
 const IgIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -97,6 +98,7 @@ export default function Footer() {
         setSubError(data.error ?? "Couldn't subscribe. Please try again.");
         return;
       }
+      trackNewsletterSubscribe();
       setSubbed(true);
     } finally {
       setSubLoading(false);

@@ -15,6 +15,7 @@ import { useSettings, formatPrice } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { productFaqItems } from "@/lib/seo";
+import { trackViewProduct } from "@/lib/analytics";
 import ProductCard from "@/components/ProductCard";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import NotifyBackInStock from "@/components/NotifyBackInStock";
@@ -286,6 +287,11 @@ export default function ProductPageClient({ product, related, reviews }: { produ
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id]);
 
+  useEffect(() => {
+    trackViewProduct(product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
+
   const size = product.sizes[selectedSizeIdx];
   const unitAddon = (giftWrap ? GIFT_WRAP_PRICE : 0) + (engrave ? ENGRAVE_PRICE : 0);
   const wishlisted = isWishlisted(product.id);
@@ -295,14 +301,14 @@ export default function ProductPageClient({ product, related, reviews }: { produ
     : null;
 
   const handleAddToCart = () => {
-    for (let i = 0; i < qty; i++) addToCart(product, size.ml, size.price, { giftWrap, engrave });
+    addToCart(product, size.ml, size.price, { giftWrap, engrave, quantity: qty });
     setAdded(true);
     setCartOpen(true);
     setTimeout(() => setAdded(false), 2500);
   };
 
   const handleBuyNow = () => {
-    for (let i = 0; i < qty; i++) addToCart(product, size.ml, size.price, { giftWrap, engrave });
+    addToCart(product, size.ml, size.price, { giftWrap, engrave, quantity: qty });
     router.push("/checkout");
   };
 
@@ -548,7 +554,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
 
             <div className="flex gap-3 mb-7">
               <motion.button
-                onClick={() => toggleWishlist(product.id)}
+                onClick={() => toggleWishlist(product)}
                 className={`flex-1 py-3.5 border text-[10px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 transition-all duration-300 ${
                   wishlisted ? "border-gold/50 text-gold bg-gold/6" : "border-gold/22 text-warm-gray hover:border-gold/40"
                 }`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Truck, ShoppingBag, AlertCircle, Tag, Check, Wallet, Gift } from "lucide-react";
@@ -14,6 +14,7 @@ import { pkrValueOfPoints, pointsEarnedFor } from "@/lib/loyalty";
 import { REFERRAL_STORAGE_KEY } from "@/lib/affiliate";
 import { PENDING_GIFT_CARD_KEY } from "@/lib/giftCardProduct";
 import { useTranslate } from "@/lib/i18n";
+import { trackBeginCheckout } from "@/lib/analytics";
 
 function getStoredReferralCode(): string | undefined {
   if (typeof window === "undefined") return undefined;
@@ -39,6 +40,16 @@ export default function CheckoutClient() {
   // a real product, the rider delivering that product can collect for the
   // whole order (gift card included), so COD stays available.
   const giftCardOnlyCart = hasGiftCardItem && cart.every((item) => item.product.id.startsWith("gift-card-"));
+
+  const trackedCheckoutRef = useRef(false);
+  useEffect(() => {
+    if (trackedCheckoutRef.current || cart.length === 0) return;
+    trackedCheckoutRef.current = true;
+    trackBeginCheckout(
+      cart.map((i) => ({ product: i.product, price: i.price, quantity: i.quantity })),
+      cartTotal()
+    );
+  }, [cart, cartTotal]);
 
   const allPaymentOptions: { id: PaymentMethod; label: string; description: string; Icon: typeof Truck; disabled?: boolean }[] = [
     { id: "cod", label: t("cashOnDelivery"), description: t("payOnDelivery"), Icon: Truck },

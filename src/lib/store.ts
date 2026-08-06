@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Product } from "./data";
+import { trackAddToCart, trackWishlist } from "./analytics";
 
 export interface GiftCardRecipient {
   email: string;
@@ -73,13 +74,13 @@ interface Store {
     product: Product,
     size: number,
     price: number,
-    options?: { giftWrap?: boolean; engrave?: boolean; giftCardRecipient?: GiftCardRecipient }
+    options?: { giftWrap?: boolean; engrave?: boolean; giftCardRecipient?: GiftCardRecipient; quantity?: number }
   ) => void;
   removeFromCart: (productId: string, size: number) => void;
   updateQuantity: (productId: string, size: number, qty: number) => void;
   clearCart: () => void;
 
-  toggleWishlist: (productId: string) => void;
+  toggleWishlist: (product: Product) => void;
   isWishlisted: (productId: string) => boolean;
 
   addRecentlyViewed: (productId: string) => void;
@@ -126,12 +127,13 @@ export const useStore = create<Store>()(
         const giftWrap = options?.giftWrap ?? false;
         const engrave = options?.engrave ?? false;
         const giftCardRecipient = options?.giftCardRecipient;
+        const quantity = options?.quantity ?? 1;
         const finalPrice = price + (giftWrap ? GIFT_WRAP_PRICE : 0) + (engrave ? ENGRAVE_PRICE : 0);
         set((state) => {
           // Gift cards always get their own line — the product id is already
           // uniquified per purchase (see /gift-cards), so this never merges.
           if (giftCardRecipient) {
-            return { cart: [...state.cart, { product, size, price: finalPrice, quantity: 1, giftCardRecipient }] };
+            return { cart: [...state.cart, { product, size, price: finalPrice, quantity, giftCardRecipient }] };
           }
           const existing = state.cart.find(
             (i) => i.product.id === product.id && i.size === size && !!i.giftWrap === giftWrap && !!i.engrave === engrave
@@ -139,12 +141,15 @@ export const useStore = create<Store>()(
           if (existing) {
             return {
               cart: state.cart.map((i) =>
-                i === existing ? { ...i, quantity: i.quantity + 1 } : i
+                i === existing ? { ...i, quantity: i.quantity + quantity } : i
               ),
             };
           }
-          return { cart: [...state.cart, { product, size, price: finalPrice, quantity: 1, giftWrap, engrave }] };
+          return { cart: [...state.cart, { product, size, price: finalPrice, quantity, giftWrap, engrave }] };
         });
+        // Gift cards aren't real catalog products — trackPurchase already
+        // excludes them, so add_to_cart skips them too for consistency.
+        if (!giftCardRecipient) trackAddToCart(product, finalPrice, quantity);
       },
 
       removeFromCart: (productId, size) => {
@@ -171,12 +176,14 @@ export const useStore = create<Store>()(
 
       clearCart: () => set({ cart: [] }),
 
-      toggleWishlist: (productId) => {
+      toggleWishlist: (product) => {
+        const willAdd = !get().wishlist.includes(product.id);
         set((state) => ({
-          wishlist: state.wishlist.includes(productId)
-            ? state.wishlist.filter((id) => id !== productId)
-            : [...state.wishlist, productId],
+          wishlist: willAdd
+            ? [...state.wishlist, product.id]
+            : state.wishlist.filter((id) => id !== product.id),
         }));
+        trackWishlist(product, willAdd);
       },
 
       isWishlisted: (productId) => get().wishlist.includes(productId),

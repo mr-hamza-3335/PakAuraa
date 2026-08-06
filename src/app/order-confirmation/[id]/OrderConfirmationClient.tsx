@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, PackageSearch, MessageCircle, FileDown, Gift, Share2 } from "lucide-react";
@@ -8,6 +8,30 @@ import { useStore, type Order } from "@/lib/store";
 import { whatsAppLink } from "@/components/WhatsAppWidget";
 import GiftCardShareCard, { type ShareableGiftCard } from "@/components/GiftCardShareCard";
 import type { IssuedGiftCard } from "@/lib/orders.server";
+import { trackPurchase } from "@/lib/analytics";
+
+const TRACKED_PURCHASES_KEY = "pk_tracked_purchases";
+
+/** purchase must fire exactly once per order — this page can be revisited via
+ * refresh, back-button, or a bookmarked link, so dedupe by order id survives
+ * across those, not just across renders. */
+function alreadyTrackedPurchase(orderId: string): boolean {
+  try {
+    const tracked: string[] = JSON.parse(localStorage.getItem(TRACKED_PURCHASES_KEY) ?? "[]");
+    return tracked.includes(orderId);
+  } catch {
+    return false;
+  }
+}
+
+function markPurchaseTracked(orderId: string) {
+  try {
+    const tracked: string[] = JSON.parse(localStorage.getItem(TRACKED_PURCHASES_KEY) ?? "[]");
+    localStorage.setItem(TRACKED_PURCHASES_KEY, JSON.stringify([...tracked, orderId].slice(-50)));
+  } catch {
+    // localStorage unavailable (private mode, quota) — worst case a refresh double-counts.
+  }
+}
 
 export default function OrderConfirmationClient({
   orderId,
@@ -24,6 +48,12 @@ export default function OrderConfirmationClient({
   // Gift cards aren't shipped or delivered — nothing for /track to show —
   // so a cart made up entirely of gift cards skips the Track Order button.
   const isGiftCardOnlyOrder = !!order && order.items.every((item) => item.product.id.startsWith("gift-card-"));
+
+  useEffect(() => {
+    if (!order || alreadyTrackedPurchase(order.id)) return;
+    trackPurchase(order);
+    markPurchaseTracked(order.id);
+  }, [order]);
 
   if (!order) {
     return (

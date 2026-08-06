@@ -10,6 +10,7 @@ import { useSettings, type Currency, type Language } from "@/lib/settings";
 import { useTranslate } from "@/lib/i18n";
 import { useCatalog } from "@/lib/catalog.client";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import { trackSearch } from "@/lib/analytics";
 
 const currencies: Currency[] = ["PKR", "USD", "AED", "GBP"];
 const languages: { id: Language; label: string }[] = [
@@ -92,6 +93,13 @@ export default function Header() {
       )
       .slice(0, 5);
   }, [searchQuery, products]);
+
+  useEffect(() => {
+    const q = searchQuery.trim();
+    if (!q) return;
+    const timer = setTimeout(() => trackSearch(q), 600);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);

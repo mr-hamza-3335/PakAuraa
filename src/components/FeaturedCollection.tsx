@@ -75,7 +75,7 @@ function ProductCard({
       {/* Wishlist */}
       <motion.button
         aria-label="Add to wishlist"
-        onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
+        onClick={(e) => { e.preventDefault(); toggleWishlist(product); }}
         className="absolute top-5 right-5 z-20 w-9 h-9 flex items-center justify-center rounded-full border border-gold/15 bg-obsidian/60 backdrop-blur-sm transition-all duration-300 hover:border-gold/40"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}

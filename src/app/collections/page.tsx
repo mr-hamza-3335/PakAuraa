@@ -52,7 +52,7 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
         <button
           aria-label="Wishlist"
-          onClick={() => toggleWishlist(product.id)}
+          onClick={() => toggleWishlist(product)}
           className="w-8 h-8 flex items-center justify-center bg-obsidian/70 backdrop-blur-sm border border-gold/18 rounded-full transition-all hover:border-gold/45"
         >
           <Heart size={13} strokeWidth={1.5} className={wishlisted ? "fill-gold text-gold" : "text-warm-gray"} />

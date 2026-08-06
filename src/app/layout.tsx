@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
+import Script from "next/script";
 import { Playfair_Display, Cormorant_Garamond, Inter, Scheherazade_New } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -7,6 +8,8 @@ import CartDrawer from "@/components/CartDrawer";
 import QuickView from "@/components/QuickView";
 import StoreHydration from "@/components/StoreHydration";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
+import AnalyticsScripts from "@/components/analytics/AnalyticsScripts";
+import ConsentBanner from "@/components/analytics/ConsentBanner";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import CompareBar from "@/components/CompareBar";
 import ReferralTracker from "@/components/ReferralTracker";
@@ -96,6 +99,12 @@ export default function RootLayout({
       className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${scheherazade.variable}`}
     >
       <body className="min-h-screen bg-obsidian antialiased">
+        {/* Just the empty array — gtm.js (loaded only after consent, see
+            AnalyticsScripts) reads whatever's already queued here once it
+            arrives, so nothing pushed before it loads is ever lost. */}
+        <Script id="datalayer-init" strategy="beforeInteractive">
+          {`window.dataLayer = window.dataLayer || [];`}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -108,6 +117,8 @@ export default function RootLayout({
           <ReferralTracker />
         </Suspense>
         <PageViewTracker />
+        <AnalyticsScripts />
+        <ConsentBanner />
         <WhatsAppWidget />
         <CompareBar />
         <LoadingScreen />

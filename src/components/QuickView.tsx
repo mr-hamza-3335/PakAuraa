@@ -181,7 +181,7 @@ export default function QuickView() {
 
                 <div className="flex gap-3">
                   <motion.button
-                    onClick={() => toggleWishlist(product.id)}
+                    onClick={() => toggleWishlist(product)}
                     className={`flex-1 py-3 border text-[11px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 transition-all duration-300 ${
                       wishlisted ? "border-gold/50 text-gold bg-gold/5" : "border-gold/25 text-warm-gray hover:border-gold/40"
                     }`}
