@@ -35,6 +35,8 @@ export interface Product {
   description: string;
   longDescription: string;
   price: number;
+  /** Pre-discount price shown struck through beside `price` when this product is on sale. */
+  originalPrice?: number;
   sizes: ProductSize[];
   size: string;
   gradient: string;
@@ -48,6 +50,8 @@ export interface Product {
   projection: number;
   /** How far the scent trail carries as the wearer moves through a room — distinct from projection (how far it reads from the skin). 1–10. */
   sillage: number;
+  /** Verbatim expected-performance claim (e.g. "8–10 Hours") shown on the product page. Omit rather than invent a figure. */
+  performanceText?: string;
   concentration: string;
   occasions: string[];
   seasons: string[];
@@ -58,6 +62,19 @@ export interface Product {
   stock?: number;
   /** ISO timestamp, set for products added through the admin panel — powers "Newest" sort. */
   createdAt?: string;
+  /** Hides this product from active listings/search and renders it as a non-purchasable "Coming Soon" tile instead. */
+  comingSoon?: boolean;
+  /** Path (in /public) to a downloadable product-details PDF, e.g. "/zurtaan-card.pdf". */
+  pdfCard?: string;
+  /** Overrides the auto-generated <title> for this product's page. */
+  seoTitle?: string;
+  /** Overrides the auto-generated meta description for this product's page. */
+  seoDescription?: string;
+}
+
+/** The size shown by default on cards and as the pre-selected PDP option. */
+export function defaultSize(product: Product): ProductSize {
+  return product.sizes[1] ?? product.sizes[0];
 }
 
 export interface Collection {
@@ -96,6 +113,7 @@ export const products: Product[] = [
     image: "/sultan-e-zafroon-v2.jpeg",
     gallery: ["/sultan-e-zafroon-v2.jpeg"],
     badge: "FLAGSHIP",
+    comingSoon: true,
     notes: {
       top: ["Saffron Oil"],
       heart: ["Oud Blend (Premium)", "Amber Resin"],
@@ -140,6 +158,7 @@ export const products: Product[] = [
     image: "/naazif.jpeg",
     gallery: ["/naazif.jpeg", "/packaging-lifestyle.jpeg"],
     badge: "NEW ARRIVAL",
+    comingSoon: true,
     notes: {
       top: ["Bergamot", "Mint Blend"],
       heart: ["Green Tea Oil", "Vetiver"],
@@ -162,42 +181,44 @@ export const products: Product[] = [
     id: "zurtaan",
     name: "Zurtaan",
     arabicName: "زرتان",
-    meaning: "Zurtaan is Arabic-root inspired, meaning strong, power, toughness — a boss perfume.",
-    tagline: "Arab Boss Style",
+    meaning: "Zurtaan is Arabic-root inspired, meaning strong, power, toughness.",
+    tagline: "Fresh in the Opening. Bold at Heart. Powerful in the Dry Down.",
     collection: "Signature Collection",
-    category: "Bold, Woody, Masculine",
-    fragranceFamily: ["Woody", "Oriental", "Spicy"],
+    category: "Woody Spicy Perfume for Men",
+    fragranceFamily: ["Woody", "Spicy"],
     gender: "men",
-    audience: ["Men only", "Strong personality type", "Evening wear / masculine signature"],
-    vibe: "Strong · Alluring · Arab Boss Style",
-    description: "Bold. Strong. The Arab Boss signature — cedarwood, oud and black pepper command every room.",
+    audience: ["Everyday Wear", "Office", "Casual Outings", "Evening", "Dinner", "Social Gatherings", "Special Occasions"],
+    vibe: "Fresh · Energetic · Aromatic · Spicy · Woody · Sophisticated",
+    description:
+      "Zurtaan is a bold Woody Spicy fragrance created for the modern man. It opens with a refreshing blend of lemon, ginger, lavender and mint, develops into an aromatic heart of apple, juniper, cardamom and geranium, and settles into a warm woody base of tonka bean, amberwood and vetiver.",
     longDescription:
-      "Zurtaan commands attention before you speak. The name carries its meaning in Arabic roots — strength, power, toughness. Black pepper ignites the opening: sharp, electric, and unapologetic. Atlas cedarwood forms the backbone — a pillar of masculine elegance — while oud lite adds an Arabic soul to the composition without overwhelming it. Amberwood and tonka bean form a base that clings to skin like a signature, deepening through the day into something darker and more alluring. Bold. Masculine. The fragrance of an Arab Boss, built for evening wear and a strong personality.",
-    price: 11500,
-    sizes: [
-      { ml: 30, price: 6500 },
-      { ml: 50, price: 11500 },
-      { ml: 100, price: 19500 },
-    ],
+      "Zurtaan opens with a vibrant burst of lemon, ginger, lavender and mint, creating a fresh and energetic first impression. As the fragrance develops, apple, juniper, cardamom and geranium reveal an aromatic heart that balances fruity freshness with warm spice. The fragrance finally settles into a sophisticated base of tonka bean, amberwood and vetiver, leaving behind a warm, woody and earthy character. Zurtaan is designed for the man who wants his fragrance to feel confident, refined and memorable.",
+    price: 2199,
+    originalPrice: 2499,
+    sizes: [{ ml: 50, price: 2199 }],
     size: "50ml",
     gradient: "product-gradient-zurtaan",
     image: "/zurtaan-v2.jpeg",
     gallery: ["/zurtaan-v2.jpeg"],
+    pdfCard: "/zurtaan-card.pdf",
+    seoTitle: "Zurtaan | Woody Spicy Perfume for Men | PakAuraa",
+    seoDescription:
+      "Discover Zurtaan by PakAuraa — a bold Woody Spicy fragrance with fresh lemon, ginger, lavender and mint, an aromatic heart of apple, juniper, cardamom and geranium, and a warm woody base of tonka bean, amberwood and vetiver.",
     notes: {
-      top: ["Black Pepper"],
-      heart: ["Cedarwood", "Oud Lite"],
-      base: ["Amberwood", "Tonka Bean"],
+      top: ["Lemon", "Ginger", "Lavender", "Mint"],
+      heart: ["Apple", "Juniper", "Cardamom", "Geranium"],
+      base: ["Tonka Bean", "Amberwood", "Vetiver"],
     },
     longevity: 9,
     projection: 8,
     sillage: 8,
     concentration: "Eau de Parfum",
-    occasions: ["Evening", "Business", "Formal", "Date Night"],
-    seasons: ["Autumn", "Winter", "Spring"],
+    occasions: ["Everyday Wear", "Office", "Casual Outings", "Evening", "Dinner", "Social Gatherings", "Special Occasions"],
+    seasons: ["Spring", "Autumn", "Winter"],
     dayNight: "both",
     madeIn: "Pakistan",
     ingredients:
-      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Cedarwood, Oud Lite, Black Pepper, Amberwood, Tonka Bean.",
+      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Lemon, Ginger, Lavender, Mint, Apple, Juniper, Cardamom, Geranium, Tonka Bean, Amberwood, Vetiver.",
   },
 
   // 4 — Zarfah
@@ -206,41 +227,44 @@ export const products: Product[] = [
     name: "Zarfah",
     arabicName: "ظرفه",
     meaning: "Zarfah (ظرفه) means a graceful, beautiful, elegant woman.",
-    tagline: "Modern Arabic Princess",
-    collection: "Floral Collection",
-    category: "Floral Arabic Luxury (for women)",
-    fragranceFamily: ["Floral", "Sweet", "Musk", "Powdery"],
+    tagline: "Fresh. Feminine. Unforgettable.",
+    collection: "Fruity Floral Collection",
+    category: "Women's Fragrance — Fruity Floral",
+    fragranceFamily: ["Fruity", "Floral", "Fresh", "Sweet", "Citrus"],
     gender: "women",
-    audience: ["Women", "Elegant & graceful", "Romantic / daytime wear"],
-    vibe: "Soft · Luxurious · Feminine",
-    description: "The graceful one. A soft, luxurious floral Arabic composition for the modern woman.",
+    audience: ["Women", "Day & Evening", "Casual & Special Occasions"],
+    vibe: "Fresh · Fruity · Feminine · Sweet · Elegant · Vibrant",
+    description:
+      "Fresh. Feminine. Unforgettable. Zarfah blends juicy fruits, delicate florals and a smooth musky-woody base into an elegant fragrance designed to make every moment memorable.",
     longDescription:
-      "Zarfah — ظرفه — the Arabic word for a graceful, beautiful, elegant woman, given form as fragrance. Orange blossom opens with the warmth of a spring morning: bright, generous, and alive. At the heart, rose absolute and jasmine sambac intertwine with the delicacy of fine silk — two of perfumery's most beloved florals at their absolute peak. Vanilla and white musk close the composition in intimacy — soft, warm, skin-close, impossible to forget. Zarfah is made for the woman who leaves a trail of wonder in every room she enters — the modern Arabic princess.",
-    price: 10500,
-    sizes: [
-      { ml: 30, price: 5800 },
-      { ml: 50, price: 10500 },
-      { ml: 100, price: 17500 },
-    ],
+      "Zarfah is a vibrant and feminine fragrance created for women who love to leave a beautiful, unforgettable impression. It opens with a sparkling burst of juicy fruits and bright citrus, moves into a soft floral heart, and settles into a smooth, warm and elegant base of musk, woods and oakmoss. The result is a fresh, playful and sophisticated scent that feels confident, graceful and effortlessly attractive.",
+    price: 1999,
+    originalPrice: 2299,
+    sizes: [{ ml: 50, price: 1999 }],
     size: "50ml",
     gradient: "product-gradient-zarfah",
     image: "/zarfah-v2.jpeg",
     gallery: ["/zarfah-v2.jpeg"],
+    pdfCard: "/zarfah-card.pdf",
+    performanceText: "8–10 Hours",
+    seoTitle: "Zarfah Women's Perfume | Fruity Floral Fragrance | PakAuraa",
+    seoDescription:
+      "Discover Zarfah by PakAuraa — a vibrant women's fruity floral fragrance with juicy fruits, delicate florals, musk and woods. Long-lasting 8–10 hour performance.",
     notes: {
-      top: ["Orange Blossom"],
-      heart: ["Rose Absolute", "Jasmine Sambac"],
-      base: ["Vanilla", "White Musk"],
+      top: ["Purple Passion Fruit", "Grapefruit", "Pineapple", "Tangerine", "Strawberry"],
+      heart: ["Peony", "Vanilla Orchid", "Red Berries", "Jasmine", "Lily of the Valley"],
+      base: ["Musk", "Blonde Woods", "Oakmoss"],
     },
     sillage: 6,
     longevity: 7,
     projection: 6,
     concentration: "Eau de Parfum",
-    occasions: ["Daily", "Brunch", "Wedding", "Gifting", "Romantic"],
-    seasons: ["Spring", "Summer", "Autumn"],
-    dayNight: "day",
+    occasions: ["Day & Evening", "Casual Outings", "Special Occasions"],
+    seasons: ["Spring", "Summer"],
+    dayNight: "both",
     madeIn: "Pakistan",
     ingredients:
-      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Rose Absolute, Jasmine Sambac, Vanilla, White Musk, Orange Blossom.",
+      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Purple Passion Fruit, Grapefruit, Pineapple, Tangerine, Strawberry, Peony, Vanilla Orchid, Red Berries, Jasmine, Lily of the Valley, Musk, Blonde Woods, Oakmoss.",
   },
 
   // 5 — Nuxtar
@@ -271,6 +295,7 @@ export const products: Product[] = [
     gallery: ["/nuxtar-v2.jpeg"],
     badge: "LIMITED",
     limitedEdition: true,
+    comingSoon: true,
     notes: {
       top: ["Cardamom", "Cinnamon"],
       heart: ["Amber", "Vanilla Bean"],

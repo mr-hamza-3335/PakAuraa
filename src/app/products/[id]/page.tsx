@@ -21,6 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = await getProductById(id);
   if (!product) return {};
+  if (product.comingSoon) {
+    return {
+      title: { absolute: `${product.name} — Coming Soon | PakAuraa` },
+      description: `${product.name} by PakAuraa is coming soon. Explore Zurtaan and Zarfah, available now.`,
+      robots: { index: false, follow: true },
+    };
+  }
   return productMetadata(product);
 }
 
@@ -56,28 +63,35 @@ export default async function ProductPage({ params }: Props) {
   ]);
   if (!product) notFound();
 
-  const related = getRelatedProducts(allProducts, id, 3);
+  const related = getRelatedProducts(
+    allProducts.filter((p) => !p.comingSoon),
+    id,
+    3
+  );
 
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Collections", path: "/collections" },
     { name: product.name, path: `/products/${product.id}` },
   ]);
-  const faq = faqJsonLd(productFaqItems(product));
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product, reviews)) }}
-      />
+      {!product.comingSoon && (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product, reviews)) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(productFaqItems(product))) }}
+          />
+        </>
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }}
       />
       <Header />
       <ProductPageClient product={product} related={related} reviews={reviews} />

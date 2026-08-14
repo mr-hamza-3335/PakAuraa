@@ -8,14 +8,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCatalog } from "@/lib/catalog.client";
 import { useStore } from "@/lib/store";
-import { useSettings, formatPrice } from "@/lib/settings";
+import { useSettings } from "@/lib/settings";
+import { defaultSize } from "@/lib/data";
+import PriceTag from "@/components/PriceTag";
 
 export default function WishlistPage() {
   const products = useCatalog();
   const { wishlist, toggleWishlist, addToCart, setCartOpen, setQuickView } = useStore();
   const { currency } = useSettings();
 
-  const items = products.filter((p) => wishlist.includes(p.id));
+  const items = products.filter((p) => wishlist.includes(p.id) && !p.comingSoon);
 
   return (
     <>
@@ -39,7 +41,7 @@ export default function WishlistPage() {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
               {items.map((product, i) => {
-                const size = product.sizes[1];
+                const size = defaultSize(product);
                 return (
                   <motion.div
                     key={product.id}
@@ -91,7 +93,7 @@ export default function WishlistPage() {
                         </h3>
                       </Link>
                       <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-gold/10">
-                        <span className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice(size.price, currency)}</span>
+                        <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[13px] text-cream" />
                         <span className="text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
                       </div>
                     </div>

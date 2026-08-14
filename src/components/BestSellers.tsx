@@ -6,12 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCatalog } from "@/lib/catalog.client";
 import { useStore } from "@/lib/store";
-import { useSettings, formatPrice } from "@/lib/settings";
+import { useSettings } from "@/lib/settings";
+import { defaultSize } from "@/lib/data";
+import PriceTag from "@/components/PriceTag";
 
 export default function BestSellers() {
   const { addToCart, toggleWishlist, isWishlisted, setCartOpen, setQuickView } = useStore();
   const { currency } = useSettings();
-  const products = useCatalog();
+  const products = useCatalog().filter((p) => !p.comingSoon);
 
   return (
     <section className="py-28 lg:py-40 bg-[#0A0A0A] relative overflow-hidden">
@@ -50,7 +52,7 @@ export default function BestSellers() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
           {products.map((product, i) => {
             const wishlisted = isWishlisted(product.id);
-            const size = product.sizes[1];
+            const size = defaultSize(product);
 
             return (
               <motion.div
@@ -160,12 +162,7 @@ export default function BestSellers() {
                   </div>
 
                   <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-gold/[0.07]">
-                    <span
-                      className="text-[12px] text-cream"
-                      style={{ fontFamily: "var(--font-body-family)" }}
-                    >
-                      {formatPrice(size.price, currency)}
-                    </span>
+                    <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[12px] text-cream" />
                     {product.badge && (
                       <span
                         className="text-[6px] text-gold/50 tracking-wider"

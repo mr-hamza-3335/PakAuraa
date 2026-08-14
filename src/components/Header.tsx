@@ -38,11 +38,8 @@ function useNavLinks() {
     {
       label: t("fragrances"),
       items: [
-        { label: "Sultan-e-Zafroon", href: "/products/sultan-e-zafroon", note: "Flagship" },
-        { label: "Naazif", href: "/products/naazif", note: "Fresh" },
-        { label: "Zurtaan", href: "/products/zurtaan", note: "Woody" },
-        { label: "Zarfah", href: "/products/zarfah", note: "Floral" },
-        { label: "Nuxtar", href: "/products/nuxtar", note: "Night" },
+        { label: "Zurtaan", href: "/products/zurtaan", note: "Woody Spicy" },
+        { label: "Zarfah", href: "/products/zarfah", note: "Fruity Floral" },
       ],
     },
     { label: "Gift Cards", href: "/gift-cards", items: null },
@@ -85,6 +82,7 @@ export default function Header() {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return [];
     return products
+      .filter((p) => !p.comingSoon)
       .filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
@@ -696,15 +694,15 @@ export default function Header() {
                 className="mt-10 p-5 border border-gold/10 bg-gold/[0.02]"
               >
                 <p className="text-[8px] text-gold tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>
-                  Flagship Fragrance
+                  Signature Fragrance
                 </p>
                 <Link
-                  href="/products/sultan-e-zafroon"
+                  href="/products/zurtaan"
                   className="text-[20px] text-cream font-display hover:text-gold transition-colors"
                   style={{ fontFamily: "var(--font-display-family)" }}
                   onClick={() => setMobileOpen(false)}
                 >
-                  Sultan-e-Zafroon →
+                  Zurtaan →
                 </Link>
               </motion.div>
             </div>

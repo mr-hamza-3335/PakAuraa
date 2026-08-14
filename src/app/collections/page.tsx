@@ -3,15 +3,16 @@
 import { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { SlidersHorizontal, X, Star, Heart, ShoppingBag, Eye, Scale } from "lucide-react";
+import { SlidersHorizontal, X, Star, Heart, ShoppingBag, Eye, Scale, Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { collections, matchesCategory, type Product } from "@/lib/data";
+import { collections, matchesCategory, defaultSize, type Product } from "@/lib/data";
 import { useCatalog } from "@/lib/catalog.client";
 import { useStore } from "@/lib/store";
-import { useSettings, formatPrice } from "@/lib/settings";
+import { useSettings } from "@/lib/settings";
+import PriceTag from "@/components/PriceTag";
 
 const categories = [{ id: "all", name: "All Fragrances" }, ...collections.map((c) => ({ id: c.id, name: c.name }))];
 const concentrations = ["All", "Eau de Parfum", "Extrait de Parfum"];
@@ -23,12 +24,46 @@ const priceRanges = [
 ];
 const sorts = ["Featured", "Price: Low to High", "Price: High to Low", "Newest"];
 
+function ComingSoonCard({ product, idx }: { product: Product; idx: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col border border-gold/12 bg-charcoal rounded-lg overflow-hidden"
+    >
+      <div className={`relative aspect-square overflow-hidden opacity-50 grayscale ${product.gradient}`}>
+        <Image
+          src={product.image}
+          alt={`${product.name} — coming soon`}
+          fill
+          className="object-cover object-center"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+        />
+        <div className="absolute inset-0 bg-obsidian/55 flex items-center justify-center">
+          <span className="text-[9px] tracking-[0.22em] uppercase text-gold border border-gold/40 px-3 py-1.5" style={{ fontFamily: "var(--font-body-family)" }}>
+            Coming Soon
+          </span>
+        </div>
+      </div>
+      <div className="p-4 text-center">
+        <h3 className="font-elegant text-[16px] text-cream/70" style={{ fontFamily: "var(--font-elegant-family)" }}>
+          {product.name}
+        </h3>
+      </div>
+    </motion.div>
+  );
+}
+
 function ProductCard({ product, idx }: { product: Product; idx: number }) {
   const { addToCart, toggleWishlist, isWishlisted, setQuickView, setCartOpen, toggleCompare, isComparing } = useStore();
   const { currency } = useSettings();
+
+  if (product.comingSoon) return <ComingSoonCard product={product} idx={idx} />;
+
   const wishlisted = isWishlisted(product.id);
   const comparing = isComparing(product.id);
-  const size = product.sizes[1];
+  const size = defaultSize(product);
 
   return (
     <motion.div
@@ -111,9 +146,19 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={9} className="fill-gold text-gold" />)}
         </div>
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-gold/10">
-          <span className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice(size.price, currency)}</span>
+          <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[14px] text-cream" />
           <span className="text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
         </div>
+        {product.pdfCard && (
+          <a
+            href={product.pdfCard}
+            download
+            className="mt-3 flex items-center justify-center gap-1.5 text-[8px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
+            style={{ fontFamily: "var(--font-body-family)" }}
+          >
+            <Download size={10} strokeWidth={1.5} /> Details PDF
+          </a>
+        )}
       </div>
     </motion.div>
   );

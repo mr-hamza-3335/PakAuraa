@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Heart, ShoppingBag, ArrowRight, Eye } from "lucide-react";
 import Image from "next/image";
-import type { Product } from "@/lib/data";
+import { defaultSize, type Product } from "@/lib/data";
 import { useCatalog } from "@/lib/catalog.client";
 import { useStore } from "@/lib/store";
-import { useSettings, formatPrice } from "@/lib/settings";
+import { useSettings } from "@/lib/settings";
+import PriceTag from "@/components/PriceTag";
 
 function ProductCard({
   product,
@@ -26,11 +27,11 @@ function ProductCard({
   const { addToCart, toggleWishlist, isWishlisted, setQuickView, setCartOpen } = useStore();
   const { currency } = useSettings();
   const wishlisted = isWishlisted(product.id);
-  const defaultSize = product.sizes[1];
+  const size = defaultSize(product);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    addToCart(product, defaultSize.ml, defaultSize.price);
+    addToCart(product, size.ml, size.price);
     setCartOpen(true);
   };
 
@@ -176,17 +177,12 @@ function ProductCard({
 
         <div className="flex items-center justify-between pt-5 border-t border-gold/[0.08]">
           <div>
-            <span
-              className="text-[18px] text-cream"
-              style={{ fontFamily: "var(--font-body-family)" }}
-            >
-              {formatPrice(defaultSize.price, currency)}
-            </span>
+            <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[18px] text-cream" />
             <span
               className="text-[9px] text-warm-gray/85 ml-1.5"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
-              /{defaultSize.ml}ml
+              /{size.ml}ml
             </span>
           </div>
           <a
@@ -204,7 +200,7 @@ function ProductCard({
 }
 
 export default function FeaturedCollection() {
-  const products = useCatalog();
+  const products = useCatalog().filter((p) => !p.comingSoon);
   const featured = products.slice(0, 3);
   return (
     <section className="py-32 lg:py-44 px-6 lg:px-16 bg-[#080808] relative overflow-hidden">
@@ -235,7 +231,7 @@ export default function FeaturedCollection() {
             className="text-[14px] text-warm-gray/85 mt-8 max-w-[420px] mx-auto leading-[1.85]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
-            Five extraordinary fragrances. Each a world unto itself.
+            Each a world unto itself.
           </p>
         </motion.div>
 
@@ -261,7 +257,7 @@ export default function FeaturedCollection() {
             whileHover={{ scale: 1.02, backgroundColor: "rgba(201,168,76,0.03)" }}
             whileTap={{ scale: 0.98 }}
           >
-            View All Five Fragrances
+            View All Fragrances
             <ArrowRight size={11} strokeWidth={2} className="transition-transform duration-300 group-hover:translate-x-1" />
           </motion.a>
         </motion.div>

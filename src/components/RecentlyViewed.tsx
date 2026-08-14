@@ -13,7 +13,9 @@ export default function RecentlyViewed({ currentProductId }: { currentProductId?
   const t = useTranslate();
 
   const ids = recentlyViewed.filter((id) => id !== currentProductId).slice(0, 4);
-  const items = ids.map((id) => products.find((p) => p.id === id)).filter((p): p is NonNullable<typeof p> => !!p);
+  const items = ids
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => !!p && !p.comingSoon);
 
   if (items.length === 0) return null;
 

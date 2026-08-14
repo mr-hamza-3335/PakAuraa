@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart, ShoppingBag, Star, Share2, ChevronDown, Minus, Plus,
-  Sun, Moon, Package, Gift, Pen, Truck, RotateCcw, ArrowRight, Zap, ZoomIn, X
+  Sun, Moon, Package, Gift, Pen, Truck, RotateCcw, ArrowRight, Zap, ZoomIn, X, Download, Clock
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product, Review } from "@/lib/data";
+import { type Product, type Review, defaultSize } from "@/lib/data";
 import { useStore, GIFT_WRAP_PRICE, ENGRAVE_PRICE } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/client";
@@ -17,9 +17,63 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { productFaqItems } from "@/lib/seo";
 import { trackViewProduct } from "@/lib/analytics";
 import ProductCard from "@/components/ProductCard";
+import PriceTag from "@/components/PriceTag";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import NotifyBackInStock from "@/components/NotifyBackInStock";
 import { useTranslate } from "@/lib/i18n";
+
+const GENDER_LABEL: Record<Product["gender"], string> = {
+  men: "For Him",
+  women: "For Women",
+  unisex: "Unisex",
+};
+
+/* ── Coming Soon PDP ────────────────────────────────────── */
+function ComingSoonHero({ product }: { product: Product }) {
+  return (
+    <main className="pt-20 bg-obsidian min-h-screen">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-6 border-b border-gold/8">
+        <div className="flex items-center gap-2 text-[10px] text-warm-gray/85 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
+          <Link href="/" className="hover:text-gold transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/collections" className="hover:text-gold transition-colors">Collections</Link>
+          <span>/</span>
+          <span className="text-warm-gray">{product.name}</span>
+        </div>
+      </div>
+
+      <section className="max-w-[720px] mx-auto px-6 lg:px-12 py-16 lg:py-24 text-center">
+        <div className={`relative aspect-square max-w-[360px] mx-auto rounded-xl overflow-hidden border border-gold/15 mb-10 ${product.gradient}`}>
+          <Image
+            src={product.image}
+            alt={`${product.name} — coming soon | PakAuraa`}
+            fill
+            className="object-cover object-center opacity-50 grayscale"
+            sizes="360px"
+          />
+          <div className="absolute inset-0 bg-obsidian/40 flex items-center justify-center">
+            <span className="text-[11px] text-gold border border-gold/40 px-4 py-2 tracking-[0.25em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+              Coming Soon
+            </span>
+          </div>
+        </div>
+        <h1 className="font-display text-[clamp(28px,4vw,44px)] text-cream/80 leading-tight mb-4" style={{ fontFamily: "var(--font-display-family)" }}>
+          {product.name}
+        </h1>
+        <p className="text-[13px] text-warm-gray/85 leading-relaxed mb-10" style={{ fontFamily: "var(--font-body-family)" }}>
+          This fragrance isn&apos;t available yet — we&apos;re putting the finishing touches on it. In the meantime, discover Zurtaan and Zarfah, available now.
+        </p>
+        <Link
+          href="/collections"
+          className="inline-flex items-center gap-2 border border-gold/40 text-gold text-[11px] tracking-[0.2em] uppercase px-6 py-3.5 hover:bg-gold/8 transition-colors"
+          style={{ fontFamily: "var(--font-body-family)" }}
+        >
+          Shop Available Fragrances <ArrowRight size={12} />
+        </Link>
+      </section>
+    </main>
+  );
+}
 
 /* ── Longevity / Projection Meter ───────────────────────── */
 function Meter({ label, value, icon }: { label: string; value: number; icon: React.ReactNode }) {
@@ -292,13 +346,17 @@ export default function ProductPageClient({ product, related, reviews }: { produ
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id]);
 
-  const size = product.sizes[selectedSizeIdx];
+  const size = product.sizes[selectedSizeIdx] ?? defaultSize(product);
   const unitAddon = (giftWrap ? GIFT_WRAP_PRICE : 0) + (engrave ? ENGRAVE_PRICE : 0);
   const wishlisted = isWishlisted(product.id);
   const productReviews = reviews;
   const avgRating = productReviews.length
     ? productReviews.reduce((sum, r) => sum + r.rating, 0) / productReviews.length
     : null;
+
+  if (product.comingSoon) {
+    return <ComingSoonHero product={product} />;
+  }
 
   const handleAddToCart = () => {
     addToCart(product, size.ml, size.price, { giftWrap, engrave, quantity: qty });
@@ -416,6 +474,13 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               &ldquo;{product.tagline}&rdquo;
             </p>
 
+            <span
+              className="inline-flex w-fit items-center gap-1.5 text-[9px] text-gold tracking-[0.25em] uppercase border border-gold/35 bg-gold/5 px-3 py-1.5 mb-6"
+              style={{ fontFamily: "var(--font-body-family)" }}
+            >
+              {GENDER_LABEL[product.gender]} · {product.fragranceFamily.join(" ")}
+            </span>
+
             {product.stock !== undefined && product.stock <= 0 && (
               <p className="inline-flex w-fit items-center gap-2 text-[10px] text-red-300 tracking-wider uppercase border border-red-500/25 px-3 py-1.5 mb-5" style={{ fontFamily: "var(--font-body-family)" }}>
                 {t("outOfStock")}
@@ -456,45 +521,58 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             <div className="h-px bg-gradient-to-r from-gold/20 to-transparent mb-6" />
 
             {/* Price */}
-            <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl text-cream" style={{ fontFamily: "var(--font-body-family)" }}>
-                {formatPrice(size.price, currency)}
-              </span>
+            <div className="flex items-baseline gap-3 mb-2">
+              <PriceTag
+                price={size.price}
+                originalPrice={product.originalPrice}
+                currency={currency}
+                className="text-3xl text-cream"
+                originalClassName="text-[15px] text-warm-gray/55 line-through"
+              />
               <span className="text-[12px] text-warm-gray" style={{ fontFamily: "var(--font-body-family)" }}>
                 Excl. shipping
               </span>
             </div>
+            <div className="mb-4">
+              {product.originalPrice && product.originalPrice > size.price && (
+                <p className="text-[11px] text-gold/80 tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
+                  You save {formatPrice(product.originalPrice - size.price, currency)}
+                </p>
+              )}
+            </div>
 
             {/* Size selector */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] text-warm-gray tracking-[0.2em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
-                  Size
-                </p>
-                <span className="text-[10px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
-                  {size.ml}ml selected
-                </span>
+            {product.sizes.length > 1 && (
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] text-warm-gray tracking-[0.2em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+                    Size
+                  </p>
+                  <span className="text-[10px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
+                    {size.ml}ml selected
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {product.sizes.map((s, i) => (
+                    <motion.button
+                      key={s.ml}
+                      onClick={() => setSelectedSizeIdx(i)}
+                      className={`py-3 text-center transition-all duration-300 border ${
+                        selectedSizeIdx === i
+                          ? "border-gold bg-gold/10 text-gold"
+                          : "border-gold/18 text-warm-gray hover:border-gold/35 hover:text-cream"
+                      }`}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <p className="text-[13px]" style={{ fontFamily: "var(--font-body-family)" }}>{s.ml}ml</p>
+                      <p className="text-[10px] text-warm-gray/85 mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
+                        {formatPrice(s.price, currency)}
+                      </p>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                {product.sizes.map((s, i) => (
-                  <motion.button
-                    key={s.ml}
-                    onClick={() => setSelectedSizeIdx(i)}
-                    className={`py-3 text-center transition-all duration-300 border ${
-                      selectedSizeIdx === i
-                        ? "border-gold bg-gold/10 text-gold"
-                        : "border-gold/18 text-warm-gray hover:border-gold/35 hover:text-cream"
-                    }`}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <p className="text-[13px]" style={{ fontFamily: "var(--font-body-family)" }}>{s.ml}ml</p>
-                    <p className="text-[10px] text-warm-gray/85 mt-0.5" style={{ fontFamily: "var(--font-body-family)" }}>
-                      {formatPrice(s.price, currency)}
-                    </p>
-                  </motion.button>
-                ))}
-              </div>
-            </div>
+            )}
 
             {/* Qty */}
             <div className="flex items-center gap-4 mb-6">
@@ -568,6 +646,17 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                 <Share2 size={14} strokeWidth={1.5} />
               </button>
             </div>
+
+            {product.pdfCard && (
+              <a
+                href={product.pdfCard}
+                download
+                className="flex items-center justify-center gap-2 border border-gold/22 text-warm-gray hover:text-gold hover:border-gold/40 text-[10px] tracking-[0.2em] uppercase py-3.5 mb-7 transition-all"
+                style={{ fontFamily: "var(--font-body-family)" }}
+              >
+                <Download size={13} strokeWidth={1.5} /> Download Fragrance Card (PDF)
+              </a>
+            )}
 
             {/* Gift & Engraving */}
             <div className="space-y-3 mb-7 p-4 border border-gold/10 bg-charcoal/30">
@@ -721,6 +810,16 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                   <Meter label="Projection" value={product.projection} icon={<span className="text-[12px]">◎</span>} />
                   <Meter label="Sillage" value={product.sillage} icon={<span className="text-[12px]">≈</span>} />
                 </div>
+
+                {product.performanceText && (
+                  <div className="mt-6 flex items-center gap-3 p-4 border border-gold/12 bg-charcoal/30">
+                    <Clock size={16} strokeWidth={1.5} className="text-gold flex-shrink-0" />
+                    <div>
+                      <p className="text-[11px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>Long-lasting fragrance</p>
+                      <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Expected performance: {product.performanceText}</p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Details */}
                 <div className="mt-10 space-y-3 pt-8 border-t border-gold/10">

@@ -6,7 +6,8 @@ import { ArrowRight, ArrowLeft, Sparkles, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import { scentMoods } from "@/lib/data";
 import { useCatalog } from "@/lib/catalog.client";
-import { useSettings, formatPrice } from "@/lib/settings";
+import { useSettings } from "@/lib/settings";
+import PriceTag from "@/components/PriceTag";
 import { recommendFromQuiz, type ScentQuizAnswers } from "@/lib/recommend";
 
 const steps = [
@@ -49,7 +50,7 @@ export default function ScentFinder() {
   const [answers, setAnswers] = useState<ScentQuizAnswers>({});
   const [revealed, setRevealed] = useState(false);
   const { currency } = useSettings();
-  const products = useCatalog();
+  const products = useCatalog().filter((p) => !p.comingSoon);
 
   const recommendations = revealed ? recommendFromQuiz(products, answers, 3) : [];
 
@@ -188,9 +189,7 @@ export default function ScentFinder() {
                         {product.description}
                       </p>
                       <div className="flex items-center gap-4">
-                        <span className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>
-                          {formatPrice(product.price, currency)}
-                        </span>
+                        <PriceTag price={product.price} originalPrice={product.originalPrice} currency={currency} />
                         <a
                           href={`/products/${product.id}`}
                           className="inline-flex items-center gap-1 text-[10px] text-gold tracking-[0.15em] uppercase hover:text-gold-light"

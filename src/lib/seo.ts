@@ -89,15 +89,18 @@ export function pageMetadata({
 
 /** Rich, keyword-targeted metadata for a single product page. */
 export function productMetadata(product: Product): Metadata {
-  const title = `${product.name} — ${product.tagline} | Luxury Arabic Perfume Pakistan`;
+  const title = product.seoTitle ?? `${product.name} — ${product.tagline} | Luxury Arabic Perfume Pakistan`;
   const description =
+    product.seoDescription ??
     `${product.description} ${product.longevity}+ hour long-lasting ${product.concentration.toLowerCase()} ` +
     `from PakAuraa — luxury Arabic perfume, made in ${product.madeIn}. Shop ${product.name} online in Pakistan.`;
   const url = absoluteUrl(`/products/${product.id}`);
   const image = absoluteUrl(product.image);
 
   return {
-    title,
+    // seoTitle is a complete, literal title (already includes "| PakAuraa") — `absolute`
+    // bypasses the root layout's `%s | PakAuraa Luxury Perfumes` template so it isn't double-suffixed.
+    title: product.seoTitle ? { absolute: product.seoTitle } : title,
     description,
     keywords: [
       product.name,

@@ -20,10 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
-  const productRoutes = products.map((p) => ({
-    url: `${base}/products/${p.id}`,
-    lastModified: new Date(),
-  }));
+  const productRoutes = products
+    .filter((p) => !p.comingSoon)
+    .map((p) => ({
+      url: `${base}/products/${p.id}`,
+      lastModified: new Date(),
+    }));
 
   return [...staticRoutes, ...productRoutes];
 }
