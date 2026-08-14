@@ -648,14 +648,30 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             </div>
 
             {product.pdfCard && (
-              <a
-                href={product.pdfCard}
-                download
-                className="flex items-center justify-center gap-2 border border-gold/22 text-warm-gray hover:text-gold hover:border-gold/40 text-[10px] tracking-[0.2em] uppercase py-3.5 mb-7 transition-all"
-                style={{ fontFamily: "var(--font-body-family)" }}
-              >
-                <Download size={13} strokeWidth={1.5} /> Download Fragrance Card (PDF)
-              </a>
+              <div className="mb-7 border border-gold/15 bg-charcoal/30 overflow-hidden">
+                <p
+                  className="text-[9px] text-gold tracking-[0.25em] uppercase px-4 pt-4 pb-3"
+                  style={{ fontFamily: "var(--font-body-family)" }}
+                >
+                  Fragrance Card
+                </p>
+                <div className="relative w-full h-[440px] border-y border-gold/10 bg-obsidian/40">
+                  <iframe
+                    src={product.pdfCard}
+                    title={`${product.name} fragrance card`}
+                    className="w-full h-full"
+                    loading="lazy"
+                  />
+                </div>
+                <a
+                  href={product.pdfCard}
+                  download
+                  className="flex items-center justify-center gap-2 text-warm-gray hover:text-gold text-[10px] tracking-[0.2em] uppercase py-3.5 hover:bg-gold/5 transition-all"
+                  style={{ fontFamily: "var(--font-body-family)" }}
+                >
+                  <Download size={13} strokeWidth={1.5} /> Download Fragrance Card (PDF)
+                </a>
+              </div>
             )}
 
             {/* Gift & Engraving */}

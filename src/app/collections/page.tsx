@@ -15,12 +15,13 @@ import { useSettings } from "@/lib/settings";
 import PriceTag from "@/components/PriceTag";
 
 const categories = [{ id: "all", name: "All Fragrances" }, ...collections.map((c) => ({ id: c.id, name: c.name }))];
-const concentrations = ["All", "Eau de Parfum", "Extrait de Parfum"];
+// Bands are sized around the currently shoppable catalog (Zurtaan 2,199 / Zarfah
+// 1,999) rather than arbitrary numbers — keep these in step with real prices.
 const priceRanges = [
   { label: "All Prices", min: 0, max: Infinity },
-  { label: "Under PKR 12,000", min: 0, max: 12000 },
-  { label: "PKR 12,000–16,000", min: 12000, max: 16000 },
-  { label: "Above PKR 16,000", min: 16000, max: Infinity },
+  { label: "Under PKR 2,000", min: 0, max: 1999 },
+  { label: "PKR 2,000 – 2,500", min: 2000, max: 2500 },
+  { label: "Above PKR 2,500", min: 2501, max: Infinity },
 ];
 const sorts = ["Featured", "Price: Low to High", "Price: High to Low", "Newest"];
 
@@ -184,9 +185,17 @@ function CollectionsPageInner() {
   const [sort, setSort] = useState(searchParams.get("sort") === "new" ? "Newest" : "Featured");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  // Filter options are drawn only from the shoppable (non-Coming-Soon) catalog,
+  // so there's never a family/concentration pill that leads to a dead end.
+  const shoppable = useMemo(() => products.filter((p) => !p.comingSoon), [products]);
+
   const families = useMemo(
-    () => Array.from(new Set(products.flatMap((p) => p.fragranceFamily))).sort(),
-    [products]
+    () => Array.from(new Set(shoppable.flatMap((p) => p.fragranceFamily))).sort(),
+    [shoppable]
+  );
+  const concentrations = useMemo(
+    () => ["All", ...Array.from(new Set(shoppable.map((p) => p.concentration))).sort()],
+    [shoppable]
   );
 
   const setCategory = (cat: string) => {
@@ -204,7 +213,9 @@ function CollectionsPageInner() {
   };
 
   const filtered = useMemo(() => {
-    let list = [...products];
+    // Coming Soon tiles are a fixed teaser, not part of the shoppable catalog —
+    // they skip every filter and always land after the real, orderable results.
+    let list = [...shoppable];
     if (activeCat !== "all") list = list.filter((p) => matchesCategory(p, activeCat));
     if (activeFamily) {
       const f = activeFamily.toLowerCase();
@@ -218,8 +229,9 @@ function CollectionsPageInner() {
     if (sort === "Newest") {
       list.sort((a, b) => (b.createdAt ? new Date(b.createdAt).getTime() : 0) - (a.createdAt ? new Date(a.createdAt).getTime() : 0));
     }
-    return list;
-  }, [products, activeCat, activeFamily, concentration, priceIdx, sort]);
+    const comingSoon = products.filter((p) => p.comingSoon);
+    return [...list, ...comingSoon];
+  }, [products, shoppable, activeCat, activeFamily, concentration, priceIdx, sort]);
 
   const activeCategoryLabel = activeFamily
     ? `${activeFamily.charAt(0).toUpperCase()}${activeFamily.slice(1)} Family`
