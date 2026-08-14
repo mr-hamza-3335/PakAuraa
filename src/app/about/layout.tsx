@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "PakAuraa is a Lahore-born luxury fragrance house crafting Arabic-inspired perfumes — Sultan-e-Zafroon, Naazif, Zurtaan, Zarfah, and Nuxtar — with rare oud, saffron, and Bulgarian rose.",
+    "PakAuraa is a Lahore-born luxury fragrance house crafting premium perfumes — Zurtaan and Zarfah.",
 };
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {

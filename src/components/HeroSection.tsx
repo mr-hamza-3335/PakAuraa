@@ -187,14 +187,6 @@ export default function HeroSection() {
                   </span>
                 </div>
 
-                {/* Arabic name */}
-                <p
-                  className="text-[22px] lg:text-[26px] text-gold/78 leading-none"
-                  style={{ fontFamily: "var(--font-scheherazade), serif" }}
-                >
-                  {active.arabicName}
-                </p>
-
                 {/* Main headline */}
                 <h1
                   className="leading-[0.85] tracking-[-0.02em] overflow-hidden"

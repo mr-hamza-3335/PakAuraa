@@ -18,7 +18,7 @@ export interface Product {
   id: string;
   name: string;
   arabicName: string;
-  /** Literal breakdown of the Arabic/root name, sourced from the brand book. */
+  /** Literal breakdown of the name's meaning, sourced from the brand book. */
   meaning: string;
   /** Short quoted brand tagline from the brand book. */
   tagline: string;
@@ -181,7 +181,7 @@ export const products: Product[] = [
     id: "zurtaan",
     name: "Zurtaan",
     arabicName: "زرتان",
-    meaning: "Zurtaan is Arabic-root inspired, meaning strong, power, toughness.",
+    meaning: "Zurtaan means strong, power, toughness.",
     tagline: "Fresh in the Opening. Bold at Heart. Powerful in the Dry Down.",
     collection: "Signature Collection",
     category: "Woody Spicy Perfume for Men",
@@ -226,7 +226,7 @@ export const products: Product[] = [
     id: "zarfah",
     name: "Zarfah",
     arabicName: "ظرفه",
-    meaning: "Zarfah (ظرفه) means a graceful, beautiful, elegant woman.",
+    meaning: "Zarfah means a graceful, beautiful, elegant woman.",
     tagline: "Fresh. Feminine. Unforgettable.",
     collection: "Fruity Floral Collection",
     category: "Women's Fragrance — Fruity Floral",
@@ -342,13 +342,6 @@ export const collections: Collection[] = [
     href: "/collections?cat=unisex",
   },
   {
-    id: "arabic",
-    name: "Arabic Collection",
-    subtitle: "Oud · Royal · Heritage",
-    gradient: "linear-gradient(145deg, #1a1008 0%, #2d1f0a 50%, #1a1008 100%)",
-    href: "/collections?cat=arabic",
-  },
-  {
     id: "signature",
     name: "Signature Collection",
     subtitle: "The House's Defining Fragrances",
@@ -380,8 +373,6 @@ export function matchesCategory(product: Product, cat: string): boolean {
       return product.gender === "women";
     case "unisex":
       return product.gender === "unisex";
-    case "arabic":
-      return true; // every PakAuraa fragrance is an Arabic-luxury composition
     case "signature":
       return product.collection === "Signature Collection";
     case "limited":

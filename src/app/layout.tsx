@@ -52,10 +52,9 @@ export const metadata: Metadata = {
     template: "%s | PakAuraa Luxury Perfumes",
   },
   description:
-    "Discover world-class luxury perfumes by PakAuraa. Authentic Arabic-inspired fragrances crafted for royalty in Lahore, Pakistan. Sultan-e-Zafroon, Naazif, Zurtaan, Zarfah, Nuxtar.",
+    "Discover world-class luxury perfumes by PakAuraa. Premium fragrances crafted for royalty in Lahore, Pakistan. Zurtaan and Zarfah.",
   keywords: [
     ...BRAND_KEYWORDS,
-    "Arabic fragrance",
     "premium perfume",
     "Lahore perfume",
     "Pakistani luxury brand",
@@ -69,13 +68,13 @@ export const metadata: Metadata = {
     title: "PakAuraa — Luxury Perfumes | Born in Pakistan",
     description:
       "World-class luxury fragrances, crafted in Pakistan for the global connoisseur.",
-    images: [{ url: "/sultan-e-zafroon-v2.jpeg", width: 1200, height: 630, alt: "PakAuraa Luxury Perfumes" }],
+    images: [{ url: "/zurtaan-v2.jpeg", width: 1200, height: 630, alt: "PakAuraa Luxury Perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PakAuraa — Luxury Perfumes",
     description: "Born in Pakistan. Worn by royalty.",
-    images: ["/sultan-e-zafroon-v2.jpeg"],
+    images: ["/zurtaan-v2.jpeg"],
   },
   robots: {
     index: true,

@@ -29,7 +29,6 @@ function useNavLinks() {
         { label: t("forHim"), href: "/collections?cat=men" },
         { label: t("forHer"), href: "/collections?cat=women" },
         { label: t("unisex"), href: "/collections?cat=unisex" },
-        { label: t("arabicCollection"), href: "/collections?cat=arabic" },
         { label: t("signatureCollection"), href: "/collections?cat=signature" },
         { label: t("limitedEdition"), href: "/collections?cat=limited" },
         { label: t("giftSets"), href: "/collections?cat=gifts" },

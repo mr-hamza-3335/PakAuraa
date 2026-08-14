@@ -52,15 +52,15 @@ export default function LoadingScreen() {
             />
           </motion.div>
 
-          {/* Arabic tagline */}
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 0.5, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gold text-xl mb-10"
-            style={{ fontFamily: "var(--font-scheherazade), serif" }}
+            className="text-gold text-[11px] tracking-[0.35em] uppercase mb-10"
+            style={{ fontFamily: "var(--font-body-family)" }}
           >
-            عطور فاخرة
+            Luxury Perfumes
           </motion.p>
 
           {/* Gold progress line */}

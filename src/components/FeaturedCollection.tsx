@@ -149,14 +149,7 @@ function ProductCard({
         </a>
 
         <p
-          className="text-base text-gold/35 mb-4"
-          style={{ fontFamily: "var(--font-scheherazade), serif" }}
-        >
-          {product.arabicName}
-        </p>
-
-        <p
-          className="text-[12px] text-warm-gray/85 leading-[1.85] mb-5 flex-1 line-clamp-3"
+          className="text-[12px] text-warm-gray/85 leading-[1.85] mb-5 mt-3 flex-1 line-clamp-3"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           {product.description}

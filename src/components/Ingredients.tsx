@@ -7,7 +7,6 @@ const ingredients = [
   {
     id: "oud",
     name: "Assam Oud",
-    arabicName: "عود آسام",
     origin: "Assam, India",
     rarity: "Ultra Rare",
     profile: ["Dark Resin", "Forest", "Leather", "Smoke"],
@@ -18,7 +17,6 @@ const ingredients = [
   {
     id: "rose",
     name: "Bulgarian Rose",
-    arabicName: "الورد البلغاري",
     origin: "Rose Valley, Bulgaria",
     rarity: "Seasonal",
     profile: ["Velvety", "Deep", "Honey", "Green"],
@@ -29,7 +27,6 @@ const ingredients = [
   {
     id: "saffron",
     name: "Kashmir Saffron",
-    arabicName: "زعفران كشمير",
     origin: "Pampore, Kashmir",
     rarity: "Rare",
     profile: ["Metallic", "Honeyed", "Warm", "Spiced"],
@@ -40,7 +37,6 @@ const ingredients = [
   {
     id: "cedarwood",
     name: "Atlas Cedarwood",
-    arabicName: "خشب الأرز",
     origin: "Atlas Mountains, Morocco",
     rarity: "Sustainable",
     profile: ["Dry Wood", "Pencil Shavings", "Warm", "Grounding"],
@@ -51,7 +47,6 @@ const ingredients = [
   {
     id: "amber",
     name: "Arabian Amber",
-    arabicName: "العنبر العربي",
     origin: "Arabian Peninsula",
     rarity: "Precious",
     profile: ["Warm", "Resinous", "Sweet", "Deep"],
@@ -62,7 +57,6 @@ const ingredients = [
   {
     id: "musk",
     name: "White Musk",
-    arabicName: "المسك الأبيض",
     origin: "Synthetic · IFRA Compliant",
     rarity: "Ethical",
     profile: ["Clean", "Skin", "Soft", "Airy"],
@@ -161,14 +155,6 @@ export default function Ingredients() {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="lg:pt-2"
           >
-              {/* Arabic name */}
-              <p
-                className="text-[28px] text-gold/30 mb-3"
-                style={{ fontFamily: "var(--font-scheherazade), serif" }}
-              >
-                {current.arabicName}
-              </p>
-
               <h3
                 className="text-cream leading-tight mb-3 tracking-[-0.015em]"
                 style={{ fontFamily: "var(--font-display-family)", fontSize: "clamp(32px,4vw,52px)" }}

@@ -45,18 +45,6 @@ export default function Newsletter() {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
       <div className="max-w-[640px] mx-auto text-center relative z-10">
-        {/* Arabic accent */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-gold text-xl mb-2"
-          style={{ fontFamily: "var(--font-scheherazade), serif" }}
-        >
-          انضم إلينا
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

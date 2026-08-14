@@ -7,7 +7,6 @@ const families = [
   {
     id: "oud",
     name: "Oud",
-    arabicName: "العود",
     tagline: "Ancient · Majestic · Revered",
     description:
       "The most precious material in all of perfumery. Centuries-old agarwood from the forests of Assam and Cambodia.",
@@ -20,7 +19,6 @@ const families = [
   {
     id: "floral",
     name: "Floral",
-    arabicName: "الزهور",
     tagline: "Romantic · Feminine · Ethereal",
     description:
       "Bulgarian rose, jasmine sambac and white peony — the most beloved notes on earth, captured at their peak.",
@@ -33,7 +31,6 @@ const families = [
   {
     id: "oriental",
     name: "Oriental",
-    arabicName: "الشرقي",
     tagline: "Rich · Spiced · Opulent",
     description:
       "Warm amber, exotic spices and ancient resins — evoking the trade routes of the old Silk Road.",
@@ -46,7 +43,6 @@ const families = [
   {
     id: "musk",
     name: "Musk",
-    arabicName: "المسك",
     tagline: "Clean · Sensual · Intimate",
     description:
       "Effortlessly beautiful. White musk and powdery accords that fuse with your skin and become truly yours.",
@@ -59,7 +55,6 @@ const families = [
   {
     id: "woody",
     name: "Woody",
-    arabicName: "الخشبي",
     tagline: "Grounding · Deep · Soulful",
     description:
       "Mysore sandalwood, Atlas cedarwood and smoky vetiver — foundations that give every great fragrance its soul.",
@@ -72,7 +67,6 @@ const families = [
   {
     id: "fresh",
     name: "Fresh",
-    arabicName: "المنعش",
     tagline: "Vibrant · Bright · Uplifting",
     description:
       "Italian bergamot, neroli and aquatic notes that open a fragrance like the first cool light of morning.",
@@ -147,14 +141,6 @@ export default function FragranceFamilies() {
                   style={{ fontFamily: "var(--font-display-family)" }}
                 >
                   {family.symbol}
-                </p>
-
-                {/* Arabic name */}
-                <p
-                  className="text-sm text-gold/40 mb-2 transition-colors duration-500 group-hover:text-gold/65"
-                  style={{ fontFamily: "var(--font-scheherazade), serif" }}
-                >
-                  {family.arabicName}
                 </p>
 
                 {/* Name */}

@@ -4,17 +4,16 @@ import type { Product, Review } from "./data";
 export const SITE_URL = "https://pakauraa.com";
 export const SITE_NAME = "PakAuraa";
 export const SITE_DESCRIPTION =
-  "PakAuraa is a Lahore-born luxury fragrance house crafting Arabic-inspired perfumes in Pakistan — Sultan-e-Zafroon, Naazif, Zurtaan, Zarfah, and Nuxtar — with rare oud, saffron, and long-lasting extrait de parfum concentration.";
+  "PakAuraa is a Lahore-born luxury fragrance house crafting premium perfumes in Pakistan — Zurtaan and Zarfah — with a long-lasting eau de parfum concentration.";
 
 /** Core phrases every public page should reinforce without keyword-stuffing. */
 export const BRAND_KEYWORDS = [
   "Pakistani perfumes",
   "luxury perfumes in Pakistan",
-  "Arabic perfumes",
   "long-lasting perfumes",
-  "Sultan-e-Zafroon perfume",
-  "oud perfume Pakistan",
-  "extrait de parfum Pakistan",
+  "Zurtaan perfume",
+  "Zarfah perfume",
+  "eau de parfum Pakistan",
   "PakAuraa",
 ];
 
@@ -49,7 +48,7 @@ export function pageMetadata({
   title,
   description,
   path,
-  image = "/sultan-e-zafroon-v2.jpeg",
+  image = "/zurtaan-v2.jpeg",
   keywords,
   noIndex = false,
 }: {
@@ -89,11 +88,11 @@ export function pageMetadata({
 
 /** Rich, keyword-targeted metadata for a single product page. */
 export function productMetadata(product: Product): Metadata {
-  const title = product.seoTitle ?? `${product.name} — ${product.tagline} | Luxury Arabic Perfume Pakistan`;
+  const title = product.seoTitle ?? `${product.name} — ${product.tagline} | Luxury Perfume Pakistan`;
   const description =
     product.seoDescription ??
     `${product.description} ${product.longevity}+ hour long-lasting ${product.concentration.toLowerCase()} ` +
-    `from PakAuraa — luxury Arabic perfume, made in ${product.madeIn}. Shop ${product.name} online in Pakistan.`;
+    `from PakAuraa — luxury perfume, made in ${product.madeIn}. Shop ${product.name} online in Pakistan.`;
   const url = absoluteUrl(`/products/${product.id}`);
   const image = absoluteUrl(product.image);
 
@@ -109,9 +108,7 @@ export function productMetadata(product: Product): Metadata {
       ...product.fragranceFamily.map((f) => `${f} perfume Pakistan`),
       "Pakistani perfumes",
       "luxury perfumes in Pakistan",
-      "Arabic perfumes",
       "long-lasting perfumes",
-      "Sultan-e-Zafroon perfume",
     ],
     alternates: { canonical: url },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },

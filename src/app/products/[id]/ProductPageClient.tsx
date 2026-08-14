@@ -403,7 +403,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
               <div className={`absolute inset-0 ${product.gradient}`} />
               <Image
                 src={product.gallery[activeImage] ?? product.image}
-                alt={`${product.name} — ${product.tagline} | Luxury Arabic Perfume by PakAuraa`}
+                alt={`${product.name} — ${product.tagline} | Luxury Perfume by PakAuraa`}
                 fill
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                 sizes="(max-width: 1024px) 100vw, 55vw"
@@ -464,12 +464,9 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             <p className="text-[9px] text-gold tracking-[0.35em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>
               {product.collection} · {product.concentration}
             </p>
-            <h1 className="font-display text-[clamp(32px,4vw,48px)] text-cream leading-tight mb-1" style={{ fontFamily: "var(--font-display-family)" }}>
+            <h1 className="font-display text-[clamp(32px,4vw,48px)] text-cream leading-tight mb-2" style={{ fontFamily: "var(--font-display-family)" }}>
               {product.name}
             </h1>
-            <p className="text-xl text-gold/40 mb-2" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
-              {product.arabicName}
-            </p>
             <p className="text-[12px] text-gold/70 tracking-wider italic mb-5" style={{ fontFamily: "var(--font-body-family)" }}>
               &ldquo;{product.tagline}&rdquo;
             </p>
@@ -1010,7 +1007,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
             >
               <Image
                 src={product.gallery[activeImage] ?? product.image}
-                alt={`${product.name} — ${product.tagline} | Luxury Arabic Perfume by PakAuraa`}
+                alt={`${product.name} — ${product.tagline} | Luxury Perfume by PakAuraa`}
                 fill
                 className="object-contain"
                 sizes="90vw"

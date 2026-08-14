@@ -10,9 +10,9 @@ import Footer from "@/components/Footer";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "PakAuraa — Luxury Arabic Perfumes in Pakistan | Sultan-e-Zafroon",
+  title: "PakAuraa — Luxury Perfumes in Pakistan | Zurtaan & Zarfah",
   description:
-    "Shop luxury Pakistani perfumes crafted with rare oud, saffron and Bulgarian rose. Long-lasting Arabic perfumes and extrait de parfum — including our flagship Sultan-e-Zafroon — with free Pakistan-wide delivery.",
+    "Shop luxury Pakistani perfumes — Zurtaan, a Woody Spicy signature for him, and Zarfah, a Fruity Floral fragrance for her. Long-lasting eau de parfum with free Pakistan-wide delivery.",
   path: "/",
 });
 

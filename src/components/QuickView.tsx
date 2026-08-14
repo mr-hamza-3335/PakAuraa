@@ -104,12 +104,9 @@ export default function QuickView() {
                 <p className="text-[9px] text-gold tracking-[0.3em] uppercase mb-2" style={{ fontFamily: "var(--font-body-family)" }}>
                   {product.collection}
                 </p>
-                <h2 className="font-display text-2xl text-cream leading-tight mb-1" style={{ fontFamily: "var(--font-display-family)" }}>
+                <h2 className="font-display text-2xl text-cream leading-tight mb-3" style={{ fontFamily: "var(--font-display-family)" }}>
                   {product.name}
                 </h2>
-                <p className="text-lg text-gold/50 mb-3" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
-                  {product.arabicName}
-                </p>
 
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
