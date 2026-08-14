@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { products, type Product } from "@/lib/data";
 
 type Particle = {
   id: number;
@@ -27,8 +28,30 @@ function generateParticles(): Particle[] {
   }));
 }
 
+// The hero showcases the two live fragrances, in this order — pulled straight
+// from data.ts so the copy can never drift from the real product content.
+const HERO_IDS = ["zurtaan", "zarfah"];
+const heroProducts: Product[] = HERO_IDS.map((id) => products.find((p) => p.id === id)).filter(
+  (p): p is Product => !!p
+);
+
+const GENDER_RING: Record<Product["gender"], string> = { men: "For Him", women: "For Her", unisex: "Unisex" };
+
+function heroStats(product: Product) {
+  return [
+    { label: "Fragrance Family", value: product.fragranceFamily.slice(0, 2).join(" · ") },
+    { label: "For", value: GENDER_RING[product.gender] },
+    product.performanceText
+      ? { label: "Performance", value: product.performanceText }
+      : { label: "Bottle Size", value: product.size },
+  ];
+}
+
+const AUTO_ADVANCE_MS = 6500;
+
 export default function HeroSection() {
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -64,6 +87,17 @@ export default function HeroSection() {
     window.addEventListener("mousemove", onMove);
     return () => { window.removeEventListener("mousemove", onMove); clearTimeout(t); };
   }, [rawX, rawY]);
+
+  useEffect(() => {
+    // Restarting on activeIndex keeps a fixed "quiet time" after every
+    // change, whether it came from the timer or a manual dot click.
+    const t = setInterval(() => setActiveIndex((i) => (i + 1) % heroProducts.length), AUTO_ADVANCE_MS);
+    return () => clearInterval(t);
+  }, [activeIndex]);
+
+  const active = heroProducts[activeIndex];
+  const stats = heroStats(active);
+  const ringText = `${active.fragranceFamily.slice(0, 2).join(" · ").toUpperCase()} · ${GENDER_RING[active.gender].toUpperCase()} ·`;
 
   return (
     <section
@@ -132,191 +166,161 @@ export default function HeroSection() {
             className="flex flex-col justify-center space-y-6 lg:space-y-8 z-10"
             style={{ y: textY, opacity: masterOpacity }}
           >
-            {/* Eyebrow line */}
             {ready && (
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-5"
+                key={activeIndex}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col space-y-6 lg:space-y-8"
               >
-                <motion.div
-                  className="h-px bg-gradient-to-r from-gold/60 to-transparent"
-                  initial={{ width: 0 }}
-                  animate={{ width: 48 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                />
-                <span className="eyebrow opacity-70">
-                  Extrait de Parfum · Lahore, Pakistan
-                </span>
-              </motion.div>
-            )}
-
-            {/* Arabic name */}
-            {ready && (
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[22px] lg:text-[26px] text-gold/78 leading-none"
-                style={{ fontFamily: "var(--font-scheherazade), serif" }}
-              >
-                سلطان الزعفران
-              </motion.p>
-            )}
-
-            {/* Main headline */}
-            {ready && (
-              <h1
-                className="leading-[0.85] tracking-[-0.02em] overflow-hidden"
-                style={{ fontFamily: "var(--font-display-family)" }}
-              >
-                <span className="block overflow-hidden">
-                  {[
-                    { text: "Sultan-e-", gold: false },
-                    { text: "Zafroon", gold: true },
-                  ].map((word, i) => (
-                    <motion.span
-                      key={i}
-                      className={`inline-block ${word.gold ? "text-gold-gradient" : "text-cream"}`}
-                      initial={{ y: 100, opacity: 0, skewY: 3 }}
-                      animate={{ y: 0, opacity: 1, skewY: 0 }}
-                      transition={{
-                        delay: 0.45 + i * 0.1,
-                        duration: 1.1,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      style={{
-                        fontSize: "clamp(30px, 8vw, 92px)",
-                        lineHeight: 0.9,
-                      }}
-                    >
-                      {word.text}
-                    </motion.span>
-                  ))}
-                </span>
-                <motion.span
-                  className="block mt-3 h-px bg-gradient-to-r from-gold/50 via-gold/15 to-transparent"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.85, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ transformOrigin: "left", width: "60%" }}
-                />
-              </h1>
-            )}
-
-            {/* Description */}
-            {ready && (
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[15px] lg:text-[17px] text-warm-gray/85 leading-[1.9] max-w-[420px] lg:max-w-[480px] font-light"
-                style={{ fontFamily: "var(--font-body-family)" }}
-              >
-                The reigning sovereign of rare Kashmir saffron and aged Assam oud.
-                A fragrance that commands presence before a word is spoken.
-              </motion.p>
-            )}
-
-            {/* CTAs */}
-            {ready && (
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.05, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row items-start gap-4"
-              >
-                <motion.a
-                  href="/products/sultan-e-zafroon"
-                  className="group relative overflow-hidden inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[10px] tracking-[0.28em] uppercase font-medium"
-                  style={{ fontFamily: "var(--font-body-family)" }}
-                  whileHover={{ scale: 1.02, boxShadow: "0 20px 56px rgba(201,168,76,0.38)" }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-800" />
-                  Discover Sultan-e-Zafroon
-                  <ArrowRight size={11} strokeWidth={2.5} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </motion.a>
-
-                <motion.a
-                  href="/collections"
-                  className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/85 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
-                  style={{ fontFamily: "var(--font-body-family)" }}
-                  whileHover={{ backgroundColor: "rgba(201,168,76,0.04)" }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  View All Fragrances
-                </motion.a>
-              </motion.div>
-            )}
-
-            {/* Fragrance stats */}
-            {ready && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4, duration: 1 }}
-                className="flex items-center gap-8 pt-6 border-t border-gold/[0.07]"
-              >
-                {[
-                  { label: "Longevity", value: "10–12 hrs" },
-                  { label: "Projection", value: "Intense" },
-                  { label: "Volume", value: "30 · 50 · 100ml" },
-                ].map(({ label, value }) => (
-                  <div key={label}>
-                    <p
-                      className="text-[7px] text-muted/80 tracking-[0.28em] uppercase mb-1.5"
-                      style={{ fontFamily: "var(--font-body-family)" }}
-                    >
-                      {label}
-                    </p>
-                    <p
-                      className="text-[12px] text-gold/80"
-                      style={{ fontFamily: "var(--font-body-family)" }}
-                    >
-                      {value}
-                    </p>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-
-            {/* Mobile-only bottle image */}
-            {ready && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                className="lg:hidden relative mx-auto mt-2 w-[220px] aspect-[4/5]"
-              >
-                <div className="absolute inset-[-40px] bg-[radial-gradient(ellipse_at_center,_rgba(61,8,32,0.7)_0%,_transparent_65%)] pointer-events-none" />
-                <div className="relative w-full h-full overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.9)]">
-                  <Image
-                    src="/sultan-e-zafroon-v2.jpeg"
-                    alt="Sultan-e-Zafroon — PakAuraa Flagship Perfume"
-                    fill
-                    className="object-cover object-center"
-                    sizes="220px"
-                    priority
+                {/* Eyebrow line */}
+                <div className="flex items-center gap-5">
+                  <motion.div
+                    className="h-px bg-gradient-to-r from-gold/60 to-transparent"
+                    initial={{ width: 0 }}
+                    animate={{ width: 48 }}
+                    transition={{ delay: 0.15, duration: 0.8 }}
                   />
+                  <span className="eyebrow opacity-70">
+                    {active.concentration} · Lahore, Pakistan
+                  </span>
+                </div>
+
+                {/* Arabic name */}
+                <p
+                  className="text-[22px] lg:text-[26px] text-gold/78 leading-none"
+                  style={{ fontFamily: "var(--font-scheherazade), serif" }}
+                >
+                  {active.arabicName}
+                </p>
+
+                {/* Main headline */}
+                <h1
+                  className="leading-[0.85] tracking-[-0.02em] overflow-hidden"
+                  style={{ fontFamily: "var(--font-display-family)" }}
+                >
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      className="inline-block text-gold-gradient"
+                      initial={{ y: 100, skewY: 3 }}
+                      animate={{ y: 0, skewY: 0 }}
+                      transition={{ delay: 0.1, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ fontSize: "clamp(30px, 8vw, 92px)", lineHeight: 0.9 }}
+                    >
+                      {active.name}
+                    </motion.span>
+                  </span>
+                  <motion.span
+                    className="block mt-3 h-px bg-gradient-to-r from-gold/50 via-gold/15 to-transparent"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ transformOrigin: "left", width: "60%" }}
+                  />
+                </h1>
+
+                {/* Description */}
+                <p
+                  className="text-[15px] lg:text-[17px] text-warm-gray/85 leading-[1.9] max-w-[420px] lg:max-w-[480px] font-light"
+                  style={{ fontFamily: "var(--font-body-family)" }}
+                >
+                  {active.description}
+                </p>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row items-start gap-4">
+                  <motion.a
+                    href={`/products/${active.id}`}
+                    className="group relative overflow-hidden inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[10px] tracking-[0.28em] uppercase font-medium"
+                    style={{ fontFamily: "var(--font-body-family)" }}
+                    whileHover={{ scale: 1.02, boxShadow: "0 20px 56px rgba(201,168,76,0.38)" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-800" />
+                    Discover {active.name}
+                    <ArrowRight size={11} strokeWidth={2.5} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </motion.a>
+
+                  <motion.a
+                    href="/collections"
+                    className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/85 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
+                    style={{ fontFamily: "var(--font-body-family)" }}
+                    whileHover={{ backgroundColor: "rgba(201,168,76,0.04)" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    View All Fragrances
+                  </motion.a>
+                </div>
+
+                {/* Fragrance stats */}
+                <div className="flex items-center gap-8 pt-6 border-t border-gold/[0.07]">
+                  {stats.map(({ label, value }) => (
+                    <div key={label}>
+                      <p
+                        className="text-[7px] text-muted/80 tracking-[0.28em] uppercase mb-1.5"
+                        style={{ fontFamily: "var(--font-body-family)" }}
+                      >
+                        {label}
+                      </p>
+                      <p
+                        className="text-[12px] text-gold/80"
+                        style={{ fontFamily: "var(--font-body-family)" }}
+                      >
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mobile-only bottle image */}
+                <div className="lg:hidden relative mx-auto mt-2 w-[220px] aspect-[4/5]">
+                  <div className="absolute inset-[-40px] bg-[radial-gradient(ellipse_at_center,_rgba(61,8,32,0.7)_0%,_transparent_65%)] pointer-events-none" />
+                  <div className="relative w-full h-full overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.9)]">
+                    <Image
+                      src={active.image}
+                      alt={`${active.name} — PakAuraa`}
+                      fill
+                      className="object-cover object-center"
+                      sizes="220px"
+                      priority
+                    />
+                  </div>
                 </div>
               </motion.div>
             )}
+
+            {/* Slide indicators */}
+            {ready && heroProducts.length > 1 && (
+              <div className="flex items-center gap-2">
+                {heroProducts.map((p, i) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    aria-label={`Show ${p.name}`}
+                    onClick={() => setActiveIndex(i)}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      i === activeIndex ? "w-8 bg-gold" : "w-4 bg-gold/25 hover:bg-gold/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
 
-          {/* RIGHT: Sultan product image */}
+          {/* RIGHT: Product image */}
           <motion.div
             className="hidden lg:flex items-center justify-center lg:justify-end"
             style={{ y: imageY }}
           >
             {ready && (
               <motion.div
+                key={activeIndex}
                 style={{ x: imgMoveX, y: imgMoveY }}
                 className="relative"
-                initial={{ opacity: 0, scale: 0.93, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.94, x: 40 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               >
                 {/* Floating animation layer */}
                 <motion.div
@@ -332,8 +336,8 @@ export default function HeroSection() {
                   {/* Product image */}
                   <div className="relative w-[380px] lg:w-[440px] xl:w-[500px] 2xl:w-[560px] aspect-[4/5] overflow-hidden shadow-[0_56px_140px_rgba(0,0,0,0.95),0_0_100px_rgba(61,8,32,0.55)]">
                     <Image
-                      src="/sultan-e-zafroon-v2.jpeg"
-                      alt="Sultan-e-Zafroon — PakAuraa Flagship Perfume"
+                      src={active.image}
+                      alt={`${active.name} — PakAuraa`}
                       fill
                       className="object-cover object-center"
                       sizes="560px"
@@ -358,7 +362,7 @@ export default function HeroSection() {
                     </div>
                   ))}
 
-                  {/* Flagship badge */}
+                  {/* Rotating identity ring */}
                   <motion.div
                     className="absolute -top-5 -right-5 w-[72px] h-[72px]"
                     animate={{ rotate: [0, 360] }}
@@ -372,7 +376,7 @@ export default function HeroSection() {
                       />
                       <text className="fill-gold/60" style={{ fontSize: "7px", fontFamily: "var(--font-body-family)", letterSpacing: "0.22em" }}>
                         <textPath href="#circ">
-                          FLAGSHIP · NO.01 · EXTRAIT DE PARFUM ·
+                          {ringText}
                         </textPath>
                       </text>
                     </svg>
