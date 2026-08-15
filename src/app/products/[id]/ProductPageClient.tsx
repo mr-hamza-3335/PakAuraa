@@ -652,12 +652,12 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                 >
                   Fragrance Card
                 </p>
-                <div className="relative w-full h-[440px] border-y border-gold/10 bg-obsidian/40">
+                <div className="relative w-full aspect-[210/297] border-y border-gold/10 bg-obsidian/40">
                   <Image
                     src={product.pdfCard}
                     alt={`${product.name} fragrance card`}
                     fill
-                    className="object-contain"
+                    className="object-cover"
                   />
                 </div>
                 <a
