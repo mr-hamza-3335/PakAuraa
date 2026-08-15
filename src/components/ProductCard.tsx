@@ -76,7 +76,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="flex items-center justify-center gap-1.5 text-[9px] text-warm-gray/85 hover:text-gold border-t border-gold/10 hover:bg-gold/5 px-3 py-2.5 tracking-wider uppercase transition-colors"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
-          <Download size={11} strokeWidth={1.5} /> Details PDF
+          <Download size={11} strokeWidth={1.5} /> Details Card
         </a>
       )}
     </motion.div>

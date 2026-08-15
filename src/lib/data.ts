@@ -64,7 +64,7 @@ export interface Product {
   createdAt?: string;
   /** Hides this product from active listings/search and renders it as a non-purchasable "Coming Soon" tile instead. */
   comingSoon?: boolean;
-  /** Path (in /public) to a downloadable product-details PDF, e.g. "/zurtaan-card.pdf". */
+  /** Path (in /public) to a downloadable product-details card image, e.g. "/zurtaan-card.png". */
   pdfCard?: string;
   /** Overrides the auto-generated <title> for this product's page. */
   seoTitle?: string;
@@ -200,7 +200,7 @@ export const products: Product[] = [
     gradient: "product-gradient-zurtaan",
     image: "/zurtaan-v2.jpeg",
     gallery: ["/zurtaan-v2.jpeg"],
-    pdfCard: "/zurtaan-card.pdf",
+    pdfCard: "/Zurtaan-card.png",
     seoTitle: "Zurtaan | Woody Spicy Perfume for Men | PakAuraa",
     seoDescription:
       "Discover Zurtaan by PakAuraa — a bold Woody Spicy fragrance with fresh lemon, ginger, lavender and mint, an aromatic heart of apple, juniper, cardamom and geranium, and a warm woody base of tonka bean, amberwood and vetiver.",
@@ -245,7 +245,7 @@ export const products: Product[] = [
     gradient: "product-gradient-zarfah",
     image: "/zarfah-v2.jpeg",
     gallery: ["/zarfah-v2.jpeg"],
-    pdfCard: "/zarfah-card.pdf",
+    pdfCard: "/Zarfah-card.png",
     performanceText: "8–10 Hours",
     seoTitle: "Zarfah Women's Perfume | Fruity Floral Fragrance | PakAuraa",
     seoDescription:

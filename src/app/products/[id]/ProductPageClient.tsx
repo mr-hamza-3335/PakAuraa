@@ -653,11 +653,11 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                   Fragrance Card
                 </p>
                 <div className="relative w-full h-[440px] border-y border-gold/10 bg-obsidian/40">
-                  <iframe
+                  <Image
                     src={product.pdfCard}
-                    title={`${product.name} fragrance card`}
-                    className="w-full h-full"
-                    loading="lazy"
+                    alt={`${product.name} fragrance card`}
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <a
@@ -666,7 +666,7 @@ export default function ProductPageClient({ product, related, reviews }: { produ
                   className="flex items-center justify-center gap-2 text-warm-gray hover:text-gold text-[10px] tracking-[0.2em] uppercase py-3.5 hover:bg-gold/5 transition-all"
                   style={{ fontFamily: "var(--font-body-family)" }}
                 >
-                  <Download size={13} strokeWidth={1.5} /> Download Fragrance Card (PDF)
+                  <Download size={13} strokeWidth={1.5} /> Download Fragrance Card
                 </a>
               </div>
             )}

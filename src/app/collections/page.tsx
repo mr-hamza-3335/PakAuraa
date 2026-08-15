@@ -157,7 +157,7 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
             className="mt-3 flex items-center justify-center gap-1.5 text-[8px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
-            <Download size={10} strokeWidth={1.5} /> Details PDF
+            <Download size={10} strokeWidth={1.5} /> Details Card
           </a>
         )}
       </div>
