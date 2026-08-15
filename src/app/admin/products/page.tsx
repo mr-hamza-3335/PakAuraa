@@ -9,9 +9,15 @@ import type { Product, Gender } from "@/lib/data";
 
 const LOW_STOCK_THRESHOLD = 5;
 
+interface FormSize {
+  ml: string;
+  price: string;
+}
+
 /** Array fields are edited as comma-separated text, then split/joined on save. */
 interface FormState {
   id: string;
+  createdAt?: string;
   name: string;
   arabicName: string;
   meaning: string;
@@ -24,20 +30,22 @@ interface FormState {
   vibe: string;
   description: string;
   longDescription: string;
-  size30: string;
-  size50: string;
-  size100: string;
+  sizes: FormSize[];
+  originalPrice: string;
   gradient: string;
   image: string;
   gallery: string;
+  pdfCard: string;
   badge: string;
   limitedEdition: boolean;
+  comingSoon: boolean;
   notesTop: string;
   notesHeart: string;
   notesBase: string;
   longevity: number;
   projection: number;
   sillage: number;
+  performanceText: string;
   concentration: string;
   occasions: string;
   seasons: string;
@@ -45,6 +53,8 @@ interface FormState {
   madeIn: string;
   ingredients: string;
   stock: number;
+  seoTitle: string;
+  seoDescription: string;
 }
 
 const blankForm: FormState = {
@@ -61,20 +71,22 @@ const blankForm: FormState = {
   vibe: "",
   description: "",
   longDescription: "",
-  size30: "",
-  size50: "",
-  size100: "",
+  sizes: [{ ml: "50", price: "" }],
+  originalPrice: "",
   gradient: "product-gradient-default",
   image: "",
   gallery: "",
+  pdfCard: "",
   badge: "",
   limitedEdition: false,
+  comingSoon: false,
   notesTop: "",
   notesHeart: "",
   notesBase: "",
   longevity: 7,
   projection: 6,
   sillage: 6,
+  performanceText: "",
   concentration: "Eau de Parfum",
   occasions: "",
   seasons: "",
@@ -82,6 +94,8 @@ const blankForm: FormState = {
   madeIn: "Pakistan",
   ingredients: "",
   stock: 50,
+  seoTitle: "",
+  seoDescription: "",
 };
 
 function slugify(name: string): string {
@@ -99,6 +113,7 @@ function csv(s: string): string[] {
 function productToForm(p: Product): FormState {
   return {
     id: p.id,
+    createdAt: p.createdAt,
     name: p.name,
     arabicName: p.arabicName,
     meaning: p.meaning,
@@ -111,20 +126,22 @@ function productToForm(p: Product): FormState {
     vibe: p.vibe,
     description: p.description,
     longDescription: p.longDescription,
-    size30: String(p.sizes.find((s) => s.ml === 30)?.price ?? p.sizes[0]?.price ?? ""),
-    size50: String(p.sizes.find((s) => s.ml === 50)?.price ?? p.sizes[1]?.price ?? ""),
-    size100: String(p.sizes.find((s) => s.ml === 100)?.price ?? p.sizes[2]?.price ?? ""),
+    sizes: p.sizes.map((s) => ({ ml: String(s.ml), price: String(s.price) })),
+    originalPrice: p.originalPrice !== undefined ? String(p.originalPrice) : "",
     gradient: p.gradient,
     image: p.image,
     gallery: p.gallery.join(", "),
+    pdfCard: p.pdfCard ?? "",
     badge: p.badge ?? "",
     limitedEdition: Boolean(p.limitedEdition),
+    comingSoon: Boolean(p.comingSoon),
     notesTop: p.notes.top.join(", "),
     notesHeart: p.notes.heart.join(", "),
     notesBase: p.notes.base.join(", "),
     longevity: p.longevity,
     projection: p.projection,
     sillage: p.sillage,
+    performanceText: p.performanceText ?? "",
     concentration: p.concentration,
     occasions: p.occasions.join(", "),
     seasons: p.seasons.join(", "),
@@ -132,18 +149,21 @@ function productToForm(p: Product): FormState {
     madeIn: p.madeIn,
     ingredients: p.ingredients,
     stock: p.stock ?? 0,
+    seoTitle: p.seoTitle ?? "",
+    seoDescription: p.seoDescription ?? "",
   };
 }
 
 function formToProduct(f: FormState): Product {
-  const sizes = [
-    { ml: 30, price: Number(f.size30) || 0 },
-    { ml: 50, price: Number(f.size50) || 0 },
-    { ml: 100, price: Number(f.size100) || 0 },
-  ];
+  const sizes = f.sizes
+    .map((s) => ({ ml: Number(s.ml) || 0, price: Number(s.price) || 0 }))
+    .filter((s) => s.ml > 0);
+  const defaultEntry = sizes[1] ?? sizes[0] ?? { ml: 0, price: 0 };
   const gallery = csv(f.gallery);
+  const originalPrice = f.originalPrice.trim() ? Number(f.originalPrice) : undefined;
   return {
     id: f.id,
+    createdAt: f.createdAt ?? new Date().toISOString(),
     name: f.name,
     arabicName: f.arabicName,
     meaning: f.meaning,
@@ -156,24 +176,30 @@ function formToProduct(f: FormState): Product {
     vibe: f.vibe,
     description: f.description,
     longDescription: f.longDescription,
-    price: sizes[1].price,
+    price: defaultEntry.price,
+    originalPrice,
     sizes,
-    size: "50ml",
+    size: `${defaultEntry.ml}ml`,
     gradient: f.gradient || "product-gradient-default",
     image: f.image,
     gallery: gallery.length ? gallery : [f.image],
+    pdfCard: f.pdfCard.trim() || undefined,
     badge: f.badge || undefined,
     limitedEdition: f.limitedEdition,
+    comingSoon: f.comingSoon || undefined,
     notes: { top: csv(f.notesTop), heart: csv(f.notesHeart), base: csv(f.notesBase) },
     longevity: f.longevity,
     projection: f.projection,
     sillage: f.sillage,
+    performanceText: f.performanceText.trim() || undefined,
     concentration: f.concentration,
     occasions: csv(f.occasions),
     seasons: csv(f.seasons),
     dayNight: f.dayNight,
     madeIn: f.madeIn,
     ingredients: f.ingredients,
+    seoTitle: f.seoTitle.trim() || undefined,
+    seoDescription: f.seoDescription.trim() || undefined,
   };
 }
 
@@ -197,7 +223,7 @@ export default function AdminProductsPage() {
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState<"image" | "pdfCard" | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const load = async () => {
@@ -224,8 +250,8 @@ export default function AdminProductsPage() {
     setForm(productToForm(p));
   };
 
-  const handleUpload = async (file: File) => {
-    setUploading(true);
+  const handleUpload = async (file: File, field: "image" | "pdfCard") => {
+    setUploading(field);
     setError(null);
     try {
       const body = new FormData();
@@ -236,10 +262,20 @@ export default function AdminProductsPage() {
         setError(data.error ?? "Upload failed.");
         return;
       }
-      setForm((f) => (f ? { ...f, image: data.url } : f));
+      setForm((f) => (f ? { ...f, [field]: data.url } : f));
     } finally {
-      setUploading(false);
+      setUploading(null);
     }
+  };
+
+  const updateSize = (i: number, patch: Partial<FormSize>) => {
+    setForm((f) => (f ? { ...f, sizes: f.sizes.map((s, idx) => (idx === i ? { ...s, ...patch } : s)) } : f));
+  };
+  const addSize = () => {
+    setForm((f) => (f ? { ...f, sizes: [...f.sizes, { ml: "", price: "" }] } : f));
+  };
+  const removeSize = (i: number) => {
+    setForm((f) => (f ? { ...f, sizes: f.sizes.filter((_, idx) => idx !== i) } : f));
   };
 
   const handleSave = async () => {
@@ -378,11 +414,37 @@ export default function AdminProductsPage() {
 
           {/* Pricing */}
           <div>
-            <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Pricing (PKR)</p>
-            <div className="grid grid-cols-3 gap-4">
-              <Field label="30ml"><input type="number" className={inputClass} value={form.size30} onChange={(e) => setForm({ ...form, size30: e.target.value })} /></Field>
-              <Field label="50ml"><input type="number" className={inputClass} value={form.size50} onChange={(e) => setForm({ ...form, size50: e.target.value })} /></Field>
-              <Field label="100ml"><input type="number" className={inputClass} value={form.size100} onChange={(e) => setForm({ ...form, size100: e.target.value })} /></Field>
+            <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Sizes &amp; Pricing (PKR)</p>
+            <div className="space-y-3">
+              {form.sizes.map((s, i) => (
+                <div key={i} className="flex items-end gap-3">
+                  <Field label="ML"><input type="number" className={inputClass} value={s.ml} onChange={(e) => updateSize(i, { ml: e.target.value })} /></Field>
+                  <Field label="Price"><input type="number" className={inputClass} value={s.price} onChange={(e) => updateSize(i, { price: e.target.value })} /></Field>
+                  <button
+                    onClick={() => removeSize(i)}
+                    disabled={form.sizes.length <= 1}
+                    className="mb-0.5 text-warm-gray hover:text-red-400 disabled:opacity-30 disabled:hover:text-warm-gray p-2.5 border border-gold/18"
+                    aria-label="Remove size"
+                  >
+                    <X size={14} strokeWidth={1.5} />
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={addSize}
+                className="flex items-center gap-1.5 text-[10px] text-gold border border-gold/25 px-3 py-2 tracking-wider uppercase hover:bg-gold/10 transition-colors"
+                style={{ fontFamily: "var(--font-body-family)" }}
+              >
+                <Plus size={12} strokeWidth={2} /> Add Size
+              </button>
+            </div>
+            <p className="text-[10px] text-warm-gray/85 mt-2" style={{ fontFamily: "var(--font-body-family)" }}>
+              The second size listed (or the first, if there&apos;s only one) is shown as the default price on cards.
+            </p>
+            <div className="mt-4 max-w-[280px]">
+              <Field label="Original Price (optional — strikethrough sale price)">
+                <input type="number" className={inputClass} value={form.originalPrice} onChange={(e) => setForm({ ...form, originalPrice: e.target.value })} placeholder="Leave blank if not on sale" />
+              </Field>
             </div>
           </div>
 
@@ -401,13 +463,13 @@ export default function AdminProductsPage() {
                 </Field>
                 <label className="flex items-center gap-2 text-[10px] text-gold border border-gold/30 px-3 py-2 tracking-wider uppercase w-fit cursor-pointer hover:bg-gold/10 transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>
                   <UploadCloud size={13} strokeWidth={1.5} />
-                  {uploading ? "Uploading…" : "Upload to Cloudinary"}
+                  {uploading === "image" ? "Uploading…" : "Upload to Cloudinary"}
                   <input
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    disabled={uploading}
-                    onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f); }}
+                    disabled={uploading !== null}
+                    onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f, "image"); }}
                   />
                 </label>
               </div>
@@ -416,6 +478,34 @@ export default function AdminProductsPage() {
               <Field label="Gallery URLs (comma-separated, optional)">
                 <input className={inputClass} value={form.gallery} onChange={(e) => setForm({ ...form, gallery: e.target.value })} />
               </Field>
+            </div>
+          </div>
+
+          {/* Fragrance Card */}
+          <div>
+            <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>Fragrance Card (optional)</p>
+            <div className="flex items-start gap-4">
+              {form.pdfCard && (
+                <div className="w-20 h-20 relative flex-shrink-0 border border-gold/15 overflow-hidden">
+                  <Image src={form.pdfCard} alt="" fill className="object-cover" sizes="80px" />
+                </div>
+              )}
+              <div className="flex-1 space-y-3">
+                <Field label="Card Image URL">
+                  <input className={inputClass} value={form.pdfCard} onChange={(e) => setForm({ ...form, pdfCard: e.target.value })} placeholder="/zurtaan-card.png or https://…" />
+                </Field>
+                <label className="flex items-center gap-2 text-[10px] text-gold border border-gold/30 px-3 py-2 tracking-wider uppercase w-fit cursor-pointer hover:bg-gold/10 transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>
+                  <UploadCloud size={13} strokeWidth={1.5} />
+                  {uploading === "pdfCard" ? "Uploading…" : "Upload to Cloudinary"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    disabled={uploading !== null}
+                    onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f, "pdfCard"); }}
+                  />
+                </label>
+              </div>
             </div>
           </div>
 
@@ -443,6 +533,7 @@ export default function AdminProductsPage() {
                 </select>
               </Field>
               <Field label="Made In"><input className={inputClass} value={form.madeIn} onChange={(e) => setForm({ ...form, madeIn: e.target.value })} /></Field>
+              <Field label="Performance Text (optional, e.g. &ldquo;8–10 Hours&rdquo;)"><input className={inputClass} value={form.performanceText} onChange={(e) => setForm({ ...form, performanceText: e.target.value })} /></Field>
             </div>
           </div>
 
@@ -455,15 +546,30 @@ export default function AdminProductsPage() {
             <textarea rows={2} className={inputClass} value={form.ingredients} onChange={(e) => setForm({ ...form, ingredients: e.target.value })} />
           </Field>
 
-          {/* Inventory */}
+          {/* SEO */}
+          <div>
+            <p className="text-[9px] text-gold tracking-[0.25em] uppercase mb-3" style={{ fontFamily: "var(--font-body-family)" }}>SEO (optional overrides)</p>
+            <div className="space-y-4">
+              <Field label="Page Title"><input className={inputClass} value={form.seoTitle} onChange={(e) => setForm({ ...form, seoTitle: e.target.value })} placeholder="Auto-generated if left blank" /></Field>
+              <Field label="Meta Description"><textarea rows={2} className={inputClass} value={form.seoDescription} onChange={(e) => setForm({ ...form, seoDescription: e.target.value })} placeholder="Auto-generated if left blank" /></Field>
+            </div>
+          </div>
+
+          {/* Inventory & Status */}
           <div className="grid grid-cols-2 gap-4 items-end">
             <Field label="Stock">
               <input type="number" min={0} className={inputClass} value={form.stock} onChange={(e) => setForm({ ...form, stock: Number(e.target.value) })} />
             </Field>
-            <label className="flex items-center gap-2 pb-2.5 text-[11px] text-cream cursor-pointer" style={{ fontFamily: "var(--font-body-family)" }}>
-              <input type="checkbox" checked={form.limitedEdition} onChange={(e) => setForm({ ...form, limitedEdition: e.target.checked })} className="accent-gold" />
-              Limited Edition
-            </label>
+            <div className="flex flex-col gap-2 pb-2.5">
+              <label className="flex items-center gap-2 text-[11px] text-cream cursor-pointer" style={{ fontFamily: "var(--font-body-family)" }}>
+                <input type="checkbox" checked={form.limitedEdition} onChange={(e) => setForm({ ...form, limitedEdition: e.target.checked })} className="accent-gold" />
+                Limited Edition
+              </label>
+              <label className="flex items-center gap-2 text-[11px] text-cream cursor-pointer" style={{ fontFamily: "var(--font-body-family)" }}>
+                <input type="checkbox" checked={form.comingSoon} onChange={(e) => setForm({ ...form, comingSoon: e.target.checked })} className="accent-gold" />
+                Coming Soon (hides from shop, non-purchasable teaser)
+              </label>
+            </div>
           </div>
 
           <button
@@ -504,9 +610,16 @@ export default function AdminProductsPage() {
             <div className="flex-1 min-w-[160px]">
               <p className="text-[13px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{p.name}</p>
               <p className="text-[10px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
-                {p.collection} · PKR {p.price.toLocaleString()} · Stock: {p.stock ?? "∞"}
+                {p.collection} · PKR {p.price.toLocaleString()}
+                {p.originalPrice !== undefined && (
+                  <span className="line-through opacity-60 ml-1">PKR {p.originalPrice.toLocaleString()}</span>
+                )}
+                {" "}· Stock: {p.stock ?? "∞"}
                 {p.stock !== undefined && p.stock > 0 && p.stock <= LOW_STOCK_THRESHOLD && (
                   <span className="ml-2 text-[9px] text-red-300 tracking-wider uppercase">Low Stock</span>
+                )}
+                {p.comingSoon && (
+                  <span className="ml-2 text-[9px] text-gold tracking-wider uppercase">Coming Soon</span>
                 )}
               </p>
             </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DollarSign, ShoppingCart, Package, Star, Eye, Users, TrendingUp, UserCircle } from "lucide-react";
+import { Banknote, ShoppingCart, Package, Star, Eye, Users, TrendingUp, UserCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getAllProductsClient } from "@/lib/catalog.client";
 
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
 
   const cards = [
     { label: "Total Orders", value: stats?.orderCount ?? "—", Icon: ShoppingCart },
-    { label: "Revenue (PKR)", value: stats ? stats.revenue.toLocaleString() : "—", Icon: DollarSign },
+    { label: "Revenue (PKR)", value: stats ? `PKR ${stats.revenue.toLocaleString()}` : "—", Icon: Banknote },
     { label: "Products Live", value: productCount ?? "—", Icon: Package },
     { label: "Pending Reviews", value: stats?.pendingReviews ?? "—", Icon: Star },
     { label: "Registered Customers", value: customerCount ?? "—", Icon: UserCircle },
