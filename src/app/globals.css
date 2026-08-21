@@ -97,8 +97,8 @@ body {
 
 .eyebrow {
   font-family: var(--font-body-family);
-  font-size: 9px;
-  letter-spacing: 0.38em;
+  font-size: 11px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #C9A84C;
 }

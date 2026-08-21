@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, ShoppingCart, Tag, Star, ShieldAlert, Users, Gift, Share2, BookOpen, Mail, Send, Newspaper, Megaphone } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingCart, Tag, Star, ShieldAlert, Users, Gift, Share2, BookOpen, Mail, Send, Newspaper, Megaphone, Menu, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
@@ -28,6 +28,11 @@ type AccessState = "checking" | "no-backend" | "signed-out" | "not-admin" | "gra
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [access, setAccess] = useState<AccessState>("checking");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -77,7 +82,47 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-obsidian flex">
+    <div className="min-h-screen bg-obsidian flex flex-col md:flex-row">
+      {/* Mobile top bar — the sidebar below is desktop-only, so this is the
+          only way into any admin section on a phone/tablet. */}
+      <div className="md:hidden flex items-center justify-between px-5 h-16 border-b border-gold/10 bg-charcoal/30 flex-shrink-0">
+        <p className="text-[11px] text-gold tracking-[0.25em] uppercase" style={{ fontFamily: "var(--font-body-family)" }}>
+          PakAuraa Admin
+        </p>
+        <button
+          type="button"
+          aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMobileNavOpen((v) => !v)}
+          className="text-warm-gray hover:text-gold transition-colors"
+        >
+          {mobileNavOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+        </button>
+      </div>
+
+      {mobileNavOpen && (
+        <nav className="md:hidden border-b border-gold/10 bg-charcoal/30 flex-shrink-0 py-2">
+          {navItems.map(({ href, label, Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`flex items-center gap-3 px-5 py-3 text-[13px] tracking-wide transition-colors ${
+                  active ? "text-gold bg-gold/[0.06]" : "text-warm-gray hover:text-cream"
+                }`}
+                style={{ fontFamily: "var(--font-body-family)" }}
+              >
+                <Icon size={16} strokeWidth={1.5} />
+                {label}
+              </Link>
+            );
+          })}
+          <Link href="/" className="flex items-center gap-3 px-5 py-3 text-[12px] text-warm-gray/85 hover:text-gold transition-colors" style={{ fontFamily: "var(--font-body-family)" }}>
+            ← Back to Storefront
+          </Link>
+        </nav>
+      )}
+
       <aside className="w-[240px] flex-shrink-0 border-r border-gold/10 bg-charcoal/30 hidden md:flex flex-col py-8">
         <p className="px-6 text-[10px] text-gold tracking-[0.3em] uppercase mb-8" style={{ fontFamily: "var(--font-body-family)" }}>
           PakAuraa Admin
@@ -104,7 +149,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ← Back to Storefront
         </Link>
       </aside>
-      <main className="flex-1 p-6 lg:p-10 overflow-x-hidden">{children}</main>
+      <main className="flex-1 p-4 sm:p-6 lg:p-10 overflow-x-hidden min-w-0">{children}</main>
     </div>
   );
 }

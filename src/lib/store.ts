@@ -39,6 +39,8 @@ export interface Order {
   id: string;
   items: CartItem[];
   total: number;
+  /** Flat delivery fee included in `total` — currently only non-zero for taster orders. */
+  shipping?: number;
   paymentMethod: PaymentMethod;
   status: "pending" | "paid" | "cod" | "shipped" | "delivered" | "cancelled";
   customer: OrderCustomer;
@@ -99,7 +101,8 @@ interface Store {
     couponCode?: string,
     giftCardCode?: string,
     giftCardAmount?: number,
-    referralCode?: string
+    referralCode?: string,
+    shipping?: number
   ) => Order;
 
   cartCount: () => number;
@@ -212,12 +215,13 @@ export const useStore = create<Store>()(
 
       setQuickView: (product) => set({ quickViewProduct: product }),
 
-      placeOrder: (customer, paymentMethod, discount = 0, couponCode, giftCardCode, giftCardAmount, referralCode) => {
+      placeOrder: (customer, paymentMethod, discount = 0, couponCode, giftCardCode, giftCardAmount, referralCode, shipping = 0) => {
         const state = get();
         const order: Order = {
           id: `PA-${Date.now().toString(36).toUpperCase()}`,
           items: state.cart,
-          total: Math.max(0, state.cartTotal() - discount),
+          total: Math.max(0, state.cartTotal() + shipping - discount),
+          shipping,
           paymentMethod,
           // JazzCash is a manual bank-transfer style payment — nobody has
           // actually looked at the screenshot yet, so it stays "pending"

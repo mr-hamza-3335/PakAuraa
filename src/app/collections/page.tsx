@@ -118,7 +118,7 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
           <div className="absolute inset-0 hidden lg:flex bg-obsidian/70 opacity-0 group-hover:opacity-100 transition-opacity duration-350 items-center justify-center gap-2">
             <motion.button
               onClick={(e) => { e.preventDefault(); addToCart(product, size.ml, size.price); setCartOpen(true); }}
-              className="flex items-center gap-1.5 bg-gold text-obsidian text-[9px] tracking-[0.15em] uppercase px-4 py-2.5"
+              className="flex items-center gap-1.5 bg-gold text-obsidian text-[11px] tracking-[0.1em] uppercase px-4 py-2.5"
               style={{ fontFamily: "var(--font-body-family)" }}
               whileTap={{ scale: 0.97 }}
             >
@@ -144,9 +144,9 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
 
       {/* Info */}
       <div className="p-3 lg:p-4 flex-1 flex flex-col">
-        <p className="text-[7px] lg:text-[8px] text-gold tracking-[0.18em] lg:tracking-[0.22em] uppercase mb-1 truncate" style={{ fontFamily: "var(--font-body-family)" }}>{product.collection}</p>
+        <p className="text-[9px] lg:text-[10px] text-gold tracking-[0.14em] lg:tracking-[0.16em] uppercase mb-1 truncate" style={{ fontFamily: "var(--font-body-family)" }}>{product.collection}</p>
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-elegant text-[14px] lg:text-[16px] text-cream leading-tight mb-1.5 lg:mb-2 group-hover:text-gold-light transition-colors" style={{ fontFamily: "var(--font-elegant-family)" }}>
+          <h3 className="font-elegant text-[14px] lg:text-[17px] text-cream leading-tight mb-1.5 lg:mb-2 group-hover:text-gold-light transition-colors" style={{ fontFamily: "var(--font-elegant-family)" }}>
             {product.name}
           </h3>
         </Link>
@@ -154,14 +154,14 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={9} className="fill-gold text-gold" />)}
         </div>
         <div className="flex items-center justify-between mt-auto pt-2.5 lg:pt-3 border-t border-gold/10">
-          <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[12px] lg:text-[14px] text-cream" />
-          <span className="text-[8px] lg:text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
+          <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[13px] lg:text-[15px] text-cream" />
+          <span className="text-[10px] lg:text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
         </div>
         {product.pdfCard && (
           <a
             href={product.pdfCard}
             download
-            className="hidden lg:flex mt-3 items-center justify-center gap-1.5 text-[8px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
+            className="hidden lg:flex mt-3 items-center justify-center gap-1.5 text-[10px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             <Download size={10} strokeWidth={1.5} /> Details Card
@@ -296,7 +296,7 @@ function CollectionsPageInner() {
               <button
                 key={c.id}
                 onClick={() => setCategory(c.id)}
-                className={`flex-shrink-0 text-[8px] lg:text-[9px] tracking-[0.18em] uppercase px-3 lg:px-4 py-2 lg:py-2.5 border transition-all duration-300 whitespace-nowrap ${
+                className={`flex-shrink-0 text-[10px] lg:text-[11px] tracking-[0.1em] uppercase px-3 lg:px-4 py-2 lg:py-2.5 border transition-all duration-300 whitespace-nowrap ${
                   activeCat === c.id ? "border-gold/60 text-gold bg-gold/8" : "border-gold/14 text-warm-gray hover:border-gold/30"
                 }`}
                 style={{ fontFamily: "var(--font-body-family)" }}

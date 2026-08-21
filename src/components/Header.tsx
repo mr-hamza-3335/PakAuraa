@@ -31,6 +31,7 @@ function useNavLinks() {
         { label: t("signatureCollection"), href: "/collections?cat=signature" },
         { label: t("limitedEdition"), href: "/collections?cat=limited" },
         { label: t("giftSets"), href: "/collections?cat=gifts" },
+        { label: t("tasters"), href: "/collections?cat=tasters" },
       ],
     },
     {

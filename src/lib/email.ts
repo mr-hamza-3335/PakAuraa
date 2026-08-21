@@ -87,6 +87,14 @@ function orderConfirmationHtml(order: Order) {
           ${rows}
         </table>
         <table style="width:100%;">
+          ${
+            order.shipping
+              ? `<tr>
+            <td style="color:#8a8478;font-size:12px;padding-top:4px;">Delivery Fee</td>
+            <td style="color:#8a8478;font-size:12px;padding-top:4px;text-align:right;">PKR ${order.shipping.toLocaleString()}</td>
+          </tr>`
+              : ""
+          }
           <tr>
             <td style="color:#d4af37;font-size:15px;padding-top:8px;">Total</td>
             <td style="color:#d4af37;font-size:15px;padding-top:8px;text-align:right;">PKR ${order.total.toLocaleString()}</td>
@@ -159,6 +167,14 @@ function adminOrderAlertHtml(order: Order) {
           ${rows}
         </table>
         <table style="width:100%;margin-bottom:20px;">
+          ${
+            order.shipping
+              ? `<tr>
+            <td style="color:#8a8478;font-size:12px;padding-top:4px;">Delivery Fee</td>
+            <td style="color:#8a8478;font-size:12px;padding-top:4px;text-align:right;">PKR ${order.shipping.toLocaleString()}</td>
+          </tr>`
+              : ""
+          }
           <tr>
             <td style="color:#d4af37;font-size:15px;padding-top:8px;">Total</td>
             <td style="color:#d4af37;font-size:15px;padding-top:8px;text-align:right;">PKR ${order.total.toLocaleString()}</td>

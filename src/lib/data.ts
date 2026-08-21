@@ -70,6 +70,8 @@ export interface Product {
   seoTitle?: string;
   /** Overrides the auto-generated meta description for this product's page. */
   seoDescription?: string;
+  /** A 5ml sample/discovery-size product — flagged so checkout can apply the flat taster delivery fee instead of free shipping. */
+  isTaster?: boolean;
 }
 
 /** The size shown by default on cards and as the pre-selected PDP option. */
@@ -312,6 +314,132 @@ export const products: Product[] = [
     ingredients:
       "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Amber, Vanilla Bean, Cardamom, Cinnamon, Woody Base.",
   },
+
+  // 6 — Zurtaan Taster (5ml discovery size)
+  {
+    id: "zurtaan-taster",
+    name: "Zurtaan — Taster 5ml",
+    arabicName: "",
+    meaning: "A 5ml discovery size of Zurtaan, our Woody Spicy signature for him.",
+    tagline: "Try Zurtaan Before You Commit",
+    collection: "Taster Collection",
+    category: "Woody Spicy Perfume for Men — 5ml Taster",
+    fragranceFamily: ["Woody", "Spicy"],
+    gender: "men",
+    audience: ["First-time buyers", "Gifting", "Travel size"],
+    vibe: "Fresh · Energetic · Aromatic · Spicy · Woody · Sophisticated",
+    description:
+      "A 5ml taster of Zurtaan — the exact same Woody Spicy formulation as the full 50ml bottle, in a compact size to try before you commit.",
+    longDescription:
+      "This is a genuine 5ml taster of Zurtaan, poured from the same batch as the full-size bottle — not a diluted or reformulated version. It carries the same fresh lemon, ginger, lavender and mint opening, the same aromatic apple, juniper, cardamom and geranium heart, and the same warm woody base of tonka bean, amberwood and vetiver. A simple, honest way to experience Zurtaan on your own skin before choosing the full 50ml bottle.",
+    price: 299,
+    sizes: [{ ml: 5, price: 299 }],
+    size: "5ml",
+    gradient: "product-gradient-zurtaan",
+    image: "/zurtaan-taster.jpeg",
+    gallery: ["/zurtaan-taster.jpeg"],
+    isTaster: true,
+    badge: "TASTER",
+    notes: {
+      top: ["Lemon", "Ginger", "Lavender", "Mint"],
+      heart: ["Apple", "Juniper", "Cardamom", "Geranium"],
+      base: ["Tonka Bean", "Amberwood", "Vetiver"],
+    },
+    longevity: 9,
+    projection: 8,
+    sillage: 8,
+    concentration: "Eau de Parfum",
+    occasions: ["Everyday Wear", "Gifting"],
+    seasons: ["Spring", "Autumn", "Winter"],
+    dayNight: "both",
+    madeIn: "Pakistan",
+    ingredients:
+      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Lemon, Ginger, Lavender, Mint, Apple, Juniper, Cardamom, Geranium, Tonka Bean, Amberwood, Vetiver.",
+  },
+
+  // 7 — Zarfah Taster (5ml discovery size)
+  {
+    id: "zarfah-taster",
+    name: "Zarfah — Taster 5ml",
+    arabicName: "",
+    meaning: "A 5ml discovery size of Zarfah, our Fruity Floral signature for her.",
+    tagline: "Try Zarfah Before You Commit",
+    collection: "Taster Collection",
+    category: "Women's Fragrance — Fruity Floral — 5ml Taster",
+    fragranceFamily: ["Fruity", "Floral", "Fresh", "Sweet", "Citrus"],
+    gender: "women",
+    audience: ["First-time buyers", "Gifting", "Travel size"],
+    vibe: "Fresh · Fruity · Feminine · Sweet · Elegant · Vibrant",
+    description:
+      "A 5ml taster of Zarfah — the exact same Fruity Floral formulation as the full 50ml bottle, in a compact size to try before you commit.",
+    longDescription:
+      "This is a genuine 5ml taster of Zarfah, poured from the same batch as the full-size bottle — not a diluted or reformulated version. It carries the same sparkling juicy-fruit and citrus opening, the same soft floral heart, and the same warm musk-and-woods base as the 50ml bottle. A simple, honest way to experience Zarfah on your own skin before choosing the full size.",
+    price: 299,
+    sizes: [{ ml: 5, price: 299 }],
+    size: "5ml",
+    gradient: "product-gradient-zarfah",
+    image: "/zarfah-taster.jpeg",
+    gallery: ["/zarfah-taster.jpeg"],
+    isTaster: true,
+    badge: "TASTER",
+    notes: {
+      top: ["Purple Passion Fruit", "Grapefruit", "Pineapple", "Tangerine", "Strawberry"],
+      heart: ["Peony", "Vanilla Orchid", "Red Berries", "Jasmine", "Lily of the Valley"],
+      base: ["Musk", "Blonde Woods", "Oakmoss"],
+    },
+    sillage: 6,
+    longevity: 7,
+    projection: 6,
+    concentration: "Eau de Parfum",
+    occasions: ["Day & Evening", "Gifting"],
+    seasons: ["Spring", "Summer"],
+    dayNight: "both",
+    madeIn: "Pakistan",
+    ingredients:
+      "Alcohol Denat., Parfum (Fragrance), Aqua (Water), Purple Passion Fruit, Grapefruit, Pineapple, Tangerine, Strawberry, Peony, Vanilla Orchid, Red Berries, Jasmine, Lily of the Valley, Musk, Blonde Woods, Oakmoss.",
+  },
+
+  // 8 — Taster Duo (Zurtaan + Zarfah, one 5ml each)
+  {
+    id: "taster-duo",
+    name: "Zurtaan + Zarfah Taster Duo",
+    arabicName: "",
+    meaning: "One 5ml taster of Zurtaan and one 5ml taster of Zarfah, together at a bundled price.",
+    tagline: "Try Both, Save More",
+    collection: "Taster Collection",
+    category: "Taster Duo — One 5ml Zurtaan + One 5ml Zarfah",
+    fragranceFamily: ["Woody", "Spicy", "Fruity", "Floral"],
+    gender: "unisex",
+    audience: ["First-time buyers", "Gifting", "Couples"],
+    vibe: "Fresh · Woody · Fruity · Floral",
+    description:
+      "One 5ml Zurtaan taster and one 5ml Zarfah taster, bundled together at PKR 500 — cheaper than buying both individually.",
+    longDescription:
+      "The Taster Duo pairs a genuine 5ml taster of Zurtaan (our Woody Spicy signature for him) with a genuine 5ml taster of Zarfah (our Fruity Floral signature for her) — both poured from the same batches as the full-size bottles. Bought separately the two tasters would cost PKR 598; bundled here they're PKR 500. A simple way for a couple, or anyone curious about both fragrances, to try each on skin before committing to a full 50ml bottle.",
+    price: 500,
+    sizes: [{ ml: 10, price: 500 }],
+    size: "5ml + 5ml",
+    gradient: "product-gradient-default",
+    image: "/taster-duo.jpeg",
+    gallery: ["/taster-duo.jpeg"],
+    isTaster: true,
+    badge: "BEST VALUE",
+    notes: {
+      top: ["Lemon", "Ginger", "Lavender", "Mint", "Purple Passion Fruit", "Grapefruit", "Pineapple"],
+      heart: ["Apple", "Juniper", "Cardamom", "Geranium", "Peony", "Jasmine"],
+      base: ["Tonka Bean", "Amberwood", "Vetiver", "Musk", "Blonde Woods"],
+    },
+    longevity: 8,
+    projection: 7,
+    sillage: 7,
+    concentration: "Eau de Parfum",
+    occasions: ["Everyday Wear", "Gifting"],
+    seasons: ["Spring", "Autumn", "Winter", "Summer"],
+    dayNight: "both",
+    madeIn: "Pakistan",
+    ingredients:
+      "Alcohol Denat., Parfum (Fragrance), Aqua (Water) — Zurtaan taster: Lemon, Ginger, Lavender, Mint, Apple, Juniper, Cardamom, Geranium, Tonka Bean, Amberwood, Vetiver. Zarfah taster: Purple Passion Fruit, Grapefruit, Pineapple, Tangerine, Strawberry, Peony, Vanilla Orchid, Red Berries, Jasmine, Lily of the Valley, Musk, Blonde Woods, Oakmoss.",
+  },
 ];
 
 export function getProduct(id: string): Product | undefined {
@@ -362,6 +490,13 @@ export const collections: Collection[] = [
     gradient: "linear-gradient(145deg, #0a1210 0%, #0f1f1a 50%, #0a1210 100%)",
     href: "/collections?cat=gifts",
   },
+  {
+    id: "tasters",
+    name: "Tasters",
+    subtitle: "5ml · Try Before You Commit",
+    gradient: "linear-gradient(145deg, #0a0a0a 0%, #1a140a 50%, #0a0a0a 100%)",
+    href: "/collections?cat=tasters",
+  },
 ];
 
 /** Maps a collection-tile id to the product predicate that populates it. */
@@ -379,6 +514,8 @@ export function matchesCategory(product: Product, cat: string): boolean {
       return Boolean(product.limitedEdition);
     case "gifts":
       return product.occasions.includes("Gifting");
+    case "tasters":
+      return Boolean(product.isTaster);
     default:
       return true;
   }

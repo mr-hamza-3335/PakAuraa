@@ -16,6 +16,7 @@ export default function CartDrawer() {
   const total = cartTotal();
   const distinctCount = distinctProductCount();
   const discount = bundleDiscount();
+  const hasTaster = cart.some((i) => i.product.isTaster);
 
   return (
     <AnimatePresence>
@@ -69,7 +70,7 @@ export default function CartDrawer() {
             {total > 0 && (
               <div className="px-6 py-3 bg-gold/5 border-b border-gold/10">
                 <p className="text-[11px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
-                  ✓ {t("freeShippingNote")}
+                  {hasTaster ? "PKR 250 delivery charge applies for taster items" : `✓ ${t("freeShippingNote")}`}
                 </p>
               </div>
             )}

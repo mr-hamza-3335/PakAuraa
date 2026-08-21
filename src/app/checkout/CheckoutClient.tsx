@@ -104,7 +104,10 @@ export default function CheckoutClient() {
   }, []);
 
   const total = cartTotal();
-  const shipping = 0;
+  // Tasters are low-value 5ml sizes — they carry their own flat delivery fee
+  // instead of the site's usual free shipping.
+  const hasTaster = cart.some((i) => i.product.isTaster);
+  const shipping = hasTaster ? 250 : 0;
   const couponDiscount = appliedCoupon ? Math.round((total * appliedCoupon.percentOff) / 100) : 0;
   const bundleAmount = bundleDiscount();
   const usingBundle = bundleAmount > couponDiscount;
@@ -244,7 +247,7 @@ export default function CheckoutClient() {
     try {
       // Both COD and JazzCash (manual QR/Till transfer) place the order
       // directly — there's no automated gateway to redirect to.
-      const order = placeOrder(customer, method, discount, usingBundle ? undefined : appliedCoupon?.code, appliedGiftCard?.code, giftCardAmount, getStoredReferralCode());
+      const order = placeOrder(customer, method, discount, usingBundle ? undefined : appliedCoupon?.code, appliedGiftCard?.code, giftCardAmount, getStoredReferralCode(), shipping);
       await finishOrder(order);
     } catch {
       setError("Something went wrong while processing payment. Please try again or choose Cash on Delivery.");
@@ -780,7 +783,7 @@ export default function CheckoutClient() {
                 )}
                 <div className="flex justify-between text-warm-gray">
                   <span>{t("shipping")}</span>
-                  <span>{t("freeDays")}</span>
+                  <span>{shipping > 0 ? `PKR ${shipping.toLocaleString()} · 3–5 business days` : t("freeDays")}</span>
                 </div>
                 <div className="flex justify-between text-[15px] text-gold pt-3 mt-2 border-t border-gold/10">
                   <span>{t("total")}</span>

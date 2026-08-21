@@ -63,9 +63,9 @@ function ProductCard({
     >
       {/* Badge */}
       {product.badge && (
-        <div className="absolute top-3 left-3 lg:top-5 lg:left-5 z-20">
+        <div className="absolute top-3 left-3 lg:top-4 lg:left-4 z-20">
           <span
-            className={`text-[7px] lg:text-[8px] tracking-[0.18em] lg:tracking-[0.22em] uppercase px-2.5 py-1 lg:px-3 lg:py-1.5 ${badgeStyle[product.badge] ?? "border border-gold/40 text-gold"}`}
+            className={`text-[9px] lg:text-[10px] tracking-[0.14em] lg:tracking-[0.16em] uppercase px-2.5 py-1 lg:px-3 lg:py-1.5 ${badgeStyle[product.badge] ?? "border border-gold/40 text-gold"}`}
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             {product.badge}
@@ -101,7 +101,7 @@ function ProductCard({
 
       {/* Image */}
       <a href={`/products/${product.id}`}>
-        <div className={`relative aspect-square lg:aspect-[4/5] overflow-hidden ${product.gradient}`}>
+        <div className={`relative aspect-square overflow-hidden ${product.gradient}`}>
           <motion.div style={{ y }} className="absolute inset-0 scale-[1.1]">
             <Image
               src={product.image}
@@ -120,7 +120,7 @@ function ProductCard({
           <div className="absolute inset-x-2.5 bottom-2.5 lg:inset-x-5 lg:bottom-5 flex gap-2.5 lg:translate-y-6 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-450 ease-out">
             <motion.button
               onClick={handleAddToCart}
-              className="flex-1 flex items-center justify-center gap-1.5 lg:gap-2 bg-gold text-obsidian text-[8px] lg:text-[9px] tracking-[0.16em] lg:tracking-[0.2em] uppercase py-2.5 lg:py-3"
+              className="flex-1 flex items-center justify-center gap-1.5 lg:gap-2 bg-gold text-obsidian text-[10px] lg:text-[11px] tracking-[0.1em] lg:tracking-[0.14em] uppercase py-2.5 lg:py-3"
               style={{ fontFamily: "var(--font-body-family)" }}
               whileTap={{ scale: 0.97 }}
             >
@@ -131,9 +131,9 @@ function ProductCard({
       </a>
 
       {/* Info */}
-      <div className="p-3.5 lg:p-6 flex flex-col flex-1">
+      <div className="p-3.5 lg:p-5 flex flex-col flex-1">
         <p
-          className="text-[7px] lg:text-[8px] text-gold/70 tracking-[0.22em] lg:tracking-[0.3em] uppercase mb-1.5 lg:mb-2 truncate"
+          className="text-[9px] lg:text-[10px] text-gold/70 tracking-[0.16em] lg:tracking-[0.2em] uppercase mb-1.5 truncate"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           {product.collection}
@@ -141,37 +141,26 @@ function ProductCard({
 
         <a href={`/products/${product.id}`}>
           <h3
-            className="text-[15px] lg:text-[22px] text-cream leading-tight mb-1 group-hover:text-gold-light transition-colors duration-400"
+            className="text-[16px] lg:text-[19px] text-cream leading-tight mb-1.5 group-hover:text-gold-light transition-colors duration-400"
             style={{ fontFamily: "var(--font-display-family)" }}
           >
             {product.name}
           </h3>
         </a>
 
-        {/* Description + notes — desktop only, keeps mobile cards compact */}
+        {/* Description — desktop only, keeps mobile cards compact */}
         <p
-          className="hidden lg:block text-[12px] text-warm-gray/85 leading-[1.7] mb-4 mt-2 flex-1 line-clamp-2"
+          className="hidden lg:block text-[13px] text-warm-gray/85 leading-[1.6] mb-3 flex-1 line-clamp-2"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           {product.description}
         </p>
-        <div className="hidden lg:flex gap-1.5 flex-wrap mb-4">
-          {product.notes.top.slice(0, 3).map((n) => (
-            <span
-              key={n}
-              className="text-[7px] text-warm-gray/85 border border-gold/[0.10] px-2.5 py-1 tracking-[0.12em] uppercase"
-              style={{ fontFamily: "var(--font-body-family)" }}
-            >
-              {n}
-            </span>
-          ))}
-        </div>
 
-        <div className="flex items-center justify-between pt-3 lg:pt-4 mt-2 lg:mt-0 border-t border-gold/[0.08]">
+        <div className="flex items-center justify-between pt-3 mt-2 lg:mt-0 border-t border-gold/[0.08]">
           <div>
-            <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[13px] lg:text-[18px] text-cream" />
+            <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[14px] lg:text-[17px] text-cream" />
             <span
-              className="text-[8px] lg:text-[9px] text-warm-gray/85 ml-1"
+              className="text-[10px] lg:text-[11px] text-warm-gray/85 ml-1"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               /{size.ml}ml
@@ -179,11 +168,11 @@ function ProductCard({
           </div>
           <a
             href={`/products/${product.id}`}
-            className="hidden lg:flex group/link items-center gap-2 text-[9px] text-gold/60 hover:text-gold tracking-[0.2em] uppercase transition-colors duration-300"
+            className="hidden lg:flex group/link items-center gap-1.5 text-[11px] text-gold/60 hover:text-gold tracking-[0.14em] uppercase transition-colors duration-300"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             Explore
-            <ArrowRight size={10} strokeWidth={2} className="transition-transform duration-300 group-hover/link:translate-x-1" />
+            <ArrowRight size={11} strokeWidth={2} className="transition-transform duration-300 group-hover/link:translate-x-1" />
           </a>
         </div>
       </div>
@@ -197,7 +186,7 @@ export default function FeaturedCollection() {
   // section IS the collection, so there's no separate "featured subset".
   const featured = products;
   return (
-    <section className="py-14 lg:py-24 px-4 lg:px-16 bg-[#080808] relative overflow-hidden">
+    <section className="py-14 lg:py-14 px-4 lg:px-16 bg-[#080808] relative overflow-hidden">
       {/* Subtle background texture */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,_rgba(201,168,76,0.025)_0%,_transparent_60%)] pointer-events-none" />
 
@@ -208,29 +197,22 @@ export default function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-8 lg:mb-14"
+          className="text-center mb-8 lg:mb-8"
         >
-          <p className="eyebrow mb-3 lg:mb-5 opacity-80">Our Icons</p>
+          <p className="eyebrow mb-3 lg:mb-4 opacity-80">Our Icons</p>
 
           <h2
-            className="text-[clamp(28px,5.5vw,60px)] text-cream leading-[0.95] tracking-[-0.02em] mb-4 lg:mb-6"
+            className="text-[clamp(28px,4.5vw,44px)] text-cream leading-[0.95] tracking-[-0.02em] mb-3 lg:mb-4"
             style={{ fontFamily: "var(--font-display-family)" }}
           >
             Signature Collection
           </h2>
 
           <div className="divider-gold hidden lg:block" />
-
-          <p
-            className="hidden lg:block text-[14px] text-warm-gray/85 mt-6 max-w-[420px] mx-auto leading-[1.85]"
-            style={{ fontFamily: "var(--font-body-family)" }}
-          >
-            Each a world unto itself.
-          </p>
         </motion.div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-5">
           {featured.map((p, i) => (
             <ProductCard key={p.id} product={p} idx={i} />
           ))}
@@ -242,11 +224,11 @@ export default function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-center mt-10 lg:mt-14"
+          className="text-center mt-8 lg:mt-8"
         >
           <motion.a
             href="/collections"
-            className="group inline-flex items-center gap-3 border border-gold/20 text-warm-gray/85 text-[9px] tracking-[0.3em] uppercase px-10 py-4 hover:border-gold/40 hover:text-cream transition-all duration-500"
+            className="group inline-flex items-center gap-3 border border-gold/20 text-warm-gray/85 text-[11px] tracking-[0.2em] uppercase px-10 py-4 hover:border-gold/40 hover:text-cream transition-all duration-500"
             style={{ fontFamily: "var(--font-body-family)" }}
             whileHover={{ scale: 1.02, backgroundColor: "rgba(201,168,76,0.03)" }}
             whileTap={{ scale: 0.98 }}
