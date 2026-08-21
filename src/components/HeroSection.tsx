@@ -172,111 +172,143 @@ export default function HeroSection() {
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col space-y-6 lg:space-y-8"
+                className="flex flex-col"
               >
-                {/* Eyebrow line */}
-                <div className="flex items-center gap-5">
-                  <motion.div
-                    className="h-px bg-gradient-to-r from-gold/60 to-transparent"
-                    initial={{ width: 0 }}
-                    animate={{ width: 48 }}
-                    transition={{ delay: 0.15, duration: 0.8 }}
-                  />
-                  <span className="eyebrow opacity-70">
+                {/* ── Mobile: compact, single-screen layout ── */}
+                <div className="lg:hidden flex flex-col items-center text-center gap-3.5">
+                  <div className="relative w-[168px] aspect-[4/5]">
+                    <div className="absolute inset-[-30px] bg-[radial-gradient(ellipse_at_center,_rgba(61,8,32,0.7)_0%,_transparent_65%)] pointer-events-none" />
+                    <div className="relative w-full h-full overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.9)]">
+                      <Image
+                        src={active.image}
+                        alt={`${active.name} — PakAuraa`}
+                        fill
+                        className="object-cover object-center"
+                        sizes="168px"
+                        priority
+                      />
+                    </div>
+                  </div>
+
+                  <span className="eyebrow opacity-70 text-[8px]">
                     {active.concentration} · Lahore, Pakistan
                   </span>
-                </div>
 
-                {/* Main headline */}
-                <h1
-                  className="leading-[0.85] tracking-[-0.02em] overflow-hidden"
-                  style={{ fontFamily: "var(--font-display-family)" }}
-                >
-                  <span className="block overflow-hidden">
-                    <motion.span
-                      className="inline-block text-gold-gradient"
-                      initial={{ y: 100, skewY: 3 }}
-                      animate={{ y: 0, skewY: 0 }}
-                      transition={{ delay: 0.1, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                      style={{ fontSize: "clamp(30px, 8vw, 92px)", lineHeight: 0.9 }}
-                    >
-                      {active.name}
-                    </motion.span>
-                  </span>
-                  <motion.span
-                    className="block mt-3 h-px bg-gradient-to-r from-gold/50 via-gold/15 to-transparent"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ transformOrigin: "left", width: "60%" }}
-                  />
-                </h1>
+                  <h1
+                    className="text-gold-gradient tracking-[-0.01em]"
+                    style={{ fontFamily: "var(--font-display-family)", fontSize: "clamp(26px, 9vw, 36px)", lineHeight: 1 }}
+                  >
+                    {active.name}
+                  </h1>
 
-                {/* Description */}
-                <p
-                  className="text-[15px] lg:text-[17px] text-warm-gray/85 leading-[1.9] max-w-[420px] lg:max-w-[480px] font-light"
-                  style={{ fontFamily: "var(--font-body-family)" }}
-                >
-                  {active.description}
-                </p>
+                  <p
+                    className="text-[13px] text-warm-gray/85 leading-[1.6] max-w-[280px] line-clamp-2 font-light"
+                    style={{ fontFamily: "var(--font-body-family)" }}
+                  >
+                    {active.description}
+                  </p>
 
-                {/* CTAs */}
-                <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <motion.a
+                  <a
                     href={`/products/${active.id}`}
-                    className="group relative overflow-hidden inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[10px] tracking-[0.28em] uppercase font-medium"
+                    className="group relative overflow-hidden inline-flex items-center gap-2.5 mt-1 px-8 py-3.5 bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[10px] tracking-[0.24em] uppercase font-medium"
                     style={{ fontFamily: "var(--font-body-family)" }}
-                    whileHover={{ scale: 1.02, boxShadow: "0 20px 56px rgba(201,168,76,0.38)" }}
-                    whileTap={{ scale: 0.97 }}
                   >
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-800" />
-                    Discover {active.name}
-                    <ArrowRight size={11} strokeWidth={2.5} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </motion.a>
-
-                  <motion.a
-                    href="/collections"
-                    className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/85 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
-                    style={{ fontFamily: "var(--font-body-family)" }}
-                    whileHover={{ backgroundColor: "rgba(201,168,76,0.04)" }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    View All Fragrances
-                  </motion.a>
+                    Shop {active.name}
+                    <ArrowRight size={11} strokeWidth={2.5} />
+                  </a>
                 </div>
 
-                {/* Fragrance stats */}
-                <div className="flex items-center gap-8 pt-6 border-t border-gold/[0.07]">
-                  {stats.map(({ label, value }) => (
-                    <div key={label}>
-                      <p
-                        className="text-[7px] text-muted/80 tracking-[0.28em] uppercase mb-1.5"
-                        style={{ fontFamily: "var(--font-body-family)" }}
-                      >
-                        {label}
-                      </p>
-                      <p
-                        className="text-[12px] text-gold/80"
-                        style={{ fontFamily: "var(--font-body-family)" }}
-                      >
-                        {value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Mobile-only bottle image */}
-                <div className="lg:hidden relative mx-auto mt-2 w-[220px] aspect-[4/5]">
-                  <div className="absolute inset-[-40px] bg-[radial-gradient(ellipse_at_center,_rgba(61,8,32,0.7)_0%,_transparent_65%)] pointer-events-none" />
-                  <div className="relative w-full h-full overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.9)]">
-                    <Image
-                      src={active.image}
-                      alt={`${active.name} — PakAuraa`}
-                      fill
-                      className="object-cover object-center"
-                      sizes="220px"
-                      priority
+                {/* ── Desktop: full editorial layout ── */}
+                <div className="hidden lg:flex flex-col space-y-8">
+                  {/* Eyebrow line */}
+                  <div className="flex items-center gap-5">
+                    <motion.div
+                      className="h-px bg-gradient-to-r from-gold/60 to-transparent"
+                      initial={{ width: 0 }}
+                      animate={{ width: 48 }}
+                      transition={{ delay: 0.15, duration: 0.8 }}
                     />
+                    <span className="eyebrow opacity-70">
+                      {active.concentration} · Lahore, Pakistan
+                    </span>
+                  </div>
+
+                  {/* Main headline */}
+                  <h1
+                    className="leading-[0.85] tracking-[-0.02em] overflow-hidden"
+                    style={{ fontFamily: "var(--font-display-family)" }}
+                  >
+                    <span className="block overflow-hidden">
+                      <motion.span
+                        className="inline-block text-gold-gradient"
+                        initial={{ y: 100, skewY: 3 }}
+                        animate={{ y: 0, skewY: 0 }}
+                        transition={{ delay: 0.1, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ fontSize: "clamp(30px, 8vw, 92px)", lineHeight: 0.9 }}
+                      >
+                        {active.name}
+                      </motion.span>
+                    </span>
+                    <motion.span
+                      className="block mt-3 h-px bg-gradient-to-r from-gold/50 via-gold/15 to-transparent"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ transformOrigin: "left", width: "60%" }}
+                    />
+                  </h1>
+
+                  {/* Description */}
+                  <p
+                    className="text-[17px] text-warm-gray/85 leading-[1.9] max-w-[480px] font-light"
+                    style={{ fontFamily: "var(--font-body-family)" }}
+                  >
+                    {active.description}
+                  </p>
+
+                  {/* CTAs */}
+                  <div className="flex items-start gap-4">
+                    <motion.a
+                      href={`/products/${active.id}`}
+                      className="group relative overflow-hidden inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[10px] tracking-[0.28em] uppercase font-medium"
+                      style={{ fontFamily: "var(--font-body-family)" }}
+                      whileHover={{ scale: 1.02, boxShadow: "0 20px 56px rgba(201,168,76,0.38)" }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span className="absolute inset-0 -translate-x-full group-hover:translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-800" />
+                      Discover {active.name}
+                      <ArrowRight size={11} strokeWidth={2.5} className="transition-transform duration-300 group-hover:translate-x-1" />
+                    </motion.a>
+
+                    <motion.a
+                      href="/collections"
+                      className="inline-flex items-center gap-3 px-9 py-4 border border-gold/20 text-warm-gray/85 text-[10px] tracking-[0.28em] uppercase hover:border-gold/45 hover:text-cream transition-all duration-500"
+                      style={{ fontFamily: "var(--font-body-family)" }}
+                      whileHover={{ backgroundColor: "rgba(201,168,76,0.04)" }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      View All Fragrances
+                    </motion.a>
+                  </div>
+
+                  {/* Fragrance stats */}
+                  <div className="flex items-center gap-8 pt-6 border-t border-gold/[0.07]">
+                    {stats.map(({ label, value }) => (
+                      <div key={label}>
+                        <p
+                          className="text-[7px] text-muted/80 tracking-[0.28em] uppercase mb-1.5"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          {label}
+                        </p>
+                        <p
+                          className="text-[12px] text-gold/80"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          {value}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -284,7 +316,7 @@ export default function HeroSection() {
 
             {/* Slide indicators */}
             {ready && heroProducts.length > 1 && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center lg:justify-start gap-2 mt-1 lg:mt-0">
                 {heroProducts.map((p, i) => (
                   <button
                     key={p.id}

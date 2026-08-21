@@ -198,6 +198,11 @@ function CollectionsPageInner() {
     [shoppable]
   );
 
+  // With only a handful of live fragrances, a full filter rail (concentration +
+  // price + family) is more clutter than help — it only earns its keep once
+  // there's enough inventory that narrowing results actually saves scrolling.
+  const showAdvancedFilters = shoppable.length > 4;
+
   const setCategory = (cat: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (cat === "all") params.delete("cat");
@@ -242,7 +247,7 @@ function CollectionsPageInner() {
       <Header />
       <main className="pt-20 bg-obsidian min-h-screen">
         {/* Hero banner */}
-        <section className="relative h-[340px] flex items-center justify-center overflow-hidden border-b border-gold/10">
+        <section className="relative h-[180px] lg:h-[340px] flex items-center justify-center overflow-hidden border-b border-gold/10">
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a0f] to-[#0a0a0a]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_80%,_rgba(201,168,76,0.08)_0%,_transparent_60%)]" />
           <div className="relative z-10 text-center px-6">
@@ -250,7 +255,7 @@ function CollectionsPageInner() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="text-[9px] text-gold tracking-[0.4em] uppercase mb-5"
+              className="hidden lg:block text-[9px] text-gold tracking-[0.4em] uppercase mb-5"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               Explore
@@ -259,7 +264,7 @@ function CollectionsPageInner() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-display text-[clamp(36px,6vw,72px)] text-cream leading-tight mb-4"
+              className="font-display text-[clamp(28px,6vw,72px)] text-cream leading-tight mb-2 lg:mb-4"
               style={{ fontFamily: "var(--font-display-family)" }}
             >
               {activeCategoryLabel}
@@ -268,7 +273,7 @@ function CollectionsPageInner() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-[14px] text-warm-gray"
+              className="text-[12px] lg:text-[14px] text-warm-gray"
               style={{ fontFamily: "var(--font-body-family)" }}
             >
               {filtered.length} of {products.length} luxury fragrances, crafted for the extraordinary
@@ -277,9 +282,9 @@ function CollectionsPageInner() {
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
         </section>
 
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-10">
+        <div className="max-w-[1440px] mx-auto px-4 lg:px-12 py-6 lg:py-10">
           {/* Category pills */}
-          <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-1">
+          <div className="flex items-center gap-2 mb-5 lg:mb-6 overflow-x-auto pb-1">
             {categories.map((c) => (
               <button
                 key={c.id}
@@ -295,18 +300,21 @@ function CollectionsPageInner() {
           </div>
 
           {/* Filter bar */}
-          <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
-            {/* Mobile filter toggle */}
-            <button
-              onClick={() => setFiltersOpen(!filtersOpen)}
-              className="lg:hidden flex items-center gap-2 border border-gold/25 text-warm-gray text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 hover:border-gold/45 transition-colors"
-              style={{ fontFamily: "var(--font-body-family)" }}
-            >
-              <SlidersHorizontal size={13} strokeWidth={1.5} />
-              Filters
-            </button>
+          <div className="flex items-center justify-between mb-6 lg:mb-8 gap-4 flex-wrap">
+            {/* Mobile filter toggle — only worth showing once there's enough inventory to filter */}
+            {showAdvancedFilters && (
+              <button
+                onClick={() => setFiltersOpen(!filtersOpen)}
+                className="lg:hidden flex items-center gap-2 border border-gold/25 text-warm-gray text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 hover:border-gold/45 transition-colors"
+                style={{ fontFamily: "var(--font-body-family)" }}
+              >
+                <SlidersHorizontal size={13} strokeWidth={1.5} />
+                Filters
+              </button>
+            )}
 
             {/* Desktop filters inline */}
+            {showAdvancedFilters && (
             <div className="hidden lg:flex items-center gap-3 flex-wrap">
               {/* Concentration */}
               <div className="flex items-center gap-1">
@@ -365,6 +373,7 @@ function CollectionsPageInner() {
                 ))}
               </div>
             </div>
+            )}
 
             {/* Sort + count */}
             <div className="flex items-center gap-4 ml-auto">
@@ -384,7 +393,7 @@ function CollectionsPageInner() {
 
           {/* Mobile filter panel */}
           <AnimatePresence>
-            {filtersOpen && (
+            {showAdvancedFilters && filtersOpen && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}

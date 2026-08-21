@@ -138,9 +138,9 @@ export default function Header() {
         <AnnouncementBar />
         <motion.header
         animate={{
-          backgroundColor: scrolled ? "rgba(8,8,8,0.92)" : "rgba(8,8,8,0.0)",
-          borderBottomColor: scrolled ? "rgba(201,168,76,0.10)" : "rgba(201,168,76,0)",
-          backdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(0px)",
+          backgroundColor: scrolled || mobileOpen ? "rgba(8,8,8,0.92)" : "rgba(8,8,8,0.0)",
+          borderBottomColor: scrolled || mobileOpen ? "rgba(201,168,76,0.10)" : "rgba(201,168,76,0)",
+          backdropFilter: scrolled || mobileOpen ? "blur(28px) saturate(180%)" : "blur(0px)",
         }}
         style={{ borderBottomWidth: 1, borderBottomStyle: "solid" }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -491,23 +491,10 @@ export default function Header() {
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="fixed inset-0 z-[99] bg-[#060606]/99 backdrop-blur-2xl flex flex-col"
           >
-            {/* Mobile header */}
-            <div className="flex items-center justify-between px-6 h-[72px] border-b border-gold/[0.08]">
-              <Image
-                src="/logo.png"
-                alt="PakAuraa"
-                width={68}
-                height={48}
-                className="object-contain"
-                placeholder="empty"
-                style={{ filter: "drop-shadow(0 2px 8px rgba(201,168,76,0.2))" }}
-              />
-              <button onClick={() => setMobileOpen(false)} className="text-warm-gray hover:text-gold transition-colors">
-                <X size={18} strokeWidth={1.5} />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-6 py-8">
+            <div
+              className="flex-1 overflow-y-auto px-6 pb-8"
+              style={{ paddingTop: "calc(var(--site-header-height) + 24px)" }}
+            >
               {/* Account / Wishlist / Cart */}
               <div className="flex items-center justify-center gap-12 mb-8 pb-6 border-b border-gold/[0.08]">
                 <a

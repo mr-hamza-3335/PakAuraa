@@ -16,11 +16,11 @@ export default function BestSellers() {
   const products = useCatalog().filter((p) => !p.comingSoon);
 
   return (
-    <section className="py-28 lg:py-40 bg-[#0A0A0A] relative overflow-hidden">
+    <section className="py-14 lg:py-40 bg-[#0A0A0A] relative overflow-hidden">
       {/* Subtle ambient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,_rgba(61,8,32,0.08)_0%,_transparent_60%)] pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-16 relative">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-16 relative">
 
         {/* Header */}
         <motion.div
@@ -28,7 +28,7 @@ export default function BestSellers() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 lg:mb-20 gap-5"
+          className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 lg:mb-20 gap-5"
         >
           <div>
             <p className="eyebrow mb-5 opacity-70">Most Loved</p>
