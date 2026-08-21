@@ -104,10 +104,11 @@ export default function CheckoutClient() {
   }, []);
 
   const total = cartTotal();
-  // Tasters are low-value 5ml sizes — they carry their own flat delivery fee
-  // instead of the site's usual free shipping.
-  const hasTaster = cart.some((i) => i.product.isTaster);
-  const shipping = hasTaster ? 250 : 0;
+  // The flat delivery fee only applies to a taster-only order — the moment a
+  // full-size fragrance is in the cart (even alongside tasters), shipping is
+  // free as usual.
+  const tasterOnlyOrder = cart.length > 0 && cart.every((i) => i.product.isTaster);
+  const shipping = tasterOnlyOrder ? 250 : 0;
   const couponDiscount = appliedCoupon ? Math.round((total * appliedCoupon.percentOff) / 100) : 0;
   const bundleAmount = bundleDiscount();
   const usingBundle = bundleAmount > couponDiscount;
