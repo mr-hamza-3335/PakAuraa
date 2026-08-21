@@ -23,7 +23,7 @@ const steps = [
   {
     key: "mood" as const,
     question: "What mood are you dressing for?",
-    options: scentMoods.map((m) => ({ value: m.id, label: m.label, arabic: m.arabic })),
+    options: scentMoods.map((m) => ({ value: m.id, label: m.label })),
   },
   {
     key: "intensity" as const,
@@ -125,14 +125,6 @@ export default function ScentFinder() {
                     whileTap={{ scale: 0.97 }}
                   >
                     {opt.label}
-                    {"arabic" in opt && (
-                      <span
-                        className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-gold opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-                        style={{ fontFamily: "var(--font-scheherazade), serif" }}
-                      >
-                        {opt.arabic}
-                      </span>
-                    )}
                   </motion.button>
                 ))}
               </div>

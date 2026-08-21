@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSettings, rtlLanguages } from "@/lib/settings";
 
 /** Keeps <html lang>/<html dir> in sync with the chosen language — this is
- * what actually flips the site into right-to-left for Urdu and Arabic. */
+ * what actually flips the site into right-to-left for Urdu. */
 export default function LocaleEffect() {
   const language = useSettings((s) => s.language);
 

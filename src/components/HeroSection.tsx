@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Truck, ShieldCheck, Banknote } from "lucide-react";
 import Image from "next/image";
 import { products, type Product } from "@/lib/data";
 
@@ -48,6 +48,12 @@ function heroStats(product: Product) {
 }
 
 const AUTO_ADVANCE_MS = 6500;
+
+const TRUST_POINTS = [
+  { Icon: Truck, label: "Free Delivery" },
+  { Icon: Banknote, label: "Cash on Delivery" },
+  { Icon: ShieldCheck, label: "100% Genuine" },
+];
 
 export default function HeroSection() {
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -191,7 +197,7 @@ export default function HeroSection() {
                   </div>
 
                   <span className="eyebrow opacity-70 text-[8px]">
-                    {active.concentration} · Lahore, Pakistan
+                    {active.concentration} · Karachi, Pakistan
                   </span>
 
                   <h1
@@ -216,6 +222,20 @@ export default function HeroSection() {
                     Shop {active.name}
                     <ArrowRight size={11} strokeWidth={2.5} />
                   </a>
+
+                  <div className="flex items-center gap-3.5 mt-1">
+                    {TRUST_POINTS.map(({ Icon, label }) => (
+                      <div key={label} className="flex items-center gap-1.5">
+                        <Icon size={11} strokeWidth={1.5} className="text-gold/60" />
+                        <span
+                          className="text-[8px] text-warm-gray/85 tracking-[0.04em]"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          {label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* ── Desktop: full editorial layout ── */}
@@ -229,7 +249,7 @@ export default function HeroSection() {
                       transition={{ delay: 0.15, duration: 0.8 }}
                     />
                     <span className="eyebrow opacity-70">
-                      {active.concentration} · Lahore, Pakistan
+                      {active.concentration} · Karachi, Pakistan
                     </span>
                   </div>
 
@@ -289,6 +309,21 @@ export default function HeroSection() {
                     >
                       View All Fragrances
                     </motion.a>
+                  </div>
+
+                  {/* Trust points */}
+                  <div className="flex items-center gap-6">
+                    {TRUST_POINTS.map(({ Icon, label }) => (
+                      <div key={label} className="flex items-center gap-2">
+                        <Icon size={13} strokeWidth={1.5} className="text-gold/60" />
+                        <span
+                          className="text-[10px] text-warm-gray/85 tracking-[0.05em]"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          {label}
+                        </span>
+                      </div>
+                    ))}
                   </div>
 
                   {/* Fragrance stats */}

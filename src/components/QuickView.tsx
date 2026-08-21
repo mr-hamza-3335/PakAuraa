@@ -6,7 +6,6 @@ import { X, Heart, ShoppingBag, Star, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useStore } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
-import { getReviewsFor } from "@/lib/data";
 import { createClient } from "@/lib/supabase/client";
 
 export default function QuickView() {
@@ -23,9 +22,9 @@ export default function QuickView() {
     let cancelled = false;
     const supabase = createClient();
     if (!supabase) {
-      // No backend configured — immediate synchronous fallback, not a fetch.
+      // No backend configured — no real review data to show.
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setReviewCount(getReviewsFor(product.id).length);
+      setReviewCount(0);
       return;
     }
     supabase

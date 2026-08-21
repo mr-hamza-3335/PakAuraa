@@ -16,7 +16,6 @@ const currencies: Currency[] = ["PKR", "USD", "AED", "GBP"];
 const languages: { id: Language; label: string }[] = [
   { id: "en", label: "English" },
   { id: "ur", label: "اردو" },
-  { id: "ar", label: "العربية" },
 ];
 
 function useNavLinks() {

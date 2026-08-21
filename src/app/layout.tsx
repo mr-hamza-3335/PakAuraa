@@ -52,11 +52,11 @@ export const metadata: Metadata = {
     template: "%s | PakAuraa Luxury Perfumes",
   },
   description:
-    "Discover world-class luxury perfumes by PakAuraa. Premium fragrances crafted for royalty in Lahore, Pakistan. Zurtaan and Zarfah.",
+    "Discover world-class luxury perfumes by PakAuraa. Premium fragrances crafted for royalty in Karachi, Pakistan. Zurtaan and Zarfah.",
   keywords: [
     ...BRAND_KEYWORDS,
     "premium perfume",
-    "Lahore perfume",
+    "Karachi perfume",
     "Pakistani luxury brand",
   ],
   alternates: { canonical: "/" },

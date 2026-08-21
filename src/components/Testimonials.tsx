@@ -3,31 +3,30 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { reviews as allReviews, getProduct } from "@/lib/data";
+import type { FeaturedReview } from "@/lib/reviews.server";
 
-const reviews = allReviews.map((r) => ({
-  ...r,
-  productName: r.productId ? getProduct(r.productId)?.name : undefined,
-}));
-
-export default function Testimonials() {
+export default function Testimonials({ reviews }: { reviews: FeaturedReview[] }) {
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState(1);
 
   const next = useCallback(() => {
     setDir(1);
     setActive((prev) => (prev + 1) % reviews.length);
-  }, []);
+  }, [reviews.length]);
 
   const prev = useCallback(() => {
     setDir(-1);
     setActive((prev) => (prev - 1 + reviews.length) % reviews.length);
-  }, []);
+  }, [reviews.length]);
 
   useEffect(() => {
+    if (reviews.length < 2) return;
     const t = setInterval(next, 6500);
     return () => clearInterval(t);
-  }, [next]);
+  }, [next, reviews.length]);
+
+  // No real, approved customer reviews yet — nothing fake to show in the meantime.
+  if (reviews.length === 0) return null;
 
   const review = reviews[active];
 

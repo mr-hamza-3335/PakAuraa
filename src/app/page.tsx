@@ -7,6 +7,7 @@ import PressStrip from "@/components/PressStrip";
 import JournalPreview from "@/components/JournalPreview";
 import Footer from "@/components/Footer";
 import { pageMetadata } from "@/lib/seo";
+import { getFeaturedReviews } from "@/lib/reviews.server";
 
 export const metadata: Metadata = pageMetadata({
   title: "PakAuraa — Luxury Perfumes in Pakistan | Zurtaan & Zarfah",
@@ -29,7 +30,8 @@ const Testimonials = dynamic(() => import("@/components/Testimonials"));
 const InstagramGallery = dynamic(() => import("@/components/InstagramGallery"));
 const Newsletter = dynamic(() => import("@/components/Newsletter"));
 
-export default function HomePage() {
+export default async function HomePage() {
+  const reviews = await getFeaturedReviews();
   return (
     <main>
       <Header />
@@ -43,7 +45,7 @@ export default function HomePage() {
       <Craftsmanship />
       <Ingredients />
       <Packaging />
-      <Testimonials />
+      {reviews.length > 0 && <Testimonials reviews={reviews} />}
       <JournalPreview />
       <InstagramGallery />
       <Newsletter />

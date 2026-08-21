@@ -47,8 +47,8 @@ function ComingSoonCard({ product, idx }: { product: Product; idx: number }) {
           </span>
         </div>
       </div>
-      <div className="p-4 text-center">
-        <h3 className="font-elegant text-[16px] text-cream/70" style={{ fontFamily: "var(--font-elegant-family)" }}>
+      <div className="p-3 lg:p-4 text-center">
+        <h3 className="font-elegant text-[14px] lg:text-[16px] text-cream/70" style={{ fontFamily: "var(--font-elegant-family)" }}>
           {product.name}
         </h3>
       </div>
@@ -85,18 +85,18 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
       )}
 
       {/* Wishlist + Compare */}
-      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+      <div className="absolute top-2 right-2 lg:top-3 lg:right-3 z-10 flex flex-col gap-1.5 lg:gap-2">
         <button
           aria-label="Wishlist"
           onClick={() => toggleWishlist(product)}
-          className="w-8 h-8 flex items-center justify-center bg-obsidian/70 backdrop-blur-sm border border-gold/18 rounded-full transition-all hover:border-gold/45"
+          className="w-7 h-7 lg:w-8 lg:h-8 flex items-center justify-center bg-obsidian/70 backdrop-blur-sm border border-gold/18 rounded-full transition-all hover:border-gold/45"
         >
-          <Heart size={13} strokeWidth={1.5} className={wishlisted ? "fill-gold text-gold" : "text-warm-gray"} />
+          <Heart size={12} strokeWidth={1.5} className={wishlisted ? "fill-gold text-gold" : "text-warm-gray"} />
         </button>
         <button
           aria-label="Add to Compare"
           onClick={() => toggleCompare(product.id)}
-          className={`w-8 h-8 flex items-center justify-center bg-obsidian/70 backdrop-blur-sm border rounded-full transition-all ${
+          className={`hidden lg:flex w-8 h-8 items-center justify-center bg-obsidian/70 backdrop-blur-sm border rounded-full transition-all ${
             comparing ? "border-gold/60" : "border-gold/18 hover:border-gold/45"
           }`}
         >
@@ -114,8 +114,8 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-obsidian/70 opacity-0 group-hover:opacity-100 transition-opacity duration-350 flex items-center justify-center gap-2">
+          {/* Add to cart — always visible on mobile, hover-revealed on desktop */}
+          <div className="absolute inset-0 hidden lg:flex bg-obsidian/70 opacity-0 group-hover:opacity-100 transition-opacity duration-350 items-center justify-center gap-2">
             <motion.button
               onClick={(e) => { e.preventDefault(); addToCart(product, size.ml, size.price); setCartOpen(true); }}
               className="flex items-center gap-1.5 bg-gold text-obsidian text-[9px] tracking-[0.15em] uppercase px-4 py-2.5"
@@ -132,29 +132,36 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
               <Eye size={13} strokeWidth={1.5} />
             </motion.button>
           </div>
+          <button
+            onClick={(e) => { e.preventDefault(); addToCart(product, size.ml, size.price); setCartOpen(true); }}
+            aria-label="Add to Cart"
+            className="lg:hidden absolute bottom-2 right-2 w-8 h-8 flex items-center justify-center bg-gold text-obsidian rounded-full"
+          >
+            <ShoppingBag size={13} strokeWidth={2} />
+          </button>
         </div>
       </Link>
 
       {/* Info */}
-      <div className="p-4 flex-1 flex flex-col">
-        <p className="text-[8px] text-gold tracking-[0.22em] uppercase mb-1" style={{ fontFamily: "var(--font-body-family)" }}>{product.collection}</p>
+      <div className="p-3 lg:p-4 flex-1 flex flex-col">
+        <p className="text-[7px] lg:text-[8px] text-gold tracking-[0.18em] lg:tracking-[0.22em] uppercase mb-1 truncate" style={{ fontFamily: "var(--font-body-family)" }}>{product.collection}</p>
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-elegant text-[16px] text-cream leading-tight mb-2 group-hover:text-gold-light transition-colors" style={{ fontFamily: "var(--font-elegant-family)" }}>
+          <h3 className="font-elegant text-[14px] lg:text-[16px] text-cream leading-tight mb-1.5 lg:mb-2 group-hover:text-gold-light transition-colors" style={{ fontFamily: "var(--font-elegant-family)" }}>
             {product.name}
           </h3>
         </Link>
-        <div className="flex gap-0.5 mb-3">
+        <div className="hidden lg:flex gap-0.5 mb-3">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={9} className="fill-gold text-gold" />)}
         </div>
-        <div className="flex items-center justify-between mt-auto pt-3 border-t border-gold/10">
-          <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[14px] text-cream" />
-          <span className="text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
+        <div className="flex items-center justify-between mt-auto pt-2.5 lg:pt-3 border-t border-gold/10">
+          <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[12px] lg:text-[14px] text-cream" />
+          <span className="text-[8px] lg:text-[9px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>{size.ml}ml</span>
         </div>
         {product.pdfCard && (
           <a
             href={product.pdfCard}
             download
-            className="mt-3 flex items-center justify-center gap-1.5 text-[8px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
+            className="hidden lg:flex mt-3 items-center justify-center gap-1.5 text-[8px] text-warm-gray/85 hover:text-gold border border-gold/14 hover:border-gold/35 px-3 py-2 tracking-wider uppercase transition-colors"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             <Download size={10} strokeWidth={1.5} /> Details Card
@@ -247,7 +254,7 @@ function CollectionsPageInner() {
       <Header />
       <main className="pt-20 bg-obsidian min-h-screen">
         {/* Hero banner */}
-        <section className="relative h-[180px] lg:h-[340px] flex items-center justify-center overflow-hidden border-b border-gold/10">
+        <section className="relative h-[130px] lg:h-[340px] flex items-center justify-center overflow-hidden border-b border-gold/10">
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a0f] to-[#0a0a0a]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_80%,_rgba(201,168,76,0.08)_0%,_transparent_60%)]" />
           <div className="relative z-10 text-center px-6">
@@ -282,14 +289,14 @@ function CollectionsPageInner() {
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
         </section>
 
-        <div className="max-w-[1440px] mx-auto px-4 lg:px-12 py-6 lg:py-10">
+        <div className="max-w-[1440px] mx-auto px-4 lg:px-12 py-3 lg:py-10">
           {/* Category pills */}
-          <div className="flex items-center gap-2 mb-5 lg:mb-6 overflow-x-auto pb-1">
+          <div className="flex items-center gap-2 mb-3 lg:mb-6 overflow-x-auto pb-1">
             {categories.map((c) => (
               <button
                 key={c.id}
                 onClick={() => setCategory(c.id)}
-                className={`flex-shrink-0 text-[9px] tracking-[0.18em] uppercase px-4 py-2.5 border transition-all duration-300 whitespace-nowrap ${
+                className={`flex-shrink-0 text-[8px] lg:text-[9px] tracking-[0.18em] uppercase px-3 lg:px-4 py-2 lg:py-2.5 border transition-all duration-300 whitespace-nowrap ${
                   activeCat === c.id ? "border-gold/60 text-gold bg-gold/8" : "border-gold/14 text-warm-gray hover:border-gold/30"
                 }`}
                 style={{ fontFamily: "var(--font-body-family)" }}
@@ -300,7 +307,7 @@ function CollectionsPageInner() {
           </div>
 
           {/* Filter bar */}
-          <div className="flex items-center justify-between mb-6 lg:mb-8 gap-4 flex-wrap">
+          <div className="flex items-center justify-between mb-3 lg:mb-8 gap-4 flex-wrap">
             {/* Mobile filter toggle — only worth showing once there's enough inventory to filter */}
             {showAdvancedFilters && (
               <button
@@ -458,7 +465,7 @@ function CollectionsPageInner() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 lg:gap-5 relative"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 lg:gap-5 relative"
             >
               {filtered.map((p, i) => (
                 <div key={p.id} className="relative">

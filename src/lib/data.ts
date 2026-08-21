@@ -136,7 +136,7 @@ export const products: Product[] = [
     id: "naazif",
     name: "Naazif",
     arabicName: "نازيف",
-    meaning: "Naazif (نازيف) means pure, clean, clear — the symbol of freshness.",
+    meaning: "Naazif means pure, clean, clear — the symbol of freshness.",
     tagline: "Just Showered Luxury Feel",
     collection: "Fresh Collection",
     category: "Fresh + Clean + Modern Arabic",
@@ -384,67 +384,12 @@ export function matchesCategory(product: Product, cat: string): boolean {
   }
 }
 
-export const reviews: Review[] = [
-  {
-    id: 1,
-    productId: "sultan-e-zafroon",
-    quote:
-      "Sultan-e-Zafroon is unlike anything I've experienced. The saffron and oud combination is world-class. I wore it to a wedding and received compliments all night.",
-    author: "Ahmad R.",
-    location: "Lahore",
-    rating: 5,
-  },
-  {
-    id: 2,
-    productId: null,
-    quote:
-      "I gifted PakAuraa to my family in London and they thought I'd brought it from a boutique in Paris. The packaging alone is breathtaking.",
-    author: "Sana M.",
-    location: "Islamabad",
-    rating: 5,
-  },
-  {
-    id: 3,
-    productId: "naazif",
-    quote:
-      "Naazif is my everyday signature now. Fresh, clean, and effortlessly luxurious. Nothing at this price range comes close.",
-    author: "Zara K.",
-    location: "Karachi",
-    rating: 5,
-  },
-  {
-    id: 4,
-    productId: "zurtaan",
-    quote:
-      "Zurtaan is exactly what I wanted — bold, masculine, long-lasting. My colleagues ask me about it every single day.",
-    author: "Usman T.",
-    location: "Islamabad",
-    rating: 5,
-  },
-  {
-    id: 5,
-    productId: "zarfah",
-    quote:
-      "Zarfah is the most beautiful floral fragrance I have ever worn. Soft, romantic, and completely unforgettable. PakAuraa has set a new standard.",
-    author: "Nadia A.",
-    location: "Karachi",
-    rating: 5,
-  },
-];
-
-/** Back-compat alias used by the homepage testimonials strip. */
-export const testimonials = reviews;
-
-export function getReviewsFor(productId: string): Review[] {
-  return reviews.filter((r) => r.productId === productId);
-}
-
 export const scentMoods = [
-  { id: "seductive", label: "Seductive", arabic: "إغرائي", color: "#6B1A2A" },
-  { id: "fresh", label: "Fresh", arabic: "منعش", color: "#0a1f1a" },
-  { id: "powerful", label: "Powerful", arabic: "قوي", color: "#1a1008" },
-  { id: "romantic", label: "Romantic", arabic: "رومانسي", color: "#1a0a12" },
-  { id: "bold", label: "Bold", arabic: "جريء", color: "#12101a" },
-  { id: "mysterious", label: "Mysterious", arabic: "غامض", color: "#0d0d1a" },
+  { id: "seductive", label: "Seductive", color: "#6B1A2A" },
+  { id: "fresh", label: "Fresh", color: "#0a1f1a" },
+  { id: "powerful", label: "Powerful", color: "#1a1008" },
+  { id: "romantic", label: "Romantic", color: "#1a0a12" },
+  { id: "bold", label: "Bold", color: "#12101a" },
+  { id: "mysterious", label: "Mysterious", color: "#0d0d1a" },
 ];
 

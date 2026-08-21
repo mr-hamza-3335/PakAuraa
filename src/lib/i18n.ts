@@ -4,7 +4,7 @@ import { useSettings } from "./settings";
  * Site-chrome dictionary (navigation, buttons, forms, common labels).
  * Long-form marketing/product prose stays in English — machine-translating
  * brand copy risked misrepresenting it, so only verified UI strings ship
- * with Urdu/Arabic here. Extend this table to widen coverage.
+ * with Urdu here. Extend this table to widen coverage.
  */
 const dict = {
   en: {
@@ -16,7 +16,6 @@ const dict = {
     forHim: "For Him",
     forHer: "For Her",
     unisex: "Unisex",
-    arabicCollection: "Arabic Collection",
     signatureCollection: "Signature Collection",
     limitedEdition: "Limited Edition",
     giftSets: "Gift Sets",
@@ -140,7 +139,6 @@ const dict = {
     forHim: "مردوں کے لیے",
     forHer: "خواتین کے لیے",
     unisex: "یونیسیکس",
-    arabicCollection: "عربی مجموعہ",
     signatureCollection: "امتیازی مجموعہ",
     limitedEdition: "محدود ایڈیشن",
     giftSets: "تحفہ سیٹس",
@@ -249,128 +247,13 @@ const dict = {
     delete: "حذف کریں",
     back: "واپس",
   },
-  ar: {
-    collections: "المجموعات",
-    fragrances: "العطور",
-    ourStory: "قصتنا",
-    contact: "اتصل بنا",
-    forHim: "له",
-    forHer: "لها",
-    unisex: "للجنسين",
-    arabicCollection: "المجموعة العربية",
-    signatureCollection: "المجموعة المميزة",
-    limitedEdition: "إصدار محدود",
-    giftSets: "أطقم الهدايا",
-    viewAll: "عرض الكل",
-    search: "بحث",
-    searchPlaceholder: "ابحث عن عطر...",
-    wishlist: "المفضلة",
-    account: "الحساب",
-    cart: "السلة",
-    currency: "العملة",
-    language: "اللغة",
-
-    yourCart: "سلتك",
-    addToCart: "أضف إلى السلة",
-    add: "أضف",
-    buyNow: "اشترِ الآن",
-    cartEmpty: "سلتك فارغة",
-    continueShopping: "متابعة التسوق",
-    proceedToCheckout: "المتابعة إلى الدفع",
-    subtotal: "المجموع الفرعي",
-    shippingTaxesAtCheckout: "تُحسب الشحن والضرائب عند الدفع",
-    freeShipping: "شحن مجاني",
-    freeShippingNote: "شحن مجاني في جميع أنحاء باكستان — 3 إلى 5 أيام عمل",
-    bundleDiscount: "خصم الباقة",
-    bundleAppliedNote: "تم تطبيق خصم الباقة 10% — عطران أو أكثر",
-    bundleUnlockHint: "أضف {n} أكثر لفتح خصم 10%",
-    giftWrapped: "تغليف هدية",
-    engraved: "منقوش",
-    giftCardFor: "بطاقة هدايا لـ {email}",
-    forRecipient: "لـ {email}",
-    remove: "إزالة",
-
-    checkout: "الدفع",
-    fullName: "الاسم الكامل",
-    email: "البريد الإلكتروني",
-    phone: "الهاتف",
-    address: "العنوان",
-    city: "المدينة",
-    landmark: "أقرب معلم (اختياري)",
-    landmarkPlaceholder: "مثال: بالقرب من مسجد كذا، مقابل متجر كذا",
-    confirmCodTitle: "تأكيد الدفع عند الاستلام",
-    confirmCodQuestion: "هل العنوان الذي أدخلته صحيح؟ هل سيتم استلام الدفع في نفس هذا العنوان؟",
-    confirmCodYes: "نعم، نفس العنوان",
-    confirmCodDifferent: "لا، عنوان مختلف",
-    confirmCodAltAddressLabel: "عنوان الدفع الصحيح",
-    confirmCodAltAddressPlaceholder: "أدخل العنوان الذي سيتم فيه استلام الدفع",
-    confirmCodContinue: "تأكيد وإتمام الطلب",
-    completeYourOrder: "أكمل طلبك",
-    shippingDetails: "تفاصيل الشحن",
-    paymentMethod: "طريقة الدفع",
-    cashOnDelivery: "الدفع عند الاستلام",
-    payOnDelivery: "ادفع عند وصول طلبك",
-    creditDebitCard: "بطاقة ائتمان / خصم",
-    couponCode: "كود الخصم",
-    giftCard: "بطاقة الهدايا",
-    giftCardCode: "كود بطاقة الهدايا",
-    redeemingPoints: "استخدام {n} نقطة",
-    freeDays: "مجاني · 3 إلى 5 أيام عمل",
-    apply: "تطبيق",
-    loyaltyPoints: "نقاط الولاء",
-    loyaltyPointsAvailable: "نقاط الولاء — {n} متاحة",
-    usePointsOff: "استخدم {n} نقطة — خصم {n} روبية",
-    orderFullyDiscounted: "تم بالفعل خصم كامل قيمة الطلب.",
-    shipping: "الشحن",
-    total: "الإجمالي",
-    placeOrder: "إتمام الطلب",
-    processing: "جارٍ المعالجة…",
-    orderSummary: "ملخص الطلب",
-
-    myAccount: "حسابي",
-    signIn: "تسجيل الدخول",
-    signOut: "تسجيل الخروج",
-    orderHistory: "سجل الطلبات",
-    noOrdersYet: "لا توجد طلبات بعد",
-    browseFragrances: "تصفح العطور",
-    saveChanges: "حفظ التغييرات",
-    saving: "جارٍ الحفظ…",
-    saved: "تم الحفظ",
-    referAndEarn: "أحِل واربح",
-    becomeAffiliate: "كن مسوقًا بالعمولة",
-
-    flagshipFragrance: "العطر الرائد",
-    outOfStock: "غير متوفر حاليًا",
-    notifyMe: "أعلمني",
-    addedToCart: "أُضيف إلى السلة",
-    relatedFragrances: "عطور ذات صلة",
-    recentlyViewed: "شوهد مؤخرًا",
-    compare: "مقارنة",
-
-    filters: "الفلاتر",
-    sortBy: "ترتيب حسب",
-    allFragrances: "جميع العطور",
-    allPrices: "كل الأسعار",
-
-    shop: "المتجر",
-    information: "معلومات",
-    help: "المساعدة",
-    newsletter: "النشرة البريدية",
-    subscribe: "اشترك",
-    yourEmailAddress: "بريدك الإلكتروني",
-
-    loading: "جارٍ التحميل…",
-    save: "حفظ",
-    cancel: "إلغاء",
-    edit: "تعديل",
-    delete: "حذف",
-    back: "رجوع",
-  },
 } as const;
 
 export type DictKey = keyof typeof dict.en;
 
 export function useTranslate() {
   const language = useSettings((s) => s.language);
-  return (key: DictKey) => dict[language][key] ?? dict.en[key];
+  // A returning visitor may still have a pre-dropped language (e.g. "ar")
+  // persisted in localStorage — fall back to English rather than crash.
+  return (key: DictKey) => (dict[language as keyof typeof dict] ?? dict.en)[key] ?? dict.en[key];
 }

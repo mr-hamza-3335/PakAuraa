@@ -4,7 +4,7 @@ import type { Product, Review } from "./data";
 export const SITE_URL = "https://pakauraa.com";
 export const SITE_NAME = "PakAuraa";
 export const SITE_DESCRIPTION =
-  "PakAuraa is a Lahore-born luxury fragrance house crafting premium perfumes in Pakistan — Zurtaan and Zarfah — with a long-lasting eau de parfum concentration.";
+  "PakAuraa is a Karachi-born luxury fragrance house crafting premium perfumes in Pakistan — Zurtaan and Zarfah — with a long-lasting eau de parfum concentration.";
 
 /** Core phrases every public page should reinforce without keyword-stuffing. */
 export const BRAND_KEYWORDS = [
@@ -149,7 +149,7 @@ export function organizationJsonLd() {
       contactType: "customer service",
       email: BUSINESS.email,
       areaServed: "PK",
-      availableLanguage: ["English", "Urdu", "Arabic"],
+      availableLanguage: ["English", "Urdu"],
     },
   };
 }

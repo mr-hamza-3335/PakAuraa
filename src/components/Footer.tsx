@@ -125,7 +125,7 @@ export default function Footer() {
 
           {!subbed ? (
             <div className="w-full lg:w-auto">
-              <form onSubmit={handleSub} className="flex gap-3 w-full lg:w-auto">
+              <form onSubmit={handleSub} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
                 <input
                   type="email"
                   value={email}
@@ -138,7 +138,7 @@ export default function Footer() {
                 <motion.button
                   type="submit"
                   disabled={subLoading}
-                  className="bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[9px] tracking-[0.25em] uppercase px-7 py-3.5 flex items-center gap-2 whitespace-nowrap font-medium disabled:opacity-60"
+                  className="w-full sm:w-auto bg-gradient-to-r from-gold-deep to-gold text-obsidian text-[9px] tracking-[0.25em] uppercase px-7 py-3.5 flex items-center justify-center gap-2 whitespace-nowrap font-medium disabled:opacity-60"
                   style={{ fontFamily: "var(--font-body-family)" }}
                   whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(201,168,76,0.35)" }}
                   whileTap={{ scale: 0.97 }}
@@ -187,13 +187,6 @@ export default function Footer() {
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             World-class luxury fragrances, crafted in Pakistan for the global connoisseur.
-          </p>
-
-          <p
-            className="text-xl text-gold/28 mb-7"
-            style={{ fontFamily: "var(--font-scheherazade), serif" }}
-          >
-            عطور فاخرة من باكستان
           </p>
 
           <div className="space-y-2.5 mb-7">

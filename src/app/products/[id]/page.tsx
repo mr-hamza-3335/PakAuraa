@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { products as staticProducts, getReviewsFor, type Review } from "@/lib/data";
+import { products as staticProducts, type Review } from "@/lib/data";
 import { getAllProducts, getProductById } from "@/lib/catalog.server";
 import { getRelatedProducts } from "@/lib/recommend";
 import { createClient } from "@/lib/supabase/server";
@@ -31,9 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return productMetadata(product);
 }
 
+// Real, admin-approved reviews only — no fallback to seeded/fake copy. An
+// empty array means "no reviews yet", which the UI shows honestly rather
+// than dressing up with placeholder testimonials.
 async function getApprovedReviews(productId: string): Promise<Review[]> {
   const supabase = await createClient();
-  if (!supabase) return getReviewsFor(productId);
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("reviews")
@@ -42,7 +45,7 @@ async function getApprovedReviews(productId: string): Promise<Review[]> {
     .eq("approved", true)
     .order("created_at", { ascending: false });
 
-  if (error || !data || data.length === 0) return getReviewsFor(productId);
+  if (error || !data) return [];
 
   return data.map((r) => ({
     id: r.id,

@@ -5,25 +5,21 @@ import { motion } from "framer-motion";
 const pillars = [
   {
     num: "01",
-    arabic: "أصول أصيلة",
     title: "Authentic Origins",
     body: "Every ingredient is traced to its source. Assam oud from 80-year-old aquilaria trees. Bulgarian rose collected at dawn. Kashmir saffron from a single valley. No compromises, no substitutes.",
   },
   {
     num: "02",
-    arabic: "حرفية يدوية",
     title: "Handcrafted Mastery",
-    body: "Each bottle is blended by hand in small batches at our Lahore atelier — Old World precision applied to Pakistan's finest raw materials.",
+    body: "Each bottle is blended by hand in small batches at our Karachi atelier — Old World precision applied to Pakistan's finest raw materials.",
   },
   {
     num: "03",
-    arabic: "عمق الثبات",
     title: "Long-Lasting Depth",
     body: "Extrait de Parfum concentration means 10–14 hours on skin. Our fragrances develop across the day — morning whisper, afternoon character, evening presence.",
   },
   {
     num: "04",
-    arabic: "إرشاد خبير",
     title: "Expert Guidance",
     body: "Every fragrance comes with a full scent profile card. Our team is available seven days a week. We believe you should know exactly what you're wearing and why.",
   },
@@ -83,13 +79,6 @@ export default function WhyPakAuraa() {
                 <div className="absolute top-0 left-0 w-5 h-px bg-gold/20 transition-all duration-500 group-hover:w-9 group-hover:bg-gold/35" />
                 <div className="absolute top-0 left-0 h-5 w-px bg-gold/20 transition-all duration-500 group-hover:h-9 group-hover:bg-gold/35" />
               </div>
-
-              <p
-                className="text-xl text-gold/28 mb-4 transition-colors duration-400 group-hover:text-gold/45"
-                style={{ fontFamily: "var(--font-scheherazade), serif" }}
-              >
-                {p.arabic}
-              </p>
 
               <h3
                 className="text-cream leading-tight mb-5 tracking-[-0.01em] transition-colors duration-400 group-hover:text-gold-light"

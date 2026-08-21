@@ -15,14 +15,14 @@ const steps = [
   { number: "01", title: "Raw Ingredient Sourcing", desc: "We source our oud from Assam, roses from Bulgaria, sandalwood from Mysore, and amber from the Arabian Gulf. Only the finest ingredients make the cut." },
   { number: "02", title: "Master Blending", desc: "Our perfumer balances hundreds of ingredients by hand, guided by instinct refined over decades. Each formula is tested over 6–18 months before approval." },
   { number: "03", title: "Maceration & Maturation", desc: "The blended concentrate is allowed to macerate for a minimum of 8 weeks, allowing molecules to bind and the fragrance to deepen and mature." },
-  { number: "04", title: "Luxury Bottling", desc: "Each bottle is hand-filled, sealed and inspected individually. The signature matte black packaging is assembled by hand in our Lahore facility." },
+  { number: "04", title: "Luxury Bottling", desc: "Each bottle is hand-filled, sealed and inspected individually. The signature matte black packaging is assembled by hand in our Karachi facility." },
 ];
 
 const values = [
-  { arabic: "أصالة", title: "Authenticity", desc: "No synthetic shortcuts. Every note is chosen for its purity and presence." },
-  { arabic: "حرفية", title: "Craftsmanship", desc: "Each bottle represents hundreds of hours of human attention to detail." },
-  { arabic: "فخامة", title: "Luxury", desc: "We define luxury not by price alone, but by the irreplaceable feeling each fragrance creates." },
-  { arabic: "إرث", title: "Heritage", desc: "Rooted in the ancient perfumery traditions of the subcontinent and Arabia." },
+  { title: "Authenticity", desc: "No synthetic shortcuts. Every note is chosen for its purity and presence." },
+  { title: "Craftsmanship", desc: "Each bottle represents hundreds of hours of human attention to detail." },
+  { title: "Luxury", desc: "We define luxury not by price alone, but by the irreplaceable feeling each fragrance creates." },
+  { title: "Heritage", desc: "Rooted in the ancient perfumery traditions of the subcontinent and Arabia." },
 ];
 
 export default function AboutPage() {
@@ -47,10 +47,6 @@ export default function AboutPage() {
               className="text-[9px] text-gold tracking-[0.4em] uppercase mb-5" style={{ fontFamily: "var(--font-body-family)" }}>
               Our Heritage
             </motion.p>
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="text-3xl text-gold/30 mb-4" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
-              قصتنا
-            </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.9 }}
               className="font-display text-[clamp(48px,8vw,88px)] text-cream leading-[0.95] tracking-[-0.02em] mb-8" style={{ fontFamily: "var(--font-display-family)" }}>
               The Scent of <br />
@@ -74,7 +70,7 @@ export default function AboutPage() {
               </blockquote>
               <div className="w-8 h-px bg-gold/50 mx-auto mb-4" />
               <p className="text-[12px] text-cream tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>Founder, PakAuraa</p>
-              <p className="text-[10px] text-warm-gray tracking-wider mt-1" style={{ fontFamily: "var(--font-body-family)" }}>Lahore, Pakistan</p>
+              <p className="text-[10px] text-warm-gray tracking-wider mt-1" style={{ fontFamily: "var(--font-body-family)" }}>Karachi, Pakistan</p>
             </motion.div>
           </div>
         </section>
@@ -119,7 +115,7 @@ export default function AboutPage() {
         {/* ── DUA / PRAYER REQUEST ── */}
         <section className="py-20 px-6 bg-obsidian text-center border-t border-gold/8">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="max-w-[700px] mx-auto">
-            <p className="text-2xl text-gold/30 mb-4" style={{ fontFamily: "var(--font-scheherazade), serif" }}>دعا</p>
+            <p className="text-[9px] text-gold tracking-[0.4em] uppercase mb-5" style={{ fontFamily: "var(--font-body-family)" }}>A Small Request</p>
             <p className="text-[15px] text-warm-gray leading-[1.9]" style={{ fontFamily: "var(--font-body-family)" }}>
               PakAuraa has been a dream since 2024 — and in 2026, we&rsquo;re finally opening our doors. We ask you to keep us in your prayers, that Allah grants this business success.
             </p>
@@ -178,9 +174,6 @@ export default function AboutPage() {
                   style={{ background: "rgba(17,17,17,0.7)" }}
                   whileHover={{ y: -4 }}
                 >
-                  <p className="text-2xl text-gold/40 mb-3 group-hover:text-gold/70 transition-colors" style={{ fontFamily: "var(--font-scheherazade), serif" }}>
-                    {v.arabic}
-                  </p>
                   <h3 className="font-display text-lg text-cream mb-3" style={{ fontFamily: "var(--font-display-family)" }}>{v.title}</h3>
                   <p className="text-[13px] text-warm-gray leading-relaxed" style={{ fontFamily: "var(--font-body-family)" }}>{v.desc}</p>
                 </motion.div>
@@ -192,7 +185,6 @@ export default function AboutPage() {
         {/* ── CTA ── */}
         <section className="py-24 px-6 bg-burgundy text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <p className="text-xl text-gold/30 mb-3" style={{ fontFamily: "var(--font-scheherazade), serif" }}>اكتشف عطرك</p>
             <h2 className="font-display text-[clamp(32px,5vw,56px)] text-cream mb-6" style={{ fontFamily: "var(--font-display-family)" }}>
               Find Your Signature
             </h2>

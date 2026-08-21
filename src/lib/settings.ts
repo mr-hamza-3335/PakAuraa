@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Currency = "PKR" | "USD" | "AED" | "GBP";
-export type Language = "en" | "ur" | "ar";
+export type Language = "en" | "ur";
 
-export const rtlLanguages: Language[] = ["ur", "ar"];
+export const rtlLanguages: Language[] = ["ur"];
 
 /** Static illustrative FX rates against PKR. Swap for a live rate feed in production. */
 export const currencyRates: Record<Currency, { rate: number; symbol: string }> = {

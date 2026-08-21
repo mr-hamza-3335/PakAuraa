@@ -14,7 +14,7 @@ const steps = [
     roman: "II",
     title: "Blending",
     subtitle: "The Alchemy",
-    body: "In our Lahore atelier, our master blender works with scales accurate to 0.01g. Each accord is built across weeks of micro-adjustments, listening to skin rather than chemistry.",
+    body: "In our Karachi atelier, our master blender works with scales accurate to 0.01g. Each accord is built across weeks of micro-adjustments, listening to skin rather than chemistry.",
     detail: "4–8 weeks per accord",
   },
   {
