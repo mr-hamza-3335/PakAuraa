@@ -101,7 +101,7 @@ function ProductCard({
 
       {/* Image */}
       <a href={`/products/${product.id}`}>
-        <div className={`relative aspect-square lg:aspect-[3/4] overflow-hidden ${product.gradient}`}>
+        <div className={`relative aspect-square lg:aspect-[4/5] overflow-hidden ${product.gradient}`}>
           <motion.div style={{ y }} className="absolute inset-0 scale-[1.1]">
             <Image
               src={product.image}
@@ -131,7 +131,7 @@ function ProductCard({
       </a>
 
       {/* Info */}
-      <div className="p-3.5 lg:p-7 flex flex-col flex-1">
+      <div className="p-3.5 lg:p-6 flex flex-col flex-1">
         <p
           className="text-[7px] lg:text-[8px] text-gold/70 tracking-[0.22em] lg:tracking-[0.3em] uppercase mb-1.5 lg:mb-2 truncate"
           style={{ fontFamily: "var(--font-body-family)" }}
@@ -150,12 +150,12 @@ function ProductCard({
 
         {/* Description + notes — desktop only, keeps mobile cards compact */}
         <p
-          className="hidden lg:block text-[12px] text-warm-gray/85 leading-[1.85] mb-5 mt-3 flex-1 line-clamp-3"
+          className="hidden lg:block text-[12px] text-warm-gray/85 leading-[1.7] mb-4 mt-2 flex-1 line-clamp-2"
           style={{ fontFamily: "var(--font-body-family)" }}
         >
           {product.description}
         </p>
-        <div className="hidden lg:flex gap-1.5 flex-wrap mb-5">
+        <div className="hidden lg:flex gap-1.5 flex-wrap mb-4">
           {product.notes.top.slice(0, 3).map((n) => (
             <span
               key={n}
@@ -167,7 +167,7 @@ function ProductCard({
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-3 lg:pt-5 mt-2 lg:mt-0 border-t border-gold/[0.08]">
+        <div className="flex items-center justify-between pt-3 lg:pt-4 mt-2 lg:mt-0 border-t border-gold/[0.08]">
           <div>
             <PriceTag price={size.price} originalPrice={product.originalPrice} currency={currency} className="text-[13px] lg:text-[18px] text-cream" />
             <span
@@ -193,9 +193,11 @@ function ProductCard({
 
 export default function FeaturedCollection() {
   const products = useCatalog().filter((p) => !p.comingSoon);
-  const featured = products.slice(0, 3);
+  // Show every live fragrance here — with a small, growing catalog this
+  // section IS the collection, so there's no separate "featured subset".
+  const featured = products;
   return (
-    <section className="py-14 lg:py-44 px-4 lg:px-16 bg-[#080808] relative overflow-hidden">
+    <section className="py-14 lg:py-24 px-4 lg:px-16 bg-[#080808] relative overflow-hidden">
       {/* Subtle background texture */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,_rgba(201,168,76,0.025)_0%,_transparent_60%)] pointer-events-none" />
 
@@ -206,12 +208,12 @@ export default function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-8 lg:mb-28"
+          className="text-center mb-8 lg:mb-14"
         >
-          <p className="eyebrow mb-3 lg:mb-6 opacity-80">Our Icons</p>
+          <p className="eyebrow mb-3 lg:mb-5 opacity-80">Our Icons</p>
 
           <h2
-            className="text-[clamp(28px,5.5vw,72px)] text-cream leading-[0.95] tracking-[-0.02em] mb-4 lg:mb-8"
+            className="text-[clamp(28px,5.5vw,60px)] text-cream leading-[0.95] tracking-[-0.02em] mb-4 lg:mb-6"
             style={{ fontFamily: "var(--font-display-family)" }}
           >
             Signature Collection
@@ -220,7 +222,7 @@ export default function FeaturedCollection() {
           <div className="divider-gold hidden lg:block" />
 
           <p
-            className="hidden lg:block text-[14px] text-warm-gray/85 mt-8 max-w-[420px] mx-auto leading-[1.85]"
+            className="hidden lg:block text-[14px] text-warm-gray/85 mt-6 max-w-[420px] mx-auto leading-[1.85]"
             style={{ fontFamily: "var(--font-body-family)" }}
           >
             Each a world unto itself.
@@ -240,7 +242,7 @@ export default function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-center mt-16 lg:mt-20"
+          className="text-center mt-10 lg:mt-14"
         >
           <motion.a
             href="/collections"

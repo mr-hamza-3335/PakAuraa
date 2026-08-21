@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import FeaturedCollection from "@/components/FeaturedCollection";
-import BestSellers from "@/components/BestSellers";
 import PressStrip from "@/components/PressStrip";
 import JournalPreview from "@/components/JournalPreview";
 import Footer from "@/components/Footer";
@@ -36,7 +35,6 @@ export default function HomePage() {
       <Header />
       <HeroSection />
       <FeaturedCollection />
-      <BestSellers />
       <PressStrip />
       <RecentlyViewed />
       <ScentFinder />
