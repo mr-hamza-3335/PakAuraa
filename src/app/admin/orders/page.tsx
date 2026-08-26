@@ -85,6 +85,16 @@ export default function AdminOrdersPage() {
     const supabase = createClient();
     if (!supabase) return;
     await supabase.from("orders").update({ status }).eq("id", id);
+    // When an order flips to "paid" (any payment method), any "pending" loyalty
+    // points for that order become "earned" and count toward the customer's
+    // spendable balance. The confirm-payment route already handles JazzCash.
+    if (status === "paid") {
+      await supabase
+        .from("loyalty_ledger")
+        .update({ reason: "earned" })
+        .eq("order_id", id)
+        .eq("reason", "pending");
+    }
     setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status: status as Order["status"] } : o)));
   };
 
@@ -130,6 +140,13 @@ export default function AdminOrdersPage() {
       .from("orders")
       .update({ status: "cancelled", cancel_reason: draft.cancelReason, cancel_note: draft.cancelNote || null, cancelled_by: draft.cancelledBy || null, cancelled_at: now })
       .eq("id", order.id);
+    // Delete any pending loyalty points for this order — the order never got paid,
+    // so these points should never become real.
+    await supabase
+      .from("loyalty_ledger")
+      .delete()
+      .eq("order_id", order.id)
+      .eq("reason", "pending");
     setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: "cancelled", ...draft, cancelledAt: now } : o)));
     setStatusFormOrder(null);
   };

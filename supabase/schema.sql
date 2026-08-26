@@ -231,16 +231,20 @@ create policy "Admins can view stock notifications" on stock_notifications for s
 create policy "Admins can update stock notifications" on stock_notifications for update
   using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
 
--- ── Loyalty / reward points (PKR 100 spent = 1 point, 1 point = PKR 1) ─
--- Balance is always computed as SUM(points) from this ledger, never stored
--- as a mutable column — so a customer can't forge points by editing their
--- own profiles row (which self-update RLS would otherwise allow).
+-- ── Loyalty / reward points (PKR 200 spent = 1 point, 1 point = PKR 1) ─
+-- Points are "pending" on order placement — they only become real (counted in
+-- balance) when the admin marks the order as "paid". This prevents points from
+-- being awarded on orders that never actually get paid (e.g. JazzCash screenshot
+-- was fake, or the customer cancels before paying). If an order is later
+-- cancelled or returned, the pending points are reversed.
+-- Balance = SUM(points) WHERE reason = 'earned' — computed from ledger, never
+-- stored as a mutable column (RSLs prevent self-edit abuse).
 create table if not exists loyalty_ledger (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
   order_id text references orders (id) on delete set null,
   points integer not null,
-  reason text not null check (reason in ('earned', 'redeemed', 'adjustment')),
+  reason text not null check (reason in ('pending', 'earned', 'redeemed', 'adjustment')),
   created_at timestamptz not null default now()
 );
 

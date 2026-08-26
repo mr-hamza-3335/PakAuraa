@@ -74,8 +74,9 @@ export async function PATCH(req: NextRequest) {
 
   if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 });
 
-  // On completion, reverse any affiliate commission for this order+product.
+  // On completion, reverse any affiliate commission and loyalty points for this order.
   if (status === "completed") {
+    // Reverse affiliate commissions
     const { data: commissions } = await admin
       .from("affiliate_commissions")
       .select("id, order_id, status")
@@ -93,6 +94,30 @@ export async function PATCH(req: NextRequest) {
             cancelled_at: now,
           })
           .eq("id", c.id);
+      }
+    }
+
+    // Reverse loyalty points for this order (if they were already earned).
+    // Points for a returned order should never be redeemable — insert an
+    // adjustment to zero them out.
+    const { data: ledgerRows } = await admin
+      .from("loyalty_ledger")
+      .select("id, points, reason")
+      .eq("order_id", returnRow.order_id)
+      .in("reason", ["pending", "earned"]);
+
+    for (const row of ledgerRows ?? []) {
+      if (row.reason === "pending") {
+        // Order was never paid — just delete the pending row so it never becomes earned
+        await admin.from("loyalty_ledger").delete().eq("id", row.id);
+      } else if (row.reason === "earned") {
+        // Order was paid — reverse with an adjustment row
+        await admin.from("loyalty_ledger").insert({
+          user_id: (await admin.from("loyalty_ledger").select("user_id").eq("id", row.id).single()).data?.user_id ?? null,
+          order_id: returnRow.order_id,
+          points: -row.points,
+          reason: "adjustment",
+        });
       }
     }
   }

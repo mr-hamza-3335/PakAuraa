@@ -19,8 +19,12 @@ export async function POST(req: NextRequest) {
   const admin = createAdminClient();
   if (!admin) return NextResponse.json({ error: "Not available." }, { status: 503 });
 
-  const { data: ledger } = await admin.from("loyalty_ledger").select("points").eq("user_id", userData.user.id);
-  const balance = (ledger ?? []).reduce((sum, r) => sum + r.points, 0);
+  // Only "earned" points are spendable. "pending", "redeemed" and "adjustment"
+  // rows are excluded from the available balance.
+  const { data: ledger } = await admin.from("loyalty_ledger").select("points, reason").eq("user_id", userData.user.id);
+  const balance = (ledger ?? [])
+    .filter((r) => r.reason === "earned")
+    .reduce((sum, r) => sum + r.points, 0);
 
   if (points > balance) {
     return NextResponse.json({ error: "Not enough points." }, { status: 400 });

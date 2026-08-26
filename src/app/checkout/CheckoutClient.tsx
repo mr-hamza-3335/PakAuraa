@@ -87,7 +87,7 @@ export default function CheckoutClient() {
       setUserId(data.user.id);
       const [{ data: profile }, { data: ledger }] = await Promise.all([
         supabase.from("profiles").select("full_name, phone, address, city").eq("id", data.user.id).single(),
-        supabase.from("loyalty_ledger").select("points").eq("user_id", data.user.id),
+        supabase.from("loyalty_ledger").select("points, reason").eq("user_id", data.user.id),
       ]);
       if (profile) {
         setForm((f) => ({
@@ -99,7 +99,10 @@ export default function CheckoutClient() {
           city: f.city || profile.city || "",
         }));
       }
-      setLoyaltyBalance((ledger ?? []).reduce((sum, r) => sum + r.points, 0));
+      const available = (ledger ?? [])
+        .filter((r: { reason: string }) => r.reason === "earned")
+        .reduce((sum: number, r: { points: number }) => sum + r.points, 0);
+      setLoyaltyBalance(available);
     });
   }, []);
 

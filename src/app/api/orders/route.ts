@@ -73,7 +73,11 @@ export async function POST(req: NextRequest) {
   if (userData?.user) {
     const earned = pointsEarnedFor(order.total);
     if (earned > 0) {
-      await admin.from("loyalty_ledger").insert({ user_id: userData.user.id, order_id: order.id, points: earned, reason: "earned" });
+      // Points start as "pending" — they don't count toward the user's
+      // balance or become redeemable until an admin marks the order paid
+      // (see /api/admin/orders/[id]/confirm-payment). If the order is
+      // cancelled or returned, the pending row gets reversed.
+      await admin.from("loyalty_ledger").insert({ user_id: userData.user.id, order_id: order.id, points: earned, reason: "pending" });
     }
   }
 

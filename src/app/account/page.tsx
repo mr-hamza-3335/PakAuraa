@@ -69,8 +69,17 @@ export default function AccountPage() {
           city: profileRow?.city ?? "",
         });
 
-        const { data: ledger } = await supabase.from("loyalty_ledger").select("points").eq("user_id", data.user.id);
-        setLoyaltyBalance((ledger ?? []).reduce((sum, r) => sum + r.points, 0));
+        // Only "earned" points count toward spendable balance. "pending" points
+        // (earned on unpaid orders) and "redeemed" / "adjustment" rows are excluded
+        // from the displayed total.
+        const { data: ledger } = await supabase
+          .from("loyalty_ledger")
+          .select("points, reason")
+          .eq("user_id", data.user.id);
+        const available = (ledger ?? [])
+          .filter((r) => r.reason === "earned")
+          .reduce((sum, r) => sum + r.points, 0);
+        setLoyaltyBalance(available);
 
         fetch("/api/affiliate/stats")
           .then((res) => res.json())
@@ -218,7 +227,7 @@ export default function AccountPage() {
               <div>
                 <p className="text-[16px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>{loyaltyBalance} Points</p>
                 <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
-                  Worth PKR {loyaltyBalance.toLocaleString()} — redeemable at checkout. Earn 1 point per PKR 100 spent.
+                  Worth PKR {loyaltyBalance.toLocaleString()} — redeemable at checkout. Earn 1 point per PKR 200 spent.
                 </p>
               </div>
             </div>

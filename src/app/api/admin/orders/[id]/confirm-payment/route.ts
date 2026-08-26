@@ -11,9 +11,10 @@ async function isAdmin(): Promise<boolean> {
   return profile?.role === "admin";
 }
 
-/** Admin confirms a JazzCash payment screenshot was actually verified — only
- * then does the order flip from "pending" to "paid", and only then does any
- * gift card it holds get generated and emailed to the recipient. */
+/** Admin confirms a payment has been verified — only then does the order
+ * flip from "pending" to "paid", only then does any held-back gift card
+ * get issued, and only then do any pending loyalty points flip to "earned"
+ * and become redeemable. */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await isAdmin())) {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
@@ -25,16 +26,25 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const { id } = await params;
   const { data: order, error } = await admin
     .from("orders")
-    .select("items, status, payment_method, gift_cards_issued")
+    .select("items, status, payment_method, user_id, total, gift_cards_issued")
     .eq("id", id)
     .maybeSingle();
   if (error || !order) return NextResponse.json({ error: "Order not found." }, { status: 404 });
-  if (order.payment_method !== "jazzcash") {
-    return NextResponse.json({ error: "Not a JazzCash order." }, { status: 400 });
-  }
 
   if (order.status === "pending") {
     await admin.from("orders").update({ status: "paid" }).eq("id", id);
+  }
+
+  // Flip any pending loyalty points for this order to "earned" — they only
+  // become part of the customer's spendable balance once the order is
+  // confirmed paid. If the order is later returned, the returns route
+  // reverses them.
+  if (order.user_id) {
+    await admin
+      .from("loyalty_ledger")
+      .update({ reason: "earned" })
+      .eq("order_id", id)
+      .eq("reason", "pending");
   }
 
   let issued = 0;
