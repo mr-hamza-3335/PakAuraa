@@ -37,7 +37,7 @@ export default function AccountPage() {
   const [loyaltyBalance, setLoyaltyBalance] = useState<number | null>(null);
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileSaved, setProfileSaved] = useState(false);
-  const [affiliate, setAffiliate] = useState<{ code: string; commissionRate: number; pending: number; paid: number; referrals: number } | null>(null);
+  const [affiliate, setAffiliate] = useState<{ code: string; commissionRate: number; pending: number; available: number; paid: number; cancelled: number; referrals: number; commissionHistory: any[] } | null>(null);
   const [affiliateLoading, setAffiliateLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -127,7 +127,7 @@ export default function AccountPage() {
     try {
       const res = await fetch("/api/affiliate/join", { method: "POST" });
       const body = await res.json();
-      if (res.ok) setAffiliate({ code: body.code, commissionRate: 0.1, pending: 0, paid: 0, referrals: 0 });
+      if (res.ok) setAffiliate({ code: body.code, commissionRate: 0.1, pending: 0, available: 0, paid: 0, cancelled: 0, referrals: 0, commissionHistory: [] });
     } finally {
       setAffiliateLoading(false);
     }
@@ -253,14 +253,24 @@ export default function AccountPage() {
                       <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Referred Orders</p>
                     </div>
                     <div>
-                      <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.pending.toLocaleString()}</p>
-                      <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Pending Payout</p>
+                      <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.available.toLocaleString()}</p>
+                      <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Available to Withdraw</p>
                     </div>
                     <div>
                       <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.paid.toLocaleString()}</p>
                       <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Paid Out</p>
                     </div>
                   </div>
+                  {affiliate.pending > 0 && (
+                    <p className="text-[10px] text-warm-gray/85 mt-2" style={{ fontFamily: "var(--font-body-family)" }}>
+                      PKR {affiliate.pending.toLocaleString()} in 10-day hold (commissions clear 10 days after order delivery).
+                    </p>
+                  )}
+                  {affiliate.cancelled > 0 && (
+                    <p className="text-[10px] text-red-300 mt-2" style={{ fontFamily: "var(--font-body-family)" }}>
+                      PKR {affiliate.cancelled.toLocaleString()} reversed (customer returned the product).
+                    </p>
+                  )}
                 </>
               ) : (
                 <>
@@ -409,6 +419,21 @@ export default function AccountPage() {
                         >
                           <FileDown size={12} strokeWidth={1.5} /> Invoice
                         </a>
+                        {order.status === "delivered" && (() => {
+                          const deliveredAt = order.deliveredAt ? new Date(order.deliveredAt) : null;
+                          const now = new Date();
+                          const daysSince = deliveredAt ? (now.getTime() - deliveredAt.getTime()) / (1000 * 60 * 60 * 24) : 999;
+                          const remaining = 7 - Math.floor(daysSince);
+                          return remaining > 0 ? (
+                            <a
+                              href={`/returns/${order.id}`}
+                              className="flex items-center gap-1.5 text-[10px] text-warm-gray hover:text-gold tracking-wider uppercase transition-colors"
+                              style={{ fontFamily: "var(--font-body-family)" }}
+                            >
+                              Return ({remaining}d left)
+                            </a>
+                          ) : null;
+                        })()}
                         <span className="text-[14px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>{formatPrice(order.total, currency)}</span>
                       </div>
                     </div>

@@ -9,12 +9,12 @@ import ProductPageClient from "./ProductPageClient";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Force dynamic rendering — admin edits must appear immediately, not from
+// a cached static snapshot.
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ id: string }>;
-}
-
-export async function generateStaticParams() {
-  return staticProducts.map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

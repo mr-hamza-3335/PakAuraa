@@ -108,14 +108,14 @@ export default function AdminOrdersPage() {
   };
 
   const confirmDelivered = async (order: Order) => {
-    const supabase = createClient();
-    if (!supabase) return;
     const draft = deliveredDraftFor(order);
+    const res = await fetch(`/api/admin/orders/${order.id}/deliver`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ deliveredBy: draft.deliveredBy, deliveredTo: draft.deliveredTo }),
+    });
+    if (!res.ok) return;
     const now = new Date().toISOString();
-    await supabase
-      .from("orders")
-      .update({ status: "delivered", delivered_by: draft.deliveredBy || null, delivered_to: draft.deliveredTo || null, delivered_at: now })
-      .eq("id", order.id);
     setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: "delivered", ...draft, deliveredAt: now } : o)));
     setStatusFormOrder(null);
   };

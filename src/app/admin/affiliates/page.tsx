@@ -8,7 +8,9 @@ interface Affiliate {
   code: string;
   commissionRate: number;
   pending: number;
+  available: number;
   paid: number;
+  cancelled: number;
   referrals: number;
   joinedAt: string;
 }
@@ -39,12 +41,16 @@ export default function AdminAffiliatesPage() {
   };
 
   const totalPending = (affiliates ?? []).reduce((s, a) => s + a.pending, 0);
+  const totalAvailable = (affiliates ?? []).reduce((s, a) => s + a.available, 0);
+  const totalCancelled = (affiliates ?? []).reduce((s, a) => s + a.cancelled, 0);
 
   return (
     <div>
       <h1 className="font-display text-[28px] text-cream mb-1" style={{ fontFamily: "var(--font-display-family)" }}>Affiliates</h1>
       <p className="text-[12px] text-warm-gray mb-8" style={{ fontFamily: "var(--font-body-family)" }}>
-        {affiliates ? `${affiliates.length} affiliate${affiliates.length === 1 ? "" : "s"} · PKR ${totalPending.toLocaleString()} pending payout.` : "Loading…"}
+        {affiliates
+          ? `${affiliates.length} affiliate${affiliates.length === 1 ? "" : "s"} · PKR ${totalPending.toLocaleString()} in hold · PKR ${totalAvailable.toLocaleString()} ready to pay · PKR ${totalCancelled.toLocaleString()} reversed.`
+          : "Loading…"}
       </p>
 
       {!affiliates ? (
@@ -61,11 +67,13 @@ export default function AdminAffiliatesPage() {
                   Code {a.code} · {Math.round(a.commissionRate * 100)}% commission · {a.referrals} referred orders
                 </p>
               </div>
-              <span className="text-[12px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>PKR {a.pending.toLocaleString()} pending</span>
-              <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>PKR {a.paid.toLocaleString()} paid</span>
+              <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Hold: PKR {a.pending.toLocaleString()}</span>
+              <span className="text-[12px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>Ready: PKR {a.available.toLocaleString()}</span>
+              <span className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>Paid: PKR {a.paid.toLocaleString()}</span>
+              <span className="text-[11px] text-red-400/70" style={{ fontFamily: "var(--font-body-family)" }}>Reversed: PKR {a.cancelled.toLocaleString()}</span>
               <button
                 onClick={() => markPaid(a.userId)}
-                disabled={a.pending === 0 || payingOut === a.userId}
+                disabled={a.available === 0 || payingOut === a.userId}
                 className="text-[9px] tracking-wider uppercase px-3 py-1.5 border border-gold/30 text-gold hover:bg-gold/10 transition-colors disabled:opacity-30"
                 style={{ fontFamily: "var(--font-body-family)" }}
               >

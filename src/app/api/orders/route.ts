@@ -77,26 +77,9 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Credit the referring affiliate — skipped for self-referral (a signed-in
-  // affiliate buying through their own link earns no commission on themself).
-  if (order.referralCode) {
-    const { data: affiliate } = await admin
-      .from("affiliates")
-      .select("user_id, commission_rate")
-      .eq("code", order.referralCode)
-      .maybeSingle();
-    if (affiliate && affiliate.user_id !== userData?.user?.id) {
-      const amount = Math.round(order.total * affiliate.commission_rate);
-      if (amount > 0) {
-        await admin.from("affiliate_commissions").insert({
-          affiliate_user_id: affiliate.user_id,
-          order_id: order.id,
-          amount,
-          status: "pending",
-        });
-      }
-    }
-  }
+  // Commission is now credited when the order is marked "delivered" (see
+  // /api/admin/orders/[id]/deliver), not here at order placement.
+  // This ensures affiliates only earn when the product actually reaches the customer.
 
   // Best-effort — a failed email shouldn't fail an already-placed order.
   sendOrderConfirmationEmail(order).catch(() => {});

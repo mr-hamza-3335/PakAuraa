@@ -2,8 +2,9 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Search, PackageSearch, Truck, User, Phone, Headset, MessageCircle, PackageCheck, XCircle } from "lucide-react";
+import { Search, PackageSearch, Truck, User, Phone, Headset, MessageCircle, PackageCheck, XCircle, RotateCcw, Clock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Order } from "@/lib/store";
@@ -163,6 +164,32 @@ function TrackForm() {
                 {order.deliveredTo && (
                   <p className="text-[12px] text-warm-gray" style={{ fontFamily: "var(--font-body-family)" }}>Received by: {order.deliveredTo}</p>
                 )}
+                {(() => {
+                  const deliveredAt = new Date(order.deliveredAt!);
+                  const now = new Date();
+                  const daysSince = (now.getTime() - deliveredAt.getTime()) / (1000 * 60 * 60 * 24);
+                  const remaining = 7 - Math.floor(daysSince);
+                  if (remaining > 0) {
+                    return (
+                      <div className="pt-3 mt-3 border-t border-[#7FA888]/20">
+                        <Link
+                          href={`/returns/${order.id}`}
+                          className="flex items-center gap-2 text-[11px] text-gold hover:text-gold-light transition-colors"
+                          style={{ fontFamily: "var(--font-body-family)" }}
+                        >
+                          <RotateCcw size={12} strokeWidth={1.5} /> Request a return ({remaining} day{remaining !== 1 ? "s" : ""} remaining)
+                        </Link>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="pt-3 mt-3 border-t border-[#7FA888]/20">
+                      <p className="text-[10px] text-warm-gray/85 flex items-center gap-1.5" style={{ fontFamily: "var(--font-body-family)" }}>
+                        <Clock size={11} strokeWidth={1.5} /> Return window has closed (7 days from delivery)
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
             )}
 

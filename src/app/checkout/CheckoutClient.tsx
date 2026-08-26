@@ -104,9 +104,9 @@ export default function CheckoutClient() {
   }, []);
 
   const total = cartTotal();
-  // The flat delivery fee only applies to a taster-only order — the moment a
-  // full-size fragrance is in the cart (even alongside tasters), shipping is
-  // free as usual.
+  // Tasters always carry a PKR 250 delivery charge, no matter how many you
+  // buy. The moment a full-size fragrance is in the cart (even alongside
+  // tasters), shipping is free as usual.
   const tasterOnlyOrder = cart.length > 0 && cart.every((i) => i.product.isTaster);
   const shipping = tasterOnlyOrder ? 250 : 0;
   const couponDiscount = appliedCoupon ? Math.round((total * appliedCoupon.percentOff) / 100) : 0;

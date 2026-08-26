@@ -12,8 +12,21 @@ interface AffiliateData {
   code: string;
   commissionRate: number;
   pending: number;
+  available: number;
   paid: number;
+  cancelled: number;
   referrals: number;
+  commissionHistory: Array<{
+    id: string;
+    orderId: string;
+    amount: number;
+    status: string;
+    earnedAt: string;
+    availableAt: string;
+    cancelled: boolean;
+    cancelReason: string | null;
+    cancelledAt: string | null;
+  }>;
 }
 
 export default function AffiliatePage() {
@@ -46,7 +59,7 @@ export default function AffiliatePage() {
     try {
       const res = await fetch("/api/affiliate/join", { method: "POST" });
       const body = await res.json();
-      if (res.ok) setAffiliate({ code: body.code, commissionRate: 0.1, pending: 0, paid: 0, referrals: 0 });
+      if (res.ok) setAffiliate({ code: body.code, commissionRate: 0.1, pending: 0, available: 0, paid: 0, cancelled: 0, referrals: 0, commissionHistory: [] });
     } finally {
       setLoading(false);
     }
@@ -141,14 +154,74 @@ export default function AffiliatePage() {
                   <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Referred Orders</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.pending.toLocaleString()}</p>
-                  <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Pending Payout</p>
+                  <p className="text-[18px] text-gold" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.available.toLocaleString()}</p>
+                  <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Available to Withdraw</p>
                 </div>
                 <div className="text-center">
                   <p className="text-[18px] text-cream" style={{ fontFamily: "var(--font-display-family)" }}>PKR {affiliate.paid.toLocaleString()}</p>
                   <p className="text-[9px] text-warm-gray/85 tracking-wider uppercase">Paid Out</p>
                 </div>
               </div>
+
+              {/* Detailed breakdown */}
+              <div className="mt-4 pt-4 border-t border-gold/10 grid grid-cols-2 gap-3 text-[11px]" style={{ fontFamily: "var(--font-body-family)" }}>
+                <div className="flex justify-between">
+                  <span className="text-warm-gray/85">In 10-day hold:</span>
+                  <span className="text-cream">PKR {affiliate.pending.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-warm-gray/85">Reversed (returns):</span>
+                  <span className="text-cream">PKR {affiliate.cancelled.toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Commission history */}
+              {affiliate.commissionHistory && affiliate.commissionHistory.length > 0 && (
+                <div className="mt-6 pt-5 border-t border-gold/10">
+                  <p className="text-[10px] text-gold tracking-[0.25em] uppercase mb-4" style={{ fontFamily: "var(--font-body-family)" }}>
+                    Commission History
+                  </p>
+                  <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                    {affiliate.commissionHistory.map((c) => {
+                      const statusLabel = c.cancelled
+                        ? "Reversed"
+                        : c.status === "available"
+                        ? "Available"
+                        : c.status === "paid"
+                        ? "Paid"
+                        : "10-day hold";
+                      const statusColor = c.cancelled
+                        ? "text-red-400"
+                        : c.status === "available"
+                        ? "text-green-400"
+                        : c.status === "paid"
+                        ? "text-cream"
+                        : "text-gold";
+                      return (
+                        <div key={c.id} className="p-3 border border-gold/10 bg-charcoal/20 text-left">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[11px] text-cream" style={{ fontFamily: "var(--font-body-family)" }}>
+                              {c.orderId}
+                            </span>
+                            <span className="text-[12px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
+                              +PKR {c.amount.toLocaleString()}
+                            </span>
+                          </div>
+                          <p className={`text-[9px] uppercase tracking-wider ${statusColor}`} style={{ fontFamily: "var(--font-body-family)" }}>
+                            {statusLabel}
+                            {c.cancelled && c.cancelReason && ` — ${c.cancelReason}`}
+                          </p>
+                          {c.earnedAt && !c.cancelled && c.status === "pending" && (
+                            <p className="text-[9px] text-warm-gray/85 mt-1" style={{ fontFamily: "var(--font-body-family)" }}>
+                              Available: {new Date(c.availableAt).toLocaleDateString()}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="text-center">
