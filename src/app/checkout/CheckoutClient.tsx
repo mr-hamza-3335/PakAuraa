@@ -7,7 +7,7 @@ import { Truck, ShoppingBag, AlertCircle, Tag, Check, Wallet, Gift } from "lucid
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useStore, BUNDLE_MIN_ITEMS, type PaymentMethod, type OrderCustomer, type Order } from "@/lib/store";
+import { useStore, type PaymentMethod, type OrderCustomer, type Order } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/client";
 import { pkrValueOfPoints, pointsEarnedFor } from "@/lib/loyalty";
@@ -30,7 +30,7 @@ function getStoredReferralCode(): string | undefined {
 
 export default function CheckoutClient() {
   const router = useRouter();
-  const { cart, cartTotal, placeOrder, distinctProductCount, bundleDiscount } = useStore();
+  const { cart, cartTotal, placeOrder, distinctProductCount, tasterBundleDiscount } = useStore();
   const { currency } = useSettings();
   const t = useTranslate();
 
@@ -110,9 +110,9 @@ export default function CheckoutClient() {
   const tasterOnlyOrder = cart.length > 0 && cart.every((i) => i.product.isTaster);
   const shipping = tasterOnlyOrder ? 250 : 0;
   const couponDiscount = appliedCoupon ? Math.round((total * appliedCoupon.percentOff) / 100) : 0;
-  const bundleAmount = bundleDiscount();
-  const usingBundle = bundleAmount > couponDiscount;
-  const promoDiscount = Math.max(couponDiscount, bundleAmount);
+  // Auto taster bundle discount: 2 tasters = PKR 550 flat (saves 50 vs 600).
+  const tasterAmount = tasterBundleDiscount();
+  const promoDiscount = Math.max(couponDiscount, tasterAmount);
   const giftCardAmount = appliedGiftCard ? Math.min(appliedGiftCard.balance, Math.max(0, total - promoDiscount)) : 0;
   const maxRedeemable = Math.max(0, Math.min(loyaltyBalance ?? 0, total - promoDiscount - giftCardAmount));
   const loyaltyDiscount = pkrValueOfPoints(Math.min(pointsToRedeem, maxRedeemable));
@@ -248,7 +248,7 @@ export default function CheckoutClient() {
     try {
       // Both COD and JazzCash (manual QR/Till transfer) place the order
       // directly — there's no automated gateway to redirect to.
-      const order = placeOrder(customer, method, discount, usingBundle ? undefined : appliedCoupon?.code, appliedGiftCard?.code, giftCardAmount, getStoredReferralCode(), shipping);
+      const order = placeOrder(customer, method, discount, appliedCoupon?.code ?? undefined, appliedGiftCard?.code, giftCardAmount, getStoredReferralCode(), shipping);
       await finishOrder(order);
     } catch {
       setError("Something went wrong while processing payment. Please try again or choose Cash on Delivery.");
@@ -682,9 +682,9 @@ export default function CheckoutClient() {
                 {couponError && (
                   <p className="text-[11px] text-red-300 mt-2" style={{ fontFamily: "var(--font-body-family)" }}>{couponError}</p>
                 )}
-                {!appliedCoupon && bundleAmount === 0 && distinctCount === 1 && (
+                {!appliedCoupon && tasterOnlyOrder && tasterAmount === 0 && (
                   <p className="text-[11px] text-gold mt-2" style={{ fontFamily: "var(--font-body-family)" }}>
-                    {t("bundleUnlockHint").replace("{n}", String(BUNDLE_MIN_ITEMS - distinctCount))}
+                    Add another taster to get 2 for PKR 550 (save PKR 50)
                   </p>
                 )}
               </div>
@@ -766,7 +766,7 @@ export default function CheckoutClient() {
                 </div>
                 {promoDiscount > 0 && (
                   <div className="flex justify-between text-gold">
-                    <span>{usingBundle ? `${t("bundleDiscount")} (10%)` : `${t("couponCode")} (${appliedCoupon?.percentOff}%)`}</span>
+                    <span>{appliedCoupon ? `${t("couponCode")} (${appliedCoupon?.percentOff}%)` : "Taster Bundle Discount"}</span>
                     <span>− PKR {promoDiscount.toLocaleString()}</span>
                   </div>
                 )}

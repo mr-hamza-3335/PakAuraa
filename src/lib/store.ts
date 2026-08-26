@@ -108,12 +108,15 @@ interface Store {
   cartCount: () => number;
   cartTotal: () => number;
   distinctProductCount: () => number;
-  bundleDiscount: () => number;
+  /** Auto discount when 2+ tasters are in a taster-only cart:
+   * total becomes PKR 550 flat (instead of 600). Single tasters stay at 300. */
+  tasterBundleDiscount: () => number;
 }
 
-/** Buy 2+ distinct fragrances, save 10% off the subtotal — applied automatically. */
-export const BUNDLE_MIN_ITEMS = 2;
-export const BUNDLE_DISCOUNT_RATE = 0.1;
+/** Taster pricing constants — single taster PKR 300, two tasters bundled at PKR 550. */
+export const TASTER_PRICE = 300;
+export const TASTER_BUNDLE_PRICE = 550;
+export const TASTER_DELIVERY_FEE = 250;
 
 export const useStore = create<Store>()(
   persist(
@@ -248,10 +251,20 @@ export const useStore = create<Store>()(
 
       distinctProductCount: () => new Set(get().cart.map((i) => i.product.id)).size,
 
-      bundleDiscount: () =>
-        get().distinctProductCount() >= BUNDLE_MIN_ITEMS
-          ? Math.round(get().cartTotal() * BUNDLE_DISCOUNT_RATE)
-          : 0,
+      // Auto-discount for taster-only cart: 2+ tasters get a flat PKR 550
+      // per pair (saves PKR 50 vs paying 2×300). Single taster = 300. Returns
+      // the discount amount — e.g. 50 for 2 tasters, 100 for 4, etc.
+      tasterBundleDiscount: () => {
+        const cart = get().cart;
+        const tasterOnly = cart.length > 0 && cart.every((i) => i.product.isTaster);
+        if (!tasterOnly) return 0;
+        const qty = cart.reduce((sum, i) => sum + (i.quantity ?? 1), 0);
+        if (qty < 2) return 0;
+        const pairs = Math.floor(qty / 2);
+        const singles = qty % 2;
+        const bundleSubtotal = pairs * TASTER_BUNDLE_PRICE + singles * TASTER_PRICE;
+        return Math.max(0, get().cartTotal() - bundleSubtotal);
+      },
     }),
     {
       name: "pakauraa-store",
