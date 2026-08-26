@@ -202,8 +202,8 @@ body {
 }
 
 @keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
+  0%   { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
 }
 
 @keyframes pulseGold {
@@ -234,7 +234,7 @@ body {
 /* ── Animation Utilities ──────────────────────────────── */
 .animate-float       { animation: floatGentle 7s ease-in-out infinite; }
 .animate-float-slow  { animation: floatSlow 10s ease-in-out infinite; }
-.animate-marquee     { animation: marquee 45s linear infinite; }
+.animate-marquee     { animation: marquee 120s linear infinite; }
 .animate-pulse-gold  { animation: pulseGold 3s ease-in-out infinite; }
 .animate-rotate-slow { animation: rotateSlow 28s linear infinite; }
 .animate-spin-slow   { animation: spin-slow 22s linear infinite; }

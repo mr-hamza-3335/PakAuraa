@@ -3,18 +3,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2, PackagePlus } from "lucide-react";
 import Image from "next/image";
-import { useStore, TASTER_BUNDLE_PRICE, TASTER_PRICE } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import { useSettings, formatPrice } from "@/lib/settings";
 import { useTranslate } from "@/lib/i18n";
 
 export default function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, removeFromCart, updateQuantity, cartTotal, tasterBundleDiscount } =
+  const { cart, cartOpen, setCartOpen, removeFromCart, updateQuantity, cartTotal } =
     useStore();
   const { currency } = useSettings();
   const t = useTranslate();
 
   const total = cartTotal();
-  const tasterDiscount = tasterBundleDiscount();
   // Tasters always carry a delivery charge — free shipping only applies when
   // a full-size fragrance is in the cart.
   const tasterOnlyOrder = cart.length > 0 && cart.every((i) => i.product.isTaster);
@@ -72,18 +71,6 @@ export default function CartDrawer() {
               <div className="px-6 py-3 bg-gold/5 border-b border-gold/10">
                 <p className="text-[11px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
                   {tasterOnlyOrder ? "PKR 250 delivery charge applies for taster-only orders" : `✓ ${t("freeShippingNote")}`}
-                </p>
-              </div>
-            )}
-
-            {/* Taster bundle offer */}
-            {total > 0 && tasterOnlyOrder && (
-              <div className="px-6 py-3 bg-gold/[0.03] border-b border-gold/10 flex items-center gap-2.5">
-                <PackagePlus size={14} className="text-gold flex-shrink-0" strokeWidth={1.5} />
-                <p className="text-[11px]" style={{ fontFamily: "var(--font-body-family)" }}>
-                  {tasterDiscount > 0
-                    ? <span className="text-gold">2 tasters for PKR 550 — you save PKR {tasterDiscount}!</span>
-                    : <span className="text-warm-gray">Add another taster for PKR 550 — save PKR 50!</span>}
                 </p>
               </div>
             )}
@@ -199,16 +186,6 @@ export default function CartDrawer() {
                     {formatPrice(total, currency)}
                   </span>
                 </div>
-                {tasterDiscount > 0 && (
-                  <div className="flex justify-between items-center">
-                    <span className="text-[12px] text-gold tracking-wider" style={{ fontFamily: "var(--font-body-family)" }}>
-                      Taster Bundle (2 for 550)
-                    </span>
-                    <span className="text-[13px] text-gold" style={{ fontFamily: "var(--font-body-family)" }}>
-                      −{formatPrice(tasterDiscount, currency)}
-                    </span>
-                  </div>
-                )}
                 <p className="text-[11px] text-warm-gray/85" style={{ fontFamily: "var(--font-body-family)" }}>
                   {t("shippingTaxesAtCheckout")}
                 </p>
