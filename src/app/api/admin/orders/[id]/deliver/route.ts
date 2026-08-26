@@ -83,5 +83,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     }
   }
 
+  // Flip any pending loyalty points for this order to "earned" — delivery
+  // implies the product reached the customer and the payment settled, so any
+  // points held in pending are now spendable. The 7-day return window is
+  // still enforced separately: if a return is filed, the admin returns
+  // route reverses them.
+  await admin
+    .from("loyalty_ledger")
+    .update({ reason: "earned" })
+    .eq("order_id", id)
+    .eq("reason", "pending");
+
   return NextResponse.json({ ok: true });
 }
