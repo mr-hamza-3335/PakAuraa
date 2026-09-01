@@ -1,0 +1,23 @@
+{
+  "name": "PakAuraa Luxury Perfumes",
+  "short_name": "PakAuraa",
+  "description": "World-class luxury fragrances, crafted in Pakistan for the global connoisseur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#C9A84C",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"]
+}

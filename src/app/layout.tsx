@@ -83,11 +83,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logo.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48 64x64 128x128 256x256" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: "/logo.png",
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180" },
+    ],
   },
+  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {

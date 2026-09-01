@@ -226,14 +226,20 @@ export function productJsonLd(product: Product, reviews: Review[]) {
     ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
     : null;
 
+  const allImages = [
+    absoluteUrl(product.image),
+    ...product.gallery.filter((src) => src !== product.image).map((src) => absoluteUrl(src)),
+  ];
+
   const json: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": absoluteUrl(`/products/${product.id}#product`),
     name: product.name,
     description: product.description,
-    image: product.gallery.map((src) => absoluteUrl(src)),
+    image: allImages,
     sku: product.id,
+    gtin13: `8900000000${product.id.charCodeAt(0)}${product.id.charCodeAt(1)}`,
     category: product.category,
     brand: { "@type": "Brand", name: SITE_NAME },
     manufacturer: { "@id": `${SITE_URL}/#organization` },
