@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["pdfkit"],
   images: {
     remotePatterns: [{ protocol: "https", hostname: "res.cloudinary.com" }],
+    // deviceSizes / imageSizes are framework defaults — leaving them at the
+    // built-in ladder is intentional, only adding local patterns to allow
+    // Googlebot and crawlers to fetch product photography directly from /public.
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
